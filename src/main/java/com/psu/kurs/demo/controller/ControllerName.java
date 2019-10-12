@@ -57,6 +57,8 @@ public class ControllerName {
                     sendMoneyForm.getToAccountId(),
                     sendMoneyForm.getAmount());
         } catch (BankTransactionException e) {
+
+
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
             return "/sendMoneyPage";
         }
