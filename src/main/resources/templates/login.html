@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head th:replace="commons::head">
+
+    
+    </head>
+<body>
+    <div id="wrap">
+        <div class="container">
+            <div class="loginbox">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="#{authorization}">Enter your login and password</h5>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="#{auth_info}">Card subtitle</h6>
+                        <div class="alert alert-danger" th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
+                            th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+                            <span th:text="${errorMsg}">Wrong input!</span>
+                        </div>
+                        <h1>Hello man</h1>
+                        <form action="/login" method="POST">
+                            <input type="hidden" name="backUrl" th:value="@{${#httpServletRequest.requestURI}}"/>
+                            <div class="form-group">
+                                <label class="col-form-label" for="login" th:text="#{username}">Login</label>
+                                <input type="text" class="form-control" id="login" name="username" autocomplete="off" maxlength="64" th:placeholder="#{login}" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="password" th:text="#{password}">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" autocomplete="off" maxlength="64" th:placeholder="#{password}">
+                            </div>
+                            <div class="form-group form-check">
+                                <input class="form-check-input" type="checkbox" name="remember-me" id="remember-me">
+                                <label class="form-check-label" for="remember-me">[[#{remember_me}]]</label>
+                            </div>
+                            <div class="d-flex flex-row">
+                            <button type="submit" class="btn btn-primary w-50 mr-1" th:text="#{login}">Login</button>
+                            <button type="reset" class="btn btn-secondary w-50 ml-1" th:text="#{cancel}">Cancel</button>
+                            </div>
+                            <a th:href="@{/user}" class="btn btn-info w-100 mt-2">Create New Account</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="commons::footer"></div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

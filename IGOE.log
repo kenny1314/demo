@@ -1,0 +1,523 @@
+2019-10-06 00:03:29,487 Application started with classpath: [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-web-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-autoconfigure-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-logging-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/logback-classic-1.2.3.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/logback-core-1.2.3.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/log4j-to-slf4j-2.11.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jul-to-slf4j-1.7.26.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/javax.annotation-api-1.3.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-core-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-jcl-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-json-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jackson-databind-2.9.9.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jackson-annotations-2.9.0.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jackson-core-2.9.9.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jackson-datatype-jdk8-2.9.9.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jackson-datatype-jsr310-2.9.9.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jackson-module-parameter-names-2.9.9.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-tomcat-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/tomcat-embed-core-9.0.21.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/tomcat-embed-el-9.0.21.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/tomcat-embed-websocket-9.0.21.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/hibernate-validator-6.0.17.Final.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/validation-api-2.0.1.Final.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jboss-logging-3.3.2.Final.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/classmate-1.4.0.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-web-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-beans-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-webmvc-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-context-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-expression-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-data-jpa-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-aop-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-jdbc-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/HikariCP-3.2.0.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-jdbc-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/javax.transaction-api-1.3.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jaxb-api-2.3.1.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/javax.activation-api-1.2.0.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/hibernate-core-5.3.10.Final.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/javax.persistence-api-2.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/javassist-3.23.2-GA.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/byte-buddy-1.9.13.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/antlr-2.7.7.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/jandex-2.0.5.Final.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/dom4j-2.1.1.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/hibernate-commons-annotations-5.0.4.Final.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-data-jpa-2.1.9.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-data-commons-2.1.9.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-orm-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-tx-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-aspects-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-thymeleaf-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/thymeleaf-spring5-3.0.11.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/thymeleaf-3.0.11.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/attoparser-2.0.5.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/unbescape-1.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/thymeleaf-extras-java8time-3.0.4.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-boot-starter-security-2.1.6.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-aop-5.1.8.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-security-config-5.1.5.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-security-core-5.1.5.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/spring-security-web-5.1.5.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/thymeleaf-extras-springsecurity4-3.0.2.RELEASE.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/slf4j-api-1.7.26.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/commons-codec-1.11.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/commons-lang3-3.8.1.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/derby-10.14.2.0.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/mybatis-spring-boot-starter-1.3.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/mybatis-spring-boot-autoconfigure-1.3.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/mybatis-3.4.6.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/mybatis-spring-1.3.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/liquibase-core-3.6.3.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/snakeyaml-1.23.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/log4j-slf4j-impl-2.11.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/log4j-api-2.11.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/log4j-core-2.11.2.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/poi-4.1.0.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/commons-collections4-4.3.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/commons-math3-3.6.1.jar!/, jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/lib/aspectjweaver-1.8.12.jar!/]
+2019-10-06 00:03:29,945 Loading source class com.epam.vitlab.blank.Application
+2019-10-06 00:03:30,097 Loaded config file 'jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/application.properties' (classpath:/application.properties)
+2019-10-06 00:03:30,099 Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7ff95560
+2019-10-06 00:03:30,145 Creating shared instance of singleton bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+2019-10-06 00:03:30,173 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory'
+2019-10-06 00:03:30,291 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/config/MvcConfig.class]
+2019-10-06 00:03:30,305 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/config/WebSecurityConfig.class]
+2019-10-06 00:03:30,323 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/security/UserDetailsServiceImpl.class]
+2019-10-06 00:03:30,325 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/security/UserPermissionEvaluator.class]
+2019-10-06 00:03:30,328 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/service/RememberMeService.class]
+2019-10-06 00:03:30,344 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/service/UserService.class]
+2019-10-06 00:03:30,354 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/AopLogger.class]
+2019-10-06 00:03:30,384 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/api/UsersRestController.class]
+2019-10-06 00:03:30,390 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/BeandsController.class]
+2019-10-06 00:03:30,392 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/DownloadController.class]
+2019-10-06 00:03:30,393 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/MyClass.class]
+2019-10-06 00:03:30,396 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/UserController.class]
+2019-10-06 00:03:30,421 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/UserFormValidator.class]
+2019-10-06 00:03:30,423 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/web/mvc/UsersController.class]
+2019-10-06 00:03:31,620 Found key 'spring.jmx.enabled' in PropertySource 'configurationProperties' with value of type String
+2019-10-06 00:03:31,676 Found key 'spring.jmx.enabled' in PropertySource 'configurationProperties' with value of type String
+2019-10-06 00:03:32,819 Loaded 1 bean definitions from class path resource [applicationContext.xml]
+2019-10-06 00:03:32,832 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.condition.BeanTypeRegistry'
+2019-10-06 00:03:33,163 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.AutoConfigurationPackages'
+2019-10-06 00:03:33,174 @EnableAutoConfiguration was declared on a class in the package 'com.epam.vitlab.blank'. Automatic @Repository and @Entity scanning is enabled.
+2019-10-06 00:03:33,575 Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-10-06 00:03:33,611 Scanning for repositories in packages com.epam.vitlab.blank.
+2019-10-06 00:03:33,675 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/dao/RoleRepository.class]
+2019-10-06 00:03:33,677 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/dao/UserRepository.class]
+2019-10-06 00:03:33,774 Identified candidate component class: URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/security/UserDetailsServiceImpl.class]
+2019-10-06 00:03:33,794 Overriding bean definition for bean 'roleRepository' with a different definition: replacing [Generic bean: class [org.mybatis.spring.mapper.MapperFactoryBean]; scope=singleton; abstract=false; lazyInit=false; autowireMode=2; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/dao/RoleRepository.class]] with [Root bean: class [org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null]
+2019-10-06 00:03:33,799 Overriding bean definition for bean 'userRepository' with a different definition: replacing [Generic bean: class [org.mybatis.spring.mapper.MapperFactoryBean]; scope=singleton; abstract=false; lazyInit=false; autowireMode=2; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/C:/Users/grunt/eclipse-workspace/blank/target/blank.jar!/BOOT-INF/classes!/com/epam/vitlab/blank/dao/UserRepository.class]] with [Root bean: class [org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null]
+2019-10-06 00:03:33,800 Finished Spring Data repository scanning in 188ms. Found 2 repository interfaces.
+2019-10-06 00:03:34,973 Creating shared instance of singleton bean 'propertySourcesPlaceholderConfigurer'
+2019-10-06 00:03:35,003 Creating shared instance of singleton bean 'emBeanDefinitionRegistrarPostProcessor'
+2019-10-06 00:03:35,024 Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerProcessor'
+2019-10-06 00:03:35,026 Creating shared instance of singleton bean 'org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata'
+2019-10-06 00:03:35,029 Creating shared instance of singleton bean 'preserveErrorControllerTargetClassPostProcessor'
+2019-10-06 00:03:35,030 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration$LiquibaseNamedParameterJdbcOperationsDependencyConfiguration'
+2019-10-06 00:03:35,031 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration$LiquibaseJdbcOperationsDependencyConfiguration'
+2019-10-06 00:03:35,032 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration$LiquibaseJpaDependencyConfiguration'
+2019-10-06 00:03:35,042 Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerFactory'
+2019-10-06 00:03:35,043 Creating shared instance of singleton bean 'org.springframework.transaction.config.internalTransactionalEventListenerFactory'
+2019-10-06 00:03:35,066 Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+2019-10-06 00:03:35,075 Creating shared instance of singleton bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+2019-10-06 00:03:35,082 Creating shared instance of singleton bean 'org.springframework.context.annotation.internalPersistenceAnnotationProcessor'
+2019-10-06 00:03:35,083 Creating shared instance of singleton bean 'org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor'
+2019-10-06 00:03:35,087 Creating shared instance of singleton bean 'org.springframework.aop.config.internalAutoProxyCreator'
+2019-10-06 00:03:35,176 Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAsyncAnnotationProcessor'
+2019-10-06 00:03:35,177 Creating shared instance of singleton bean 'org.springframework.scheduling.annotation.ProxyAsyncConfiguration'
+2019-10-06 00:03:35,299 Creating shared instance of singleton bean 'org.springframework.context.annotation.internalScheduledAnnotationProcessor'
+2019-10-06 00:03:35,300 Creating shared instance of singleton bean 'org.springframework.scheduling.annotation.SchedulingConfiguration'
+2019-10-06 00:03:35,324 Creating shared instance of singleton bean 'methodValidationPostProcessor'
+2019-10-06 00:03:35,346 Autowiring by type from bean name 'methodValidationPostProcessor' via factory method to bean named 'environment'
+2019-10-06 00:03:35,364 Creating shared instance of singleton bean 'dataSourceInitializerPostProcessor'
+2019-10-06 00:03:35,373 Creating shared instance of singleton bean 'persistenceExceptionTranslationPostProcessor'
+2019-10-06 00:03:35,375 Autowiring by type from bean name 'persistenceExceptionTranslationPostProcessor' via factory method to bean named 'environment'
+2019-10-06 00:03:35,380 Creating shared instance of singleton bean 'webServerFactoryCustomizerBeanPostProcessor'
+2019-10-06 00:03:35,381 Creating shared instance of singleton bean 'errorPageRegistrarBeanPostProcessor'
+2019-10-06 00:03:35,382 Creating shared instance of singleton bean 'dataSourceInitializedPublisher'
+2019-10-06 00:03:35,388 Creating shared instance of singleton bean 'projectingArgumentResolverBeanPostProcessor'
+2019-10-06 00:03:35,392 Creating shared instance of singleton bean 'metaDataSourceAdvisor'
+2019-10-06 00:03:35,393 Creating shared instance of singleton bean 'methodSecurityMetadataSource'
+2019-10-06 00:03:35,393 Creating shared instance of singleton bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration'
+2019-10-06 00:03:35,394 Creating shared instance of singleton bean 'org.springframework.transaction.config.internalTransactionAdvisor'
+2019-10-06 00:03:35,394 Creating shared instance of singleton bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration'
+2019-10-06 00:03:35,500 Found AspectJ method: public java.lang.Object com.epam.vitlab.blank.web.mvc.AopLogger.around2(org.aspectj.lang.ProceedingJoinPoint)
+2019-10-06 00:03:35,502 Found AspectJ method: public void com.epam.vitlab.blank.web.mvc.AopLogger.around3(org.aspectj.lang.JoinPoint)
+2019-10-06 00:03:35,503 Found AspectJ method: public void com.epam.vitlab.blank.web.mvc.AopLogger.before0(org.aspectj.lang.JoinPoint)
+2019-10-06 00:03:35,503 Found AspectJ method: public void com.epam.vitlab.blank.web.mvc.AopLogger.befuser()
+2019-10-06 00:03:35,601 Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$73e105b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-06 00:03:35,965 Creating shared instance of singleton bean 'transactionAttributeSource'
+2019-10-06 00:03:35,993 Creating shared instance of singleton bean 'transactionInterceptor'
+2019-10-06 00:03:36,100 Creating shared instance of singleton bean 'objectPostProcessor'
+2019-10-06 00:03:36,101 Creating shared instance of singleton bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration'
+2019-10-06 00:03:36,102 Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$9febd895] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-06 00:03:36,110 Autowiring by type from bean name 'objectPostProcessor' via factory method to bean named 'org.springframework.beans.factory.support.DefaultListableBeanFactory@2c767a52'
+2019-10-06 00:03:36,129 Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-06 00:03:36,134 Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@1c3146bc' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-06 00:03:36,139 Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$c4c07b47] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-06 00:03:36,150 Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-06 00:03:36,219 Creating shared instance of singleton bean 'messageSource'
+2019-10-06 00:03:36,219 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration'
+2019-10-06 00:03:36,234 Creating shared instance of singleton bean 'messageSourceProperties'
+2019-10-06 00:03:36,283 Autowiring by type from bean name 'messageSource' via factory method to bean named 'messageSourceProperties'
+2019-10-06 00:03:36,322 Unable to locate ThemeSource with name 'themeSource': using default [org.springframework.ui.context.support.ResourceBundleThemeSource@1e7aa82b]
+2019-10-06 00:03:36,326 Creating shared instance of singleton bean 'tomcatServletWebServerFactory'
+2019-10-06 00:03:36,326 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat'
+2019-10-06 00:03:36,423 Creating shared instance of singleton bean 'websocketServletWebServerCustomizer'
+2019-10-06 00:03:36,423 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration'
+2019-10-06 00:03:36,435 Creating shared instance of singleton bean 'servletWebServerFactoryCustomizer'
+2019-10-06 00:03:36,435 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration'
+2019-10-06 00:03:36,444 Creating shared instance of singleton bean 'server-org.springframework.boot.autoconfigure.web.ServerProperties'
+2019-10-06 00:03:36,456 Autowiring by type from bean name 'servletWebServerFactoryCustomizer' via factory method to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties'
+2019-10-06 00:03:36,464 Creating shared instance of singleton bean 'tomcatServletWebServerFactoryCustomizer'
+2019-10-06 00:03:36,466 Autowiring by type from bean name 'tomcatServletWebServerFactoryCustomizer' via factory method to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties'
+2019-10-06 00:03:36,470 Creating shared instance of singleton bean 'tomcatWebServerFactoryCustomizer'
+2019-10-06 00:03:36,471 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration'
+2019-10-06 00:03:36,477 Autowiring by type from bean name 'tomcatWebServerFactoryCustomizer' via factory method to bean named 'environment'
+2019-10-06 00:03:36,477 Autowiring by type from bean name 'tomcatWebServerFactoryCustomizer' via factory method to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties'
+2019-10-06 00:03:36,492 Creating shared instance of singleton bean 'localeCharsetMappingsCustomizer'
+2019-10-06 00:03:36,492 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration'
+2019-10-06 00:03:36,493 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration$$EnhancerBySpringCGLIB$$da92c6fd] - unable to determine constructor/method parameter names
+2019-10-06 00:03:36,495 Creating shared instance of singleton bean 'spring.http-org.springframework.boot.autoconfigure.http.HttpProperties'
+2019-10-06 00:03:36,500 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration' via constructor to bean named 'spring.http-org.springframework.boot.autoconfigure.http.HttpProperties'
+2019-10-06 00:03:36,559 Creating shared instance of singleton bean 'errorPageCustomizer'
+2019-10-06 00:03:36,560 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration'
+2019-10-06 00:03:36,561 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$$EnhancerBySpringCGLIB$$32ea15e0] - unable to determine constructor/method parameter names
+2019-10-06 00:03:36,564 Creating shared instance of singleton bean 'dispatcherServletRegistration'
+2019-10-06 00:03:36,564 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration'
+2019-10-06 00:03:36,565 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration$$EnhancerBySpringCGLIB$$b94534cb] - unable to determine constructor/method parameter names
+2019-10-06 00:03:36,567 Creating shared instance of singleton bean 'spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties'
+2019-10-06 00:03:36,572 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration' via constructor to bean named 'spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties'
+2019-10-06 00:03:36,579 Creating shared instance of singleton bean 'multipartConfigElement'
+2019-10-06 00:03:36,580 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration'
+2019-10-06 00:03:36,581 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration$$EnhancerBySpringCGLIB$$49834f0a] - unable to determine constructor/method parameter names
+2019-10-06 00:03:36,583 Creating shared instance of singleton bean 'spring.servlet.multipart-org.springframework.boot.autoconfigure.web.servlet.MultipartProperties'
+2019-10-06 00:03:36,600 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration' via constructor to bean named 'spring.servlet.multipart-org.springframework.boot.autoconfigure.web.servlet.MultipartProperties'
+2019-10-06 00:03:36,626 Creating shared instance of singleton bean 'dispatcherServlet'
+2019-10-06 00:03:36,628 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration'
+2019-10-06 00:03:36,646 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration$$EnhancerBySpringCGLIB$$573da024] - unable to determine constructor/method parameter names
+2019-10-06 00:03:36,651 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration' via constructor to bean named 'spring.http-org.springframework.boot.autoconfigure.http.HttpProperties'
+2019-10-06 00:03:36,652 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration' via constructor to bean named 'spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties'
+2019-10-06 00:03:36,749 Autowiring by type from bean name 'dispatcherServletRegistration' via factory method to bean named 'dispatcherServlet'
+2019-10-06 00:03:36,796 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration' via constructor to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties'
+2019-10-06 00:03:36,796 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration' via constructor to bean named 'dispatcherServletRegistration'
+2019-10-06 00:03:36,802 Creating shared instance of singleton bean 'conventionErrorViewResolver'
+2019-10-06 00:03:36,806 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration'
+2019-10-06 00:03:36,809 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration$$EnhancerBySpringCGLIB$$477eea80] - unable to determine constructor/method parameter names
+2019-10-06 00:03:36,815 Creating shared instance of singleton bean 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties'
+2019-10-06 00:03:36,829 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration' via constructor to bean named 'org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7ff95560'
+2019-10-06 00:03:36,829 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration' via constructor to bean named 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties'
+2019-10-06 00:03:37,777 Code archive: C:\Users\grunt\eclipse-workspace\blank\target\blank.jar
+2019-10-06 00:03:37,777 Code archive: C:\Users\grunt\eclipse-workspace\blank\target\blank.jar
+2019-10-06 00:03:37,779 None of the document roots [src/main/webapp, public, static] point to a directory and will be ignored.
+2019-10-06 00:03:37,862 Tomcat initialized with port(s): 8080 (http)
+2019-10-06 00:03:38,239 Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2019-10-06 00:03:38,239 Root WebApplicationContext: initialization completed in 8140 ms
+2019-10-06 00:03:38,246 Creating shared instance of singleton bean 'securityFilterChainRegistration'
+2019-10-06 00:03:38,247 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration'
+2019-10-06 00:03:38,255 Creating shared instance of singleton bean 'spring.security-org.springframework.boot.autoconfigure.security.SecurityProperties'
+2019-10-06 00:03:38,261 Autowiring by type from bean name 'securityFilterChainRegistration' via factory method to bean named 'spring.security-org.springframework.boot.autoconfigure.security.SecurityProperties'
+2019-10-06 00:03:38,286 Creating shared instance of singleton bean 'requestContextFilter'
+2019-10-06 00:03:38,295 Creating shared instance of singleton bean 'hiddenHttpMethodFilter'
+2019-10-06 00:03:38,296 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration'
+2019-10-06 00:03:38,315 Creating shared instance of singleton bean 'formContentFilter'
+2019-10-06 00:03:38,345 Creating shared instance of singleton bean 'characterEncodingFilter'
+2019-10-06 00:03:38,365 Mapping filters: springSecurityFilterChain urls=[/*], characterEncodingFilter urls=[/*], hiddenHttpMethodFilter urls=[/*], formContentFilter urls=[/*], requestContextFilter urls=[/*]
+2019-10-06 00:03:38,366 Mapping servlets: dispatcherServlet urls=[/]
+2019-10-06 00:03:38,400 Filter 'requestContextFilter' configured for use
+2019-10-06 00:03:38,401 Filter 'hiddenHttpMethodFilter' configured for use
+2019-10-06 00:03:38,401 Filter 'characterEncodingFilter' configured for use
+2019-10-06 00:03:38,402 Filter 'springSecurityFilterChain' configured for use
+2019-10-06 00:03:38,402 Filter 'formContentFilter' configured for use
+2019-10-06 00:03:38,419 Creating shared instance of singleton bean 'liquibase'
+2019-10-06 00:03:38,420 Creating shared instance of singleton bean 'application'
+2019-10-06 00:03:38,440 Creating shared instance of singleton bean 'dataSource'
+2019-10-06 00:03:38,440 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari'
+2019-10-06 00:03:38,445 Creating shared instance of singleton bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties'
+2019-10-06 00:03:38,476 Autowiring by type from bean name 'dataSource' via factory method to bean named 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties'
+2019-10-06 00:03:38,936 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker'
+2019-10-06 00:03:38,943 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' via constructor to bean named 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties'
+2019-10-06 00:03:38,943 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' via constructor to bean named 'org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7ff95560'
+2019-10-06 00:03:38,967 Found key 'liquibase.changelog' in PropertySource 'configurationProperties' with value of type String
+2019-10-06 00:03:38,967 Found key 'liquibase.changelog' in PropertySource 'environmentProperties' with value of type String
+2019-10-06 00:03:38,969 Found key 'liquibase.contexts' in PropertySource 'configurationProperties' with value of type String
+2019-10-06 00:03:38,970 Found key 'liquibase.contexts' in PropertySource 'environmentProperties' with value of type String
+2019-10-06 00:03:38,971 Autowiring by type from bean name 'liquibase' via factory method to bean named 'dataSource'
+2019-10-06 00:03:40,401 Searching for implementations of liquibase.database.Database in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:40,632 Searching for: is assignable to Database in package: liquibase/change
+2019-10-06 00:03:40,708 Searching for: is assignable to Database in package: liquibase/command
+2019-10-06 00:03:40,835 Searching for: is assignable to Database in package: liquibase/changelog
+2019-10-06 00:03:40,924 Searching for: is assignable to Database in package: liquibase/database
+2019-10-06 00:03:40,977 Searching for: is assignable to Database in package: liquibase/parser
+2019-10-06 00:03:41,030 Searching for: is assignable to Database in package: liquibase/precondition
+2019-10-06 00:03:41,085 Searching for: is assignable to Database in package: liquibase/datatype
+2019-10-06 00:03:41,160 Searching for: is assignable to Database in package: liquibase/serializer
+2019-10-06 00:03:41,335 Searching for: is assignable to Database in package: liquibase/sqlgenerator
+2019-10-06 00:03:41,389 Searching for: is assignable to Database in package: liquibase/executor
+2019-10-06 00:03:41,491 Searching for: is assignable to Database in package: liquibase/snapshot
+2019-10-06 00:03:41,522 Searching for: is assignable to Database in package: liquibase/logging
+2019-10-06 00:03:41,688 Searching for: is assignable to Database in package: liquibase/diff
+2019-10-06 00:03:41,731 Searching for: is assignable to Database in package: liquibase/structure
+2019-10-06 00:03:41,732 Searching for: is assignable to Database in package: liquibase/structurecompare
+2019-10-06 00:03:41,732 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:41,750 Searching for: is assignable to Database in package: liquibase/lockservice
+2019-10-06 00:03:41,770 Searching for: is assignable to Database in package: liquibase/sdk/database
+2019-10-06 00:03:41,771 Searching for: is assignable to Database in package: liquibase/ext
+2019-10-06 00:03:41,771 No classes found in package: liquibase/ext
+2019-10-06 00:03:41,771 Found: [class liquibase.database.core.Db2zDatabase, class liquibase.database.core.MySQLDatabase, class liquibase.database.core.MSSQLDatabase, class liquibase.database.core.MariaDBDatabase, class liquibase.database.core.SybaseDatabase, class liquibase.database.core.AbstractDb2Database, class liquibase.database.AbstractJdbcDatabase, interface liquibase.database.Database, class liquibase.database.core.SQLiteDatabase, class liquibase.database.core.InformixDatabase, class liquibase.database.core.DerbyDatabase, class liquibase.database.core.HsqlDatabase, class liquibase.database.core.FirebirdDatabase, class liquibase.database.core.H2Database, class liquibase.database.core.OracleDatabase, class liquibase.database.core.DB2Database, class liquibase.database.core.SybaseASADatabase, class liquibase.database.core.UnsupportedDatabase, class liquibase.database.core.PostgresDatabase, class liquibase.diff.output.DiffOutputControl$DatabaseForHash, class liquibase.sdk.database.MockDatabase]
+2019-10-06 00:03:41,812 Searching for implementations of liquibase.executor.Executor in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:41,812 Searching for: is assignable to Executor in package: liquibase/change
+2019-10-06 00:03:41,812 Searching for: is assignable to Executor in package: liquibase/command
+2019-10-06 00:03:41,812 Searching for: is assignable to Executor in package: liquibase/changelog
+2019-10-06 00:03:41,812 Searching for: is assignable to Executor in package: liquibase/database
+2019-10-06 00:03:41,812 Searching for: is assignable to Executor in package: liquibase/parser
+2019-10-06 00:03:41,812 Searching for: is assignable to Executor in package: liquibase/precondition
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/datatype
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/serializer
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/sqlgenerator
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/executor
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/snapshot
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/logging
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/diff
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/structure
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/structurecompare
+2019-10-06 00:03:41,813 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/lockservice
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/sdk/database
+2019-10-06 00:03:41,813 Searching for: is assignable to Executor in package: liquibase/ext
+2019-10-06 00:03:41,814 No classes found in package: liquibase/ext
+2019-10-06 00:03:41,814 Found: [interface liquibase.executor.Executor, class liquibase.executor.AbstractExecutor, class liquibase.executor.LoggingExecutor, class liquibase.executor.jvm.JdbcExecutor]
+2019-10-06 00:03:41,830 Searching for implementations of liquibase.sqlgenerator.SqlGenerator in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:41,830 Searching for: is assignable to SqlGenerator in package: liquibase/change
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/command
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/changelog
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/database
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/parser
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/precondition
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/datatype
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/serializer
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/sqlgenerator
+2019-10-06 00:03:41,831 Searching for: is assignable to SqlGenerator in package: liquibase/executor
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/snapshot
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/logging
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/diff
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/structure
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/structurecompare
+2019-10-06 00:03:41,832 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/lockservice
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/sdk/database
+2019-10-06 00:03:41,832 Searching for: is assignable to SqlGenerator in package: liquibase/ext
+2019-10-06 00:03:41,832 No classes found in package: liquibase/ext
+2019-10-06 00:03:41,832 Found: [class liquibase.sqlgenerator.core.AlterSequenceGenerator, class liquibase.sqlgenerator.core.AddColumnGeneratorSQLite, class liquibase.sqlgenerator.core.DropForeignKeyConstraintGenerator, class liquibase.sqlgenerator.core.DropTableGenerator, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorDB2, class liquibase.sqlgenerator.core.AddAutoIncrementGeneratorSQLite, class liquibase.sqlgenerator.core.RuntimeGenerator, class liquibase.sqlgenerator.core.AddColumnGeneratorDefaultClauseBeforeNotNull, class liquibase.sqlgenerator.core.AddUniqueConstraintGeneratorInformix, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorHsql, class liquibase.sqlgenerator.core.CopyRowsGenerator, class liquibase.sqlgenerator.core.RenameColumnGenerator, class liquibase.sqlgenerator.core.CreateIndexGeneratorFirebird, class liquibase.sqlgenerator.core.UpdateGenerator, class liquibase.sqlgenerator.core.DropPrimaryKeyGenerator, class liquibase.sqlgenerator.core.SetNullableGenerator, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorSybaseASA, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorInformix, class liquibase.sqlgenerator.core.CreateDatabaseChangeLogTableGeneratorSybase, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorDerby, class liquibase.sqlgenerator.core.TableRowCountGenerator, class liquibase.sqlgenerator.core.CreateIndexGeneratorPostgres, class liquibase.sqlgenerator.core.LockDatabaseChangeLogGenerator, interface liquibase.sqlgenerator.SqlGenerator, class liquibase.sqlgenerator.core.CreateSequenceGenerator, class liquibase.sqlgenerator.core.AddAutoIncrementGeneratorMySQL, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorOracle, class liquibase.sqlgenerator.core.AddAutoIncrementGeneratorInformix, class liquibase.sqlgenerator.core.ModifyDataTypeGenerator, class liquibase.sqlgenerator.core.GetViewDefinitionGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorSybaseASA, class liquibase.sqlgenerator.core.DeleteGenerator, class liquibase.sqlgenerator.core.AddAutoIncrementGeneratorHsqlH2, class liquibase.sqlgenerator.core.MarkChangeSetRanGenerator, class liquibase.sqlgenerator.core.DropIndexGenerator, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorInformix, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorOracle, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorPostgres, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorSybase, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorSQLite, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorFirebird, class liquibase.sqlgenerator.core.AddAutoIncrementGenerator, class liquibase.sqlgenerator.core.DropColumnGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorH2, class liquibase.sqlgenerator.core.UpdateDataChangeGenerator, class liquibase.sqlgenerator.core.CreateProcedureGenerator, class liquibase.sqlgenerator.core.StoredProcedureGenerator, class liquibase.sqlgenerator.core.CreateTableGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGenerator, class liquibase.sqlgenerator.core.UnlockDatabaseChangeLogGenerator, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorMSSQL, class liquibase.sqlgenerator.core.RemoveChangeSetRanStatusGenerator, class liquibase.sqlgenerator.core.AddDefaultValueGenerator, class liquibase.sqlgenerator.core.DropUniqueConstraintGenerator, class liquibase.sqlgenerator.core.CommentGenerator, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorDerby, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorOracle, class liquibase.sqlgenerator.core.DropDefaultValueGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorSQLite, class liquibase.sqlgenerator.core.CreateViewGenerator, class liquibase.sqlgenerator.core.ClearDatabaseChangeLogTableGenerator, class liquibase.sqlgenerator.core.RenameViewGenerator, class liquibase.sqlgenerator.core.SelectFromDatabaseChangeLogGenerator, class liquibase.sqlgenerator.core.CreateViewGeneratorInformix, class liquibase.sqlgenerator.core.SetColumnRemarksGenerator, class liquibase.sqlgenerator.core.AddPrimaryKeyGenerator, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorMySQL, class liquibase.sqlgenerator.core.DropSequenceGenerator, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorSybaseASA, class liquibase.sqlgenerator.core.AddAutoIncrementGeneratorDB2, class liquibase.sqlgenerator.core.GetViewDefinitionGeneratorPostgres, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorDB2, class liquibase.sqlgenerator.core.CreateTableGeneratorInformix, class liquibase.sqlgenerator.core.CreateIndexGenerator, class liquibase.sqlgenerator.core.AbstractSqlGenerator, class liquibase.sqlgenerator.core.AddColumnGenerator, class liquibase.sqlgenerator.core.AddUniqueConstraintGenerator, class liquibase.sqlgenerator.core.RawSqlGenerator, class liquibase.sqlgenerator.core.GetNextChangeSetSequenceValueGenerator, class liquibase.sqlgenerator.core.InsertGenerator, class liquibase.sqlgenerator.core.UpdateChangeSetChecksumGenerator, class liquibase.sqlgenerator.core.InitializeDatabaseChangeLogLockTableGenerator, class liquibase.sqlgenerator.core.RenameTableGenerator, class liquibase.sqlgenerator.core.TagDatabaseGenerator, class liquibase.sqlgenerator.core.BatchDmlExecutablePreparedStatementGenerator, class liquibase.sqlgenerator.core.ReindexGeneratorSQLite, class liquibase.sqlgenerator.core.CreateDatabaseChangeLogLockTableGenerator, class liquibase.sqlgenerator.core.SetTableRemarksGenerator, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorMSSQL, class liquibase.sqlgenerator.core.ReorganizeTableGeneratorDB2, class liquibase.sqlgenerator.core.RenameSequenceGenerator, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorSybase, class liquibase.sqlgenerator.core.AddForeignKeyConstraintGenerator, class liquibase.sqlgenerator.core.InsertSetGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorMySQL, class liquibase.sqlgenerator.core.DropViewGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorPostgres, class liquibase.sqlgenerator.core.AddPrimaryKeyGeneratorInformix, class liquibase.sqlgenerator.core.CreateDatabaseChangeLogTableGenerator, class liquibase.sqlgenerator.core.DropProcedureGenerator, class liquibase.sqlgenerator.core.AddUniqueConstraintGeneratorTDS, class liquibase.sqlgenerator.core.AddDefaultValueGeneratorInformix, class liquibase.sqlgenerator.core.InsertDataChangeGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorMSSQL, class liquibase.sqlgenerator.core.SelectFromDatabaseChangeLogLockGenerator, class liquibase.sqlgenerator.core.InsertOrUpdateGeneratorHsql]
+2019-10-06 00:03:42,179 Searching for implementations of liquibase.lockservice.LockService in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/change
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/command
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/changelog
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/database
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/parser
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/precondition
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/datatype
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/serializer
+2019-10-06 00:03:42,180 Searching for: is assignable to LockService in package: liquibase/sqlgenerator
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/executor
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/snapshot
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/logging
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/diff
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/structure
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/structurecompare
+2019-10-06 00:03:42,181 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/lockservice
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/sdk/database
+2019-10-06 00:03:42,181 Searching for: is assignable to LockService in package: liquibase/ext
+2019-10-06 00:03:42,181 No classes found in package: liquibase/ext
+2019-10-06 00:03:42,181 Found: [interface liquibase.lockservice.LockService, class liquibase.lockservice.LockServiceImpl, class liquibase.lockservice.StandardLockService, class liquibase.lockservice.OfflineLockService]
+2019-10-06 00:03:42,184 Searching for implementations of liquibase.snapshot.SnapshotGenerator in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/change
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/command
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/changelog
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/database
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/parser
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/precondition
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/datatype
+2019-10-06 00:03:42,184 Searching for: is assignable to SnapshotGenerator in package: liquibase/serializer
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/sqlgenerator
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/executor
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/snapshot
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/logging
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/diff
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/structure
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/structurecompare
+2019-10-06 00:03:42,185 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/lockservice
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/sdk/database
+2019-10-06 00:03:42,185 Searching for: is assignable to SnapshotGenerator in package: liquibase/ext
+2019-10-06 00:03:42,186 No classes found in package: liquibase/ext
+2019-10-06 00:03:42,186 Found: [class liquibase.snapshot.jvm.ColumnSnapshotGenerator, class liquibase.snapshot.jvm.UniqueConstraintSnapshotGenerator, interface liquibase.snapshot.SnapshotGenerator, class liquibase.snapshot.jvm.ColumnSnapshotGeneratorInformix, class liquibase.snapshot.jvm.SequenceSnapshotGenerator, class liquibase.snapshot.jvm.ForeignKeySnapshotGenerator, class liquibase.snapshot.jvm.CatalogSnapshotGenerator, class liquibase.snapshot.jvm.ColumnSnapshotGeneratorOracle, class liquibase.snapshot.jvm.ColumnSnapshotGeneratorPostgres, class liquibase.snapshot.jvm.ViewSnapshotGenerator, class liquibase.snapshot.jvm.IndexSnapshotGenerator, class liquibase.snapshot.jvm.JdbcSnapshotGenerator, class liquibase.snapshot.jvm.PrimaryKeySnapshotGenerator, class liquibase.snapshot.jvm.ColumnSnapshotGeneratorH2, class liquibase.snapshot.jvm.DataSnapshotGenerator, class liquibase.snapshot.jvm.SchemaSnapshotGenerator, class liquibase.snapshot.jvm.TableSnapshotGenerator]
+2019-10-06 00:03:42,207 Searching for implementations of liquibase.datatype.LiquibaseDataType in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/change
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/command
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/changelog
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/database
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/parser
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/precondition
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/datatype
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/serializer
+2019-10-06 00:03:42,208 Searching for: is assignable to LiquibaseDataType in package: liquibase/sqlgenerator
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/executor
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/snapshot
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/logging
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/diff
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/structure
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/structurecompare
+2019-10-06 00:03:42,209 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/lockservice
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/sdk/database
+2019-10-06 00:03:42,209 Searching for: is assignable to LiquibaseDataType in package: liquibase/ext
+2019-10-06 00:03:42,209 No classes found in package: liquibase/ext
+2019-10-06 00:03:42,209 Found: [class liquibase.datatype.core.UUIDType, class liquibase.datatype.core.ClobType, class liquibase.datatype.core.UnknownType, class liquibase.datatype.core.NCharType, class liquibase.datatype.core.DecimalType, class liquibase.datatype.core.NumberType, class liquibase.datatype.core.MediumIntType, class liquibase.datatype.core.DoubleType, class liquibase.datatype.core.XMLType, class liquibase.datatype.core.TimeType, class liquibase.datatype.core.DatabaseFunctionType, class liquibase.datatype.LiquibaseDataType, class liquibase.datatype.core.CurrencyType, class liquibase.datatype.core.BooleanType, class liquibase.datatype.core.DateType, class liquibase.datatype.core.BlobType, class liquibase.datatype.core.NVarcharType, class liquibase.datatype.core.SmallIntType, class liquibase.datatype.core.DateTimeType, class liquibase.datatype.core.VarcharType, class liquibase.datatype.core.IntType, class liquibase.datatype.core.BigIntType, class liquibase.datatype.core.FloatType, class liquibase.datatype.core.TimestampType, class liquibase.datatype.core.TinyIntType, class liquibase.datatype.core.CharType]
+2019-10-06 00:03:42,521 Searching for implementations of liquibase.parser.ChangeLogParser in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:42,521 Searching for: is assignable to ChangeLogParser in package: liquibase/change
+2019-10-06 00:03:42,521 Searching for: is assignable to ChangeLogParser in package: liquibase/command
+2019-10-06 00:03:42,521 Searching for: is assignable to ChangeLogParser in package: liquibase/changelog
+2019-10-06 00:03:42,521 Searching for: is assignable to ChangeLogParser in package: liquibase/database
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/parser
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/precondition
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/datatype
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/serializer
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/sqlgenerator
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/executor
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/snapshot
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/logging
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/diff
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/structure
+2019-10-06 00:03:42,522 Searching for: is assignable to ChangeLogParser in package: liquibase/structurecompare
+2019-10-06 00:03:42,522 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:42,523 Searching for: is assignable to ChangeLogParser in package: liquibase/lockservice
+2019-10-06 00:03:42,523 Searching for: is assignable to ChangeLogParser in package: liquibase/sdk/database
+2019-10-06 00:03:42,523 Searching for: is assignable to ChangeLogParser in package: liquibase/ext
+2019-10-06 00:03:42,523 No classes found in package: liquibase/ext
+2019-10-06 00:03:42,523 Found: [interface liquibase.parser.ChangeLogParser, class liquibase.parser.core.formattedsql.FormattedSqlChangeLogParser, class liquibase.parser.core.xml.XMLChangeLogSAXParser, class liquibase.parser.core.json.JsonChangeLogParser, class liquibase.parser.core.sql.SqlChangeLogParser, class liquibase.parser.core.yaml.YamlChangeLogParser, class liquibase.parser.core.xml.AbstractChangeLogParser]
+2019-10-06 00:03:42,547 Searching for implementations of liquibase.change.Change in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/change
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/command
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/changelog
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/database
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/parser
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/precondition
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/datatype
+2019-10-06 00:03:42,548 Searching for: is assignable to Change in package: liquibase/serializer
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/sqlgenerator
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/executor
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/snapshot
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/logging
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/diff
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/structure
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/structurecompare
+2019-10-06 00:03:42,549 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:42,549 Searching for: is assignable to Change in package: liquibase/lockservice
+2019-10-06 00:03:42,551 Searching for: is assignable to Change in package: liquibase/sdk/database
+2019-10-06 00:03:42,551 Searching for: is assignable to Change in package: liquibase/ext
+2019-10-06 00:03:42,551 No classes found in package: liquibase/ext
+2019-10-06 00:03:42,551 Found: [class liquibase.change.core.AddAutoIncrementChange, class liquibase.change.core.DropIndexChange, class liquibase.change.core.RenameSequenceChange, class liquibase.change.core.AddColumnChange, class liquibase.change.core.ExecuteShellCommandChange, class liquibase.change.core.DropViewChange, class liquibase.change.core.SetColumnRemarksChange, class liquibase.change.core.RenameTableChange, class liquibase.change.core.MergeColumnChange, class liquibase.change.core.UpdateDataChange, class liquibase.change.core.EmptyChange, class liquibase.change.core.DropNotNullConstraintChange, class liquibase.change.core.RenameColumnChange, class liquibase.change.AbstractChange, class liquibase.change.core.CreateIndexChange, class liquibase.change.core.DropSequenceChange, class liquibase.change.core.AddPrimaryKeyChange, class liquibase.change.core.AddUniqueConstraintChange, class liquibase.change.core.SQLFileChange, class liquibase.change.custom.CustomChangeWrapper, class liquibase.change.core.AddLookupTableChange, class liquibase.change.core.StopChange, class liquibase.change.core.AlterSequenceChange, class liquibase.change.AbstractSQLChange, class liquibase.change.core.LoadDataChange, class liquibase.change.core.CreateTableChange, class liquibase.change.core.AbstractModifyDataChange, class liquibase.change.core.RawSQLChange, class liquibase.change.core.DropColumnChange, class liquibase.change.core.CreateProcedureChange, class liquibase.change.core.InsertDataChange, class liquibase.change.core.TagDatabaseChange, class liquibase.change.core.AddForeignKeyConstraintChange, class liquibase.change.core.DropUniqueConstraintChange, class liquibase.change.core.AddDefaultValueChange, class liquibase.change.core.DropDefaultValueChange, class liquibase.change.core.ModifyDataTypeChange, class liquibase.change.core.AddNotNullConstraintChange, class liquibase.change.core.SetTableRemarksChange, class liquibase.change.core.OutputChange, interface liquibase.change.Change, class liquibase.change.core.LoadUpdateDataChange, class liquibase.change.core.DropProcedureChange, class liquibase.change.core.DropTableChange, class liquibase.change.core.DropForeignKeyConstraintChange, class liquibase.change.core.CreateSequenceChange, class liquibase.change.core.CreateViewChange, class liquibase.change.core.DropAllForeignKeyConstraintsChange, class liquibase.change.core.DropPrimaryKeyChange, class liquibase.change.core.RenameViewChange, class liquibase.change.core.DeleteDataChange]
+2019-10-06 00:03:44,285 Searching for implementations of liquibase.precondition.Precondition in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:44,285 Searching for: is assignable to Precondition in package: liquibase/change
+2019-10-06 00:03:44,285 Searching for: is assignable to Precondition in package: liquibase/command
+2019-10-06 00:03:44,285 Searching for: is assignable to Precondition in package: liquibase/changelog
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/database
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/parser
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/precondition
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/datatype
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/serializer
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/sqlgenerator
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/executor
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/snapshot
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/logging
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/diff
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/structure
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/structurecompare
+2019-10-06 00:03:44,286 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/lockservice
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/sdk/database
+2019-10-06 00:03:44,286 Searching for: is assignable to Precondition in package: liquibase/ext
+2019-10-06 00:03:44,286 No classes found in package: liquibase/ext
+2019-10-06 00:03:44,286 Found: [class liquibase.precondition.CustomPreconditionWrapper, class liquibase.precondition.core.OrPrecondition, class liquibase.precondition.core.TableExistsPrecondition, class liquibase.precondition.PreconditionLogic, class liquibase.precondition.core.DBMSPrecondition, class liquibase.precondition.core.ColumnExistsPrecondition, interface liquibase.precondition.Precondition, class liquibase.precondition.core.TableIsEmptyPrecondition, class liquibase.precondition.core.ChangeSetExecutedPrecondition, class liquibase.precondition.AbstractPrecondition, class liquibase.precondition.core.SequenceExistsPrecondition, class liquibase.precondition.core.NotPrecondition, class liquibase.precondition.core.RowCountPrecondition, class liquibase.precondition.core.SqlPrecondition, class liquibase.precondition.core.IndexExistsPrecondition, class liquibase.precondition.core.PreconditionContainer, class liquibase.precondition.core.ViewExistsPrecondition, class liquibase.precondition.core.ObjectQuotingStrategyPrecondition, class liquibase.precondition.core.ChangeLogPropertyDefinedPrecondition, class liquibase.precondition.core.PrimaryKeyExistsPrecondition, class liquibase.precondition.core.ForeignKeyExistsPrecondition, class liquibase.precondition.core.AndPrecondition, class liquibase.precondition.core.RunningAsPrecondition]
+2019-10-06 00:03:44,297 Searching for implementations of liquibase.parser.NamespaceDetails in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/change
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/command
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/changelog
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/database
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/parser
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/precondition
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/datatype
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/serializer
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/sqlgenerator
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/executor
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/snapshot
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/logging
+2019-10-06 00:03:44,297 Searching for: is assignable to NamespaceDetails in package: liquibase/diff
+2019-10-06 00:03:44,299 Searching for: is assignable to NamespaceDetails in package: liquibase/structure
+2019-10-06 00:03:44,299 Searching for: is assignable to NamespaceDetails in package: liquibase/structurecompare
+2019-10-06 00:03:44,299 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:44,300 Searching for: is assignable to NamespaceDetails in package: liquibase/lockservice
+2019-10-06 00:03:44,300 Searching for: is assignable to NamespaceDetails in package: liquibase/sdk/database
+2019-10-06 00:03:44,300 Searching for: is assignable to NamespaceDetails in package: liquibase/ext
+2019-10-06 00:03:44,300 No classes found in package: liquibase/ext
+2019-10-06 00:03:44,300 Found: [class liquibase.parser.core.xml.StandardNamespaceDetails, interface liquibase.parser.NamespaceDetails]
+2019-10-06 00:03:44,437 Searching for implementations of liquibase.changelog.ChangeLogHistoryService in packages: [liquibase.change, liquibase.command, liquibase.changelog, liquibase.database, liquibase.parser, liquibase.precondition, liquibase.datatype, liquibase.serializer, liquibase.sqlgenerator, liquibase.executor, liquibase.snapshot, liquibase.logging, liquibase.diff, liquibase.structure, liquibase.structurecompare, liquibase.lockservice, liquibase.sdk.database, liquibase.ext]
+2019-10-06 00:03:44,437 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/change
+2019-10-06 00:03:44,438 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/command
+2019-10-06 00:03:44,438 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/changelog
+2019-10-06 00:03:44,438 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/database
+2019-10-06 00:03:44,438 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/parser
+2019-10-06 00:03:44,438 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/precondition
+2019-10-06 00:03:44,438 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/datatype
+2019-10-06 00:03:44,441 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/serializer
+2019-10-06 00:03:44,441 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/sqlgenerator
+2019-10-06 00:03:44,441 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/executor
+2019-10-06 00:03:44,441 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/snapshot
+2019-10-06 00:03:44,441 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/logging
+2019-10-06 00:03:44,441 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/diff
+2019-10-06 00:03:44,442 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/structure
+2019-10-06 00:03:44,442 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/structurecompare
+2019-10-06 00:03:44,442 No classes found in package: liquibase/structurecompare
+2019-10-06 00:03:44,442 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/lockservice
+2019-10-06 00:03:44,442 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/sdk/database
+2019-10-06 00:03:44,442 Searching for: is assignable to ChangeLogHistoryService in package: liquibase/ext
+2019-10-06 00:03:44,442 No classes found in package: liquibase/ext
+2019-10-06 00:03:44,443 Found: [class liquibase.changelog.OfflineChangeLogHistoryService, class liquibase.changelog.AbstractChangeLogHistoryService, class liquibase.changelog.StandardChangeLogHistoryService, interface liquibase.changelog.ChangeLogHistoryService]
+2019-10-06 00:03:45,234 Creating shared instance of singleton bean 'entityManagerFactory'
+2019-10-06 00:03:45,234 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration'
+2019-10-06 00:03:45,235 Cannot find '.class' file for class [class org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$2614d2ca] - unable to determine constructor/method parameter names
+2019-10-06 00:03:45,239 Creating shared instance of singleton bean 'spring.jpa-org.springframework.boot.autoconfigure.orm.jpa.JpaProperties'
+2019-10-06 00:03:45,247 Creating shared instance of singleton bean 'spring.jpa.hibernate-org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties'
+2019-10-06 00:03:45,253 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration' via constructor to bean named 'dataSource'
+2019-10-06 00:03:45,253 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration' via constructor to bean named 'spring.jpa-org.springframework.boot.autoconfigure.orm.jpa.JpaProperties'
+2019-10-06 00:03:45,253 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration' via constructor to bean named 'org.springframework.beans.factory.support.DefaultListableBeanFactory@2c767a52'
+2019-10-06 00:03:45,253 Autowiring by type from bean name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration' via constructor to bean named 'spring.jpa.hibernate-org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties'
+2019-10-06 00:03:45,256 Creating shared instance of singleton bean 'platformTransactionManagerCustomizers'
+2019-10-06 00:03:45,259 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration'
+2019-10-06 00:03:45,275 Creating shared instance of singleton bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties'
+2019-10-06 00:03:45,285 Creating shared instance of singleton bean 'hikariPoolDataSourceMetadataProvider'
+2019-10-06 00:03:45,285 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration'
+2019-10-06 00:03:45,325 Creating shared instance of singleton bean 'entityManagerFactoryBuilder'
+2019-10-06 00:03:45,328 Creating shared instance of singleton bean 'jpaVendorAdapter'
+2019-10-06 00:03:45,401 Fetching JDBC Connection from DataSource
+2019-10-06 00:03:45,413 Unable to determine jdbc url from datasource
+org.springframework.jdbc.support.MetaDataAccessException: Error while extracting DatabaseMetaData; nested exception is java.sql.SQLNonTransientConnectionException: No current connection.
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:331)
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356)
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:73)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:142)
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:112)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$2614d2ca.CGLIB$jpaVendorAdapter$5(<generated>)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$2614d2ca$$FastClassBySpringCGLIB$$4792d2c2.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:363)
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$2614d2ca.jpaVendorAdapter(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:622)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:456)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1321)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1160)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:277)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1171)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:857)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:760)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1321)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1160)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:277)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1171)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:857)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:760)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1321)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1160)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1105)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202)
+	at com.epam.vitlab.blank.Application.main(Application.java:84)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:47)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:86)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: java.sql.SQLNonTransientConnectionException: No current connection.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.noCurrentConnection(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.checkIfClosed(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.getMetaData(Unknown Source)
+	at com.zaxxer.hikari.pool.ProxyConnection.getMetaData(ProxyConnection.java:354)
+	at com.zaxxer.hikari.pool.HikariProxyConnection.getMetaData(HikariProxyConnection.java)
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:320)
+	... 70 common frames omitted
+Caused by: org.apache.derby.iapi.error.StandardException: No current connection.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 80 common frames omitted
+2019-10-06 00:03:45,420 Autowiring by type from bean name 'entityManagerFactoryBuilder' via factory method to bean named 'jpaVendorAdapter'
+2019-10-06 00:03:45,430 Autowiring by type from bean name 'entityManagerFactory' via factory method to bean named 'entityManagerFactoryBuilder'
+2019-10-06 00:03:45,446 Fetching JDBC Connection from DataSource
+2019-10-06 00:03:45,480 Creating shared instance of singleton bean 'liquibaseDefaultDdlModeProvider'
+2019-10-06 00:03:45,480 Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration'
+2019-10-06 00:03:45,542 Building JPA container EntityManagerFactory for persistence unit 'default'
