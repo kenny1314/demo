@@ -20,13 +20,13 @@
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Full Name</th>
-        <th>Balance</th>
+        <th>Name</th>
+        <th>Possport Number</th>
     </tr>
-    <tr th:each="accountInfo : ${accountInfos}">
+    <tr th:each="accountInfo : ${listStudent}">
         <td th:utext="${accountInfo.id}">..</td>
-        <td th:utext="${accountInfo.fullName}">..</td>
-        <td th:utext="${accountInfo.balance}">..</td>
+        <td th:utext="${accountInfo.name}">..</td>
+        <td th:utext="${accountInfo.passportNumber}">..</td>
     </tr>
 
 </table>

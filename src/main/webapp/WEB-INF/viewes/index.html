@@ -122,16 +122,17 @@
 
 						<br>
 
-
-						<div class="container " style="padding-left: 0px;" th:each="i : ${#numbers.sequence( 1, 10)}">
+<!--						<tr th:each="accountInfo : ${listStudent}">-->
+<!--						<div class="container " style="padding-left: 0px;" th:each="i : ${#numbers.sequence( 1, 10)}">-->
+						<div class="container " style="padding-left: 0px;" th:each="info : ${listGame}">
 							<div class="row ">
 								<div class="col-md-4 ">
 									<div class="card " style="width: 18rem; margin-bottom: 20px;"
 										id="card1id">
 										<img src="img/card1.jpg " class="card-img-top " alt="... ">
 										<div class="card-body ">
-											<h5 class="card-title " th:text="${ i }">Battletoads</h5>
-											<p class="card-text ">Игры серии выполнены в жанре «избей
+											<h5 class="card-title " th:text="${ info.name }">Battletoads</h5>
+											<p class="card-text " th:text="${info.description}">Игры серии выполнены в жанре «избей
 												их всех». Сюжеты игр развиваются вокруг противостояния
 												боевых жаб и Тёмной Королевы, главного отрицательного героя
 												игр серии.</p>
