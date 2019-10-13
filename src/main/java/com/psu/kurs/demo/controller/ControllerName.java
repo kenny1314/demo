@@ -25,6 +25,8 @@ public class ControllerName {
 
     @GetMapping("/")
     public String index(Model model) {
+        logger.info("hello igorok");
+        logger.info("hello igorok");
         return "index";
     }
 
@@ -57,8 +59,6 @@ public class ControllerName {
                     sendMoneyForm.getToAccountId(),
                     sendMoneyForm.getAmount());
         } catch (BankTransactionException e) {
-
-
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
             return "/sendMoneyPage";
         }

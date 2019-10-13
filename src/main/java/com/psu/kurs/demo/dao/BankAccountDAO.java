@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-//запросы к базе данных
+
 @Repository
 @Transactional
 public class BankAccountDAO {
