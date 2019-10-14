@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<h1>okfffаааааf</h1>
+<h1>igor</h1>
 
 <div class="bodycl">
     <div class="maincl">
@@ -122,41 +122,35 @@
 
                     <br>
 
-
                     <div class="container " style="padding-left: 0px;">
                         <th:block
                                 th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(listGame, 3)}">
                             <div class="row " th:each="partition: ${partitions}">
-                                <div class="col-md-4 " th:each="info : ${partition}">
-                                    <div class="card " style="width: 18rem; margin-bottom: 20px;" id="card1id">
-                                        <img src="img/card1.jpg " class="card-img-top " alt="... ">
-                                        <div class="card-body ">
+                                <div class="col-md-4" th:each="info : ${partition}">
+                                    <div class="card" style="width: 18rem; margin-bottom: 20px;" id="card1id">
+                                        <img src="img/card1.jpg " class="card-img-top">
+                                        <div class="card-body">
                                             <h5 class="card-title " th:text="${ info.name }">Battletoads</h5>
                                             <p class="card-text " th:text="${info.description}">Игры серии выполнены в
-                                                жанре
-                                                «избей
-                                                их всех». Сюжеты игр развиваются вокруг противостояния
-                                                боевых жаб и Тёмной Королевы, главного отрицательного героя
-                                                игр серии.</p>
+                                                жанре «избей их всех». Сюжеты игр развиваются вокруг противостояния
+                                                боевых жаб и Тёмной Королевы, главного отрицательного героя игр
+                                                серии.</p>
                                             <hr>
-                                            <div class="container ">
-                                                <div class="row ">
-                                                    <div class="col-md-5 "
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-5"
                                                          style="padding-top: 7px; padding-left: 40px;">100p
                                                     </div>
-
-                                                    <div class="col-md-7 ">
-                                                        <a href="# " class="btn btn-primary "
+                                                    <div class="col-md-7">
+                                                        <a href="# " class="btn btn-primary"
                                                            style="margin-left: 19px">В корзину</a>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
+                            </div> <!-- card -->
                         </th:block>
                     </div>
 

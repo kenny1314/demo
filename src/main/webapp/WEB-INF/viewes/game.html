@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Game</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="maincl">
+
+        <!-- Header -->
+        <div th:replace="headerth :: header"></div>
+
+        <!-- Navbar -->
+        <div th:replace="navbarth :: navbar"></div>
+
+
+        <div class="container-fluet" style="width: 1211px;">
+            <div class="row">
+                <!-- Menu -->
+                <div class="col-md-3" style="padding-right: 0px;">
+                    <div th:replace="menuth :: menu"></div>
+                </div>
+
+                <div class="col-md-9" style="padding-left: 0px;">
+                    <!-- Картинка + год, страна и т.д-->
+                    <div class="container" id="gamediscrip">
+                        <div class="row ">
+                            <div class="col-md-6 " id="infoimg">
+                                <img src="img/p1.jpg " id="imggame">
+                            </div>
+
+                            <div class="col-md-6 " id="infodiscrip ">
+                                <h3>Battletods</h3>
+                                <table border="0 " id="tabinfo ">
+                                    <tr>
+                                        <td id="col1tabinfo ">Язык:</td>
+                                        <td id="col2tabinfo ">Русский (Интерфейс)</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Регион:</td>
+                                        <td id="col2tabinfo ">Япония
+                                        <td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Возрастное огранчение:</td>
+                                        <td id="col2tabinfo ">18+</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Жанр:</td>
+                                        <td id="col2tabinfo ">Экшн</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Платформа:</td>
+                                        <td id="col2tabinfo ">Dendy</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Издатель:</td>
+                                        <td id="col2tabinfo ">Canami</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Разработчик:</td>
+                                        <td id="col2tabinfo ">Canami prod.</td>
+                                    </tr>
+                                </table>
+
+                                <div class="row">
+                                    <!-- добавить в корзину -->
+                                    <div class="container">
+                                        <div class="row" style="padding-top: 15px">
+                                            <div class="col-md-10">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-6"
+                                                             style="padding-top: 10px; text-align: right;">
+                                                            <h5>2022р/д</h5>
+                                                        </div>
+                                                        <div class="col-md-6" style="padding-left: 5px">
+                                                            <button type="button" class="btn btn-success" id="btncart">
+                                                                В корзину
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/добавить в корзину-->
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div> <!-- Картинка + год, страна и т.д-->
+
+                    <!-- Описание -->
+                    <div class="container" style="margin-top:10px ">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h4>Описание:</h4>
+                                <p>
+                                    Ну вот тут должно быть какое-то описание, вот такие вот дела. Игры серии выполнены в
+                                    жанре «избей их всех». Сюжеты игр развиваются вокруг противостояния боевых жаб и
+                                    Тёмной Королевы, главного отрицательного героя игр серии.
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div> <!-- /Описание -->
+
+
+                    <!-- блок почему именно мы?-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-9"
+                                 style=" border-radius: 10px; border: 1px solid #18bc9c; margin-left: 60px; margin-top: 30px; margin-bottom: 30px;">
+                                <div class="container">
+                                    <div class="row" style="padding-top: 10px;">
+                                        <div class="col-md-12">
+                                            <h4>Почему именно RetroIgori?</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-bottom: 15px;">
+                                        <div class="col-md-4">
+                                            <img src="img/money.png"> Цены ниже
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="img/ex.png"> Эксклюзивы
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="img/sale.png"> Скидки
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-bottom: 15px;">
+                                        <div class="col-md-4">
+                                            <img src="img/delivery.png"> Быстрая доставка
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="img/economy.png"> Нет комиссии
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="img/games.png"> Большой ассортимент
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div> <!-- почему именно мы конец -->
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div th:replace="footerth :: footer"></div>
+
+</div>
+
+<!-- Script bootstrap -->
+<div th:include="scriptth :: script"></div>
+</body>
+
+</html>
