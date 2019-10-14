@@ -1,10 +1,11 @@
 package com.psu.kurs.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "game")
 public class Game {
     @Id
     @GeneratedValue
@@ -12,14 +13,20 @@ public class Game {
     private String name;
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "age_limits_id")
+    private AgeLimits ageLimits;
+
+
     public Game() {
     }
 
-    public Game(Long id, String name, String description) {
+    public Game(Long id, String name, String description, AgeLimits age_limits) {
         super();
         this.id = id;
         this.name = name;
         this.description = description;
+        this.ageLimits = age_limits;
     }
 
     public Long getId() {
@@ -46,12 +53,21 @@ public class Game {
         this.description = description;
     }
 
+    public AgeLimits getAgeLimits() {
+        return ageLimits;
+    }
+
+    public void setAgeLimits(AgeLimits ageLimits) {
+        this.ageLimits = ageLimits;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", ageLimits=" + ageLimits +
                 '}';
     }
 }

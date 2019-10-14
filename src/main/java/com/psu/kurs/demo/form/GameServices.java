@@ -14,12 +14,10 @@ public class GameServices {
     GameRepository gameRepository;
 
     public List<Game> list(){
-//        studentRepository.save(new Student(100L,"Igor","passmy"));
-//        studentRepository.saveAndFlush();
         return gameRepository.findAll();
     }
 
     public void addGameDef(){
-        gameRepository.save(new Game(100L,"BattleT99","I'm form Germany"));
+//        gameRepository.save(new Game(100L,"BattleT99","I'm form Germany",0L));
     }
 }
