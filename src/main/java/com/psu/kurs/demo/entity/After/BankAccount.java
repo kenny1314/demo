@@ -1,16 +1,16 @@
-package com.psu.kurs.demo.entity;
+package com.psu.kurs.demo.entity.After;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bank_account", schema = "public", catalog = "")
+@Table(name = "bank_account", schema = "public", catalog = "students")
 public class BankAccount {
     private int id;
+    private Double balance;
     private String fullName;
-    private double balance;
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -20,23 +20,23 @@ public class BankAccount {
     }
 
     @Basic
-    @Column(name = "FULL_NAME")
+    @Column(name = "balance")
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    @Basic
+    @Column(name = "full_name")
     public String getFullName() {
         return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    @Basic
-    @Column(name = "BALANCE")
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class BankAccount {
         BankAccount that = (BankAccount) o;
 
         if (id != that.id) return false;
-        if (Double.compare(that.balance, balance) != 0) return false;
+        if (balance != null ? !balance.equals(that.balance) : that.balance != null) return false;
         if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null) return false;
 
         return true;
@@ -55,12 +55,9 @@ public class BankAccount {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id;
+        int result = id;
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
-        temp = Double.doubleToLongBits(balance);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 }

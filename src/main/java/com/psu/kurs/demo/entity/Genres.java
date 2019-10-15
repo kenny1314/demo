@@ -1,40 +1,37 @@
 package com.psu.kurs.demo.entity;
 
-import com.psu.kurs.demo.entity.After.Game;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "age_limits", schema = "cursovaya", catalog = "kurss")
-public class AgeLimits {
-    private Long id;
-    private int year;
+@Table(name = "genres", schema = "cursovaya", catalog = "kurss")
+public class Genres {
+    private int id;
+    private String name;
     private List<Products> productsList;
 
     @Id
     @Column(name = "id")
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "year")
-    public int getYear() {
-        return year;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "age_limits_id")
+    @JoinColumn(name = "genres_id")
     public List<Products> getProductsList() {
         return productsList;
     }

@@ -1,0 +1,3 @@
+INSERT INTO cursovaya.products (id, description, full_price, one_day_price, quantity, title, year_of_issue, age_limits_id, genres_id, languages_id) VALUES (1, 'My first discription', 20, 2, 20, 'Battletoas', 1980, 1, 1, 1);
+INSERT INTO cursovaya.products (id, description, full_price, one_day_price, quantity, title, year_of_issue, age_limits_id, genres_id, languages_id) VALUES (2, 'The best computer game 2015', 40, 4, 50, 'GTA 5', 2015, 2, 2, 2);
+INSERT INTO cursovaya.products (id, description, full_price, one_day_price, quantity, title, year_of_issue, age_limits_id, genres_id, languages_id) VALUES (3, 'My favorite game', 15, 1, 13, 'valiant hearts', 2016, 3, 3, 3);

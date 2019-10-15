@@ -1,9 +1,8 @@
 package com.psu.kurs.demo.controller;
 
-import com.psu.kurs.demo.entity.BankAccount;
-import com.psu.kurs.demo.entity.Game;
-import com.psu.kurs.demo.form.BankAccountServices;
-import com.psu.kurs.demo.form.GameServices;
+import com.psu.kurs.demo.dao.RoRepository;
+import com.psu.kurs.demo.dao.UsersRepository;
+import com.psu.kurs.demo.entity.After.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +18,41 @@ public class ControllerName {
     private static Logger logger = LoggerFactory.getLogger(ControllerName.class);
 
 
-    @Autowired
-    GameServices gameServices;
+//    @Autowired
+//    GameServices gameServices;
+
 
     @Autowired
-    BankAccountServices bankAccountServices;
+    UsersRepository usersRepository;
+
+    @Autowired
+    RoRepository roRepository;
+
+
+//    @Autowired
+//    ClientsRepository clientsRepository;
+
 
     @GetMapping("/")
     public String index(Model model) {
 
-//        gameServices.addGameDef();
 
-        List<Game> listGame = gameServices.list();
-        logger.info("list game: " + listGame.size());
+//        List<Users> usersList = usersRepository.findAll();
+//
+//        logger.info("sizeListUsers: "+usersList.size());
+//
+//        Users user=usersList.get(0);
+//
+//        logger.info(user.toString());
 
-        List<BankAccount> bankAccountList = bankAccountServices.list();
-        logger.info("list game: " + listGame.size());
+
+//        List<Game> listGame = gameServices.list();
+//        logger.info("list game: " + listGame.size());
 
 
+//        model.addAttribute("listGame", listGame);
 
-        model.addAttribute("listGame", listGame);
-
-        return "index";
+        return "page2";
     }
 
     @GetMapping("/game")

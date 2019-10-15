@@ -1,11 +1,13 @@
-package com.psu.kurs.demo.entity;
+package com.psu.kurs.demo.entity.After;
+
+import com.psu.kurs.demo.entity.AgeLimits;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "game")
+@Table(name = "game", schema = "cursovaya", catalog = "kurss")
 public class Game {
     @Id
     @GeneratedValue
