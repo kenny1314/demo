@@ -1,6 +1,8 @@
 package com.psu.kurs.demo.controller;
 
+import com.psu.kurs.demo.entity.BankAccount;
 import com.psu.kurs.demo.entity.Game;
+import com.psu.kurs.demo.form.BankAccountServices;
 import com.psu.kurs.demo.form.GameServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,9 @@ public class ControllerName {
     @Autowired
     GameServices gameServices;
 
+    @Autowired
+    BankAccountServices bankAccountServices;
+
     @GetMapping("/")
     public String index(Model model) {
 
@@ -27,6 +32,10 @@ public class ControllerName {
 
         List<Game> listGame = gameServices.list();
         logger.info("list game: " + listGame.size());
+
+        List<BankAccount> bankAccountList = bankAccountServices.list();
+        logger.info("list game: " + listGame.size());
+
 
 
         model.addAttribute("listGame", listGame);
