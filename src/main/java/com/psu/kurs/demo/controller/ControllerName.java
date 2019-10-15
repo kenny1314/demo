@@ -1,8 +1,10 @@
 package com.psu.kurs.demo.controller;
 
+import com.psu.kurs.demo.dao.ProductsRepository;
 import com.psu.kurs.demo.dao.RoRepository;
 import com.psu.kurs.demo.dao.UsersRepository;
 import com.psu.kurs.demo.entity.After.Users;
+import com.psu.kurs.demo.entity.Products;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,24 @@ public class ControllerName {
     RoRepository roRepository;
 
 
-//    @Autowired
-//    ClientsRepository clientsRepository;
+    @Autowired
+    ProductsRepository productsRepository;
 
 
     @GetMapping("/")
     public String index(Model model) {
 
+
+        List<Products> productsList;
+
+        try {
+            productsList = productsRepository.findAll();
+            logger.info("sizeListProducts:" + productsList.size());
+            logger.info("product #1: " + productsList.get(1).toString());
+            logger.info("WTF");
+        } catch (Exception ex) {
+
+        }
 
 //        List<Users> usersList = usersRepository.findAll();
 //

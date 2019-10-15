@@ -18,6 +18,8 @@ public class Products {
     private AgeLimits ageLimits;
     private Genres genres;
     private Languages languages;
+    private Platforms platforms;
+    private Publishers publishers;
 
     @Id
     @Column(name = "id")
@@ -119,4 +121,45 @@ public class Products {
     public void setLanguages(Languages languages) {
         this.languages = languages;
     }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "platforms_id")
+    public Platforms getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(Platforms platforms) {
+        this.platforms = platforms;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publishers_id")
+    public Publishers getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(Publishers publishers) {
+        this.publishers = publishers;
+    }
+
+    @Override
+    public String toString() {
+        return "Products{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", YearOfIssue=" + YearOfIssue +
+                ", oneDayPrice=" + oneDayPrice +
+                ", fullPrice=" + fullPrice +
+                ", quantity=" + quantity +
+                ", ageLimits=" + ageLimits.getYear() +
+                ", genres=" + genres.getName() +
+                ", languages=" + languages.getName() +
+                ", platforms=" + platforms.getName() +
+                ", publishers=" + publishers.getName() +
+                '}';
+    }
+
+
 }
