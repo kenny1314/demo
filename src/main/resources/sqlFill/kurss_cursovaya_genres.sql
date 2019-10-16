@@ -1,3 +1,3 @@
-INSERT INTO cursovaya.genres (id, name) VALUES (1, 'arcade');
-INSERT INTO cursovaya.genres (id, name) VALUES (2, 'fighing');
-INSERT INTO cursovaya.genres (id, name) VALUES (3, 'simulator');
+INSERT INTO cursovaya.genres (id, name) VALUES (3, 'Simulator');
+INSERT INTO cursovaya.genres (id, name) VALUES (2, 'Fighing');
+INSERT INTO cursovaya.genres (id, name) VALUES (1, 'Arcade');

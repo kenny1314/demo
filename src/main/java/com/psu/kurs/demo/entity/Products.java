@@ -7,10 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products", schema = "cursovaya", catalog = "kurss")
 public class Products {
-    private int id;
+    private Long id;
     private String title;
     private String description;
-    private int YearOfIssue;
+    private int yearOfIssue;
     private Double oneDayPrice;
     private Double fullPrice;
     private Integer quantity;
@@ -23,11 +23,11 @@ public class Products {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,11 +54,11 @@ public class Products {
     @Basic
     @Column(name = "year_of_issue")
     public int getYearOfIssue() {
-        return YearOfIssue;
+        return yearOfIssue;
     }
 
-    public void setYearOfIssue(int YearOfIssue) {
-        this.YearOfIssue = YearOfIssue;
+    public void setYearOfIssue(int yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
     }
 
     @Basic
@@ -149,7 +149,7 @@ public class Products {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", YearOfIssue=" + YearOfIssue +
+                ", yearOfIssue=" + yearOfIssue +
                 ", oneDayPrice=" + oneDayPrice +
                 ", fullPrice=" + fullPrice +
                 ", quantity=" + quantity +

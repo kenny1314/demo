@@ -60,7 +60,7 @@
                     <!-- Container with card -->
                     <div class="container" style="padding-left: 0px;">
                         <th:block
-                                th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(listGame, 3)}">
+                                th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(productsListd, 3)}">
                             <div class="row " th:each="partition: ${partitions}">
                                 <div class="col-md-4" th:each="info : ${partition}">
                                     <div class="card" style="width: 18rem; margin-bottom: 20px;" id="card1id">

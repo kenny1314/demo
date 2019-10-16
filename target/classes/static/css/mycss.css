@@ -86,9 +86,9 @@ footer {
     border-bottom-left-radius: 0px;
 }
 
-a.list-group-item.list-group-item-action {
-    border-left-width: 0px;
-}
+/*a.list-group-item.list-group-item-action {*/
+/*    border-left-width: 0px;*/
+/*}*/
 
 #card1id {
     /* margin-left: 130px; */
@@ -134,4 +134,23 @@ a.list-group-item.list-group-item-action {
     width: 116px;
     height: 44px;
     /* background-color: #18bc9c; */
+}
+
+.fa-1x {
+    font-size: 1.5rem;
+}
+.navbar-toggler.toggler-example {
+    cursor: pointer;
+}
+.dark-blue-text {
+    color: #0A38F5;
+}
+.dark-pink-text {
+    color: #AC003A;
+}
+.dark-amber-text {
+    color: #ff6f00;
+}
+.dark-teal-text {
+    color: #004d40;
 }

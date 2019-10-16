@@ -15,17 +15,20 @@
     <div class="maincl">
 
         <!-- Header -->
-        <div th:replace="headerth :: header"></div>
+        <div th:replace="fragments/headerth :: header"></div>
 
         <!-- Navbar -->
-        <div th:replace="navbarth :: navbar"></div>
+        <div th:replace="fragments/navbarth :: navbar"></div>
 
 
         <div class="container-fluet" style="width: 1211px;">
             <div class="row">
                 <!-- Menu -->
                 <div class="col-md-3" style="padding-right: 0px;">
-                    <div th:replace="menuth :: menu"></div>
+                    <div th:replace="fragments/menuth :: menu"></div>
+
+
+
                 </div>
 
                 <div class="col-md-9" style="padding-left: 0px;">
@@ -33,41 +36,54 @@
                     <div class="container" id="gamediscrip">
                         <div class="row ">
                             <div class="col-md-6 " id="infoimg">
-                                <img src="img/p1.jpg " id="imggame">
+                                <img src="/img/p1.jpg " id="imggame">
                             </div>
 
                             <div class="col-md-6 " id="infodiscrip ">
-                                <h3>Battletods</h3>
+                                <h3 th:text="${product.title}">Battletods</h3>
                                 <table border="0 " id="tabinfo ">
                                     <tr>
                                         <td id="col1tabinfo ">Язык:</td>
-                                        <td id="col2tabinfo ">Русский (Интерфейс)</td>
-                                    </tr>
-                                    <tr>
-                                        <td id="col1tabinfo ">Регион:</td>
-                                        <td id="col2tabinfo ">Япония
-                                        <td>
-                                    </tr>
-                                    <tr>
-                                        <td id="col1tabinfo ">Возрастное огранчение:</td>
-                                        <td id="col2tabinfo ">18+</td>
-                                    </tr>
-                                    <tr>
-                                        <td id="col1tabinfo ">Жанр:</td>
-                                        <td id="col2tabinfo ">Экшн</td>
+                                        <td id="col2tabinfo" th:text="${product.languages.name}">Русский (Интерфейс)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td id="col1tabinfo ">Платформа:</td>
-                                        <td id="col2tabinfo ">Dendy</td>
+                                        <td id="col2tabinfo " th:text="${product.platforms.name}">Dendy</td>
                                     </tr>
+
+                                    <tr>
+                                        <td id="col1tabinfo ">Год выхода:</td>
+                                        <td id="col2tabinfo " th:text="${product.yearOfIssue}">8888</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Возрастное огранчение:</td>
+                                        <td id="col2tabinfo " th:text="${product.ageLimits.year} + ' +'">18+</td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td id="col1tabinfo ">Жанр:</td>
+                                        <td id="col2tabinfo " th:text="${product.genres.name}">Экшн</td>
+                                    </tr>
+
                                     <tr>
                                         <td id="col1tabinfo ">Издатель:</td>
-                                        <td id="col2tabinfo ">Canami</td>
+                                        <td id="col2tabinfo " th:text="${product.publishers.name}">Canami</td>
                                     </tr>
                                     <tr>
-                                        <td id="col1tabinfo ">Разработчик:</td>
-                                        <td id="col2tabinfo ">Canami prod.</td>
+                                        <td id="col1tabinfo ">Количество:</td>
+                                        <td id="col2tabinfo " th:text="${product.quantity}">-1</td>
                                     </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Цена за день:</td>
+                                        <td id="col2tabinfo " th:text="${product.oneDayPrice}+' $'">-1</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo ">Полная цена:</td>
+                                        <td id="col2tabinfo " th:text="${product.fullPrice} +' $'">-1</td>
+                                    </tr>
+
                                 </table>
 
                                 <div class="row">
@@ -105,7 +121,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
                                 <h4>Описание:</h4>
-                                <p>
+                                <p th:text="${product.description}">
                                     Ну вот тут должно быть какое-то описание, вот такие вот дела. Игры серии выполнены в
                                     жанре «избей их всех». Сюжеты игр развиваются вокруг противостояния боевых жаб и
                                     Тёмной Королевы, главного отрицательного героя игр серии.
@@ -131,24 +147,24 @@
                                     </div>
                                     <div class="row" style="padding-bottom: 15px;">
                                         <div class="col-md-4">
-                                            <img src="img/money.png"> Цены ниже
+                                            <img src="/img/money.png"> Цены ниже
                                         </div>
                                         <div class="col-md-4">
-                                            <img src="img/ex.png"> Эксклюзивы
+                                            <img src="/img/ex.png"> Эксклюзивы
                                         </div>
                                         <div class="col-md-4">
-                                            <img src="img/sale.png"> Скидки
+                                            <img src="/img/sale.png"> Скидки
                                         </div>
                                     </div>
                                     <div class="row" style="padding-bottom: 15px;">
                                         <div class="col-md-4">
-                                            <img src="img/delivery.png"> Быстрая доставка
+                                            <img src="/img/delivery.png"> Быстрая доставка
                                         </div>
                                         <div class="col-md-4">
-                                            <img src="img/economy.png"> Нет комиссии
+                                            <img src="/img/economy.png"> Нет комиссии
                                         </div>
                                         <div class="col-md-4">
-                                            <img src="img/games.png"> Большой ассортимент
+                                            <img src="/img/games.png"> Большой ассортимент
                                         </div>
                                     </div>
                                 </div>
@@ -161,12 +177,12 @@
         </div>
     </div> <!-- /MainCl -->
 
-    <div th:replace="footerth :: footer"></div>
+    <div th:replace="fragments/footerth :: footer"></div>
 
 </div>
 
 <!-- Script bootstrap -->
-<div th:include="scriptth :: script"></div>
+<div th:include="fragments/scriptth :: script"></div>
 </body>
 
 </html>
