@@ -23,7 +23,7 @@
 
 
 <nav class="navbar navbar-light white mb-4" id="navwh" th:fragment="menu">
-    <a class="navbar-brand" href="#">Console</a>
+    <a class="navbar-brand" style="padding-left: 18px;" href="#">Console</a>
     <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"
             aria-label="Toggle navigation" style="
@@ -31,15 +31,16 @@
     border-right-width: 0px;
     border-bottom-width: 0px;
     border-left-width: 0px;
-    width: 54px;
-    height: 38px;
+    width: 40px;
+    height: 35px;
     padding-left: 0px;
     padding-top: 0px;
-    padding-bottom: 0px;
+    padding-bottom: 2px;
     padding-right: 0px;
+    margin-bottom: 2px;
 ">
-        <img src="../img/hum.png" style="width: 54px;
-    height: 38px;"></button>
+        <img src="../img/hum1.png" style="width: 30px;
+    height: 30px;"></button>
     <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
         <ul class="navbar-nav mr-auto" th:each="platfom: ${platforms}">
             <li><a href="#" class="list-group-item list-group-item-action" th:text="${platfom.name}">Sega Master

@@ -41,6 +41,11 @@ public class ControllerName {
     PlatformsRepository platformsRepository;
 
 
+    @GetMapping("/dialogs")
+    public String dialog(Model model){
+        return "dialogs";
+    }
+
     @GetMapping("/page")
     public String page(Model model) {
 
@@ -63,32 +68,23 @@ public class ControllerName {
     public String index(Model model) {
 
 
+        List<Platforms> platformsList;
         List<Products> productsList;
 
         try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
             productsList = productsRepository.findAll();
             model.addAttribute("productsList", productsList);
             logger.info("sizeListProducts:" + productsList.size());
-            logger.info("product #1: " + productsList.get(1).toString());
-            logger.info("WTF");
+//            logger.info("product #1: " + productsList.get(1).toString());
+            logger.info("index");
         } catch (Exception ex) {
 
         }
 
-//        List<Users> usersList = usersRepository.findAll();
-//
-//        logger.info("sizeListUsers: "+usersList.size());
-//
-//        Users user=usersList.get(0);
-//
-//        logger.info(user.toString());
-
-
-//        List<Game> listGame = gameServices.list();
-//        logger.info("list game: " + listGame.size());
-
-
-//        model.addAttribute("listGame", listGame);
 
         return "index";
     }
@@ -101,7 +97,7 @@ public class ControllerName {
     @GetMapping("/game/{id}")
     public String game(@PathVariable String id, Model model) {
         logger.info("gameID");
-        logger.info("game id: "+id);
+        logger.info("game id: " + id);
 
         Products product;
         List<Products> productsList;
@@ -110,10 +106,10 @@ public class ControllerName {
         try {
             product = productsRepository.findById(Long.parseLong(id)).get();
             model.addAttribute("product", product);
-            logger.info("product #"+id+": "+ product.toString());
+            logger.info("product #" + id + ": " + product.toString());
 
-            platformsList=platformsRepository.findAll();
-            model.addAttribute("platforms",platformsList);
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
 
 
         } catch (Exception ex) {
