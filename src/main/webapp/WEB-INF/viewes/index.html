@@ -18,86 +18,23 @@
 </head>
 
 <body>
-<h1>igor</h1>
-
 <div class="bodycl">
     <div class="maincl">
 
-        <div class="container-fluet"
-             style="margin-left: 20px; margin-right: 20px;">
-            <div class=" row ">
-                <div class="col-md-4">
-                    <img id="logo" src="img/logo2.png ">
-                </div>
-                <div class="col-md-6">
-                    <form class="form-inline my-2 my-lg-0 searchcl ">
-                        <input class="form-control mr-sm-2 inputclsearch" id="srch1"
-                               type="text " placeholder="Search ">
-                        <button class="btn btn-secondary my-2 my-sm-0 " type="submit ">Search</button>
-                    </form>
-                </div>
-                <div class="col-md-2" id="contid">
-                    тел. 375298265750<br> тел. 375296666666
-                </div>
-            </div>
-        </div>
+        <!-- Header -->
+        <div th:replace="fragments/headerth :: header"></div>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <img src="img/3ch.png" id="imgl"> <a class="navbar-brand "
-                                                 href="# " id="gameofconsole">Игры по приставкам</a> <a
-                class="navbar-brand " href="# ">Главная</a>
-            <button class="navbar-toggler " type="button "
-                    data-toggle="collapse " data-target="#navbarColor01 "
-                    aria-controls="navbarColor01 " aria-expanded="false "
-                    aria-label="Toggle navigation ">
-                <span class="navbar-toggler-icon "></span>
-            </button>
-
-            <div class="collapse navbar-collapse " id="navbarColor01 ">
-                <ul class="navbar-nav mr-auto ">
-                    <li class="nav-item "><a class="nav-link " href="# ">Категории</a>
-                    </li>
-                    <li class="nav-item "><a class="nav-link " href="# ">Приставки</a>
-                    </li>
-                    <li class="nav-item "><a class="nav-link " href="# ">Оплата
-                        и доставка</a></li>
-                    <li class="nav-item "><a class="nav-link " href="# ">О
-                        нас</a></li>
-                    <li class="nav-item "><a class="nav-link " href="# ">Контакты</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <!-- Havbar -->
+        <div th:replace="fragments/navbarth :: navbar"></div>
 
         <div class="container-fluet">
-            <div class=" row ">
+            <div class="row">
+                <!-- Menu -->
                 <div class="col-md-3">
-                    <div class="list-group" id="listcat">
-                        <a href="#" class="list-group-item list-group-item-action"
-                           id="firstellistpr">Dendy</a> <a href="#"
-                                                           class="list-group-item list-group-item-action">Sega Master
-                        System</a> <a href="#"
-                                      class="list-group-item list-group-item-action">SNES</a> <a
-                            href="#" class="list-group-item list-group-item-action">Game
-                        Boy</a> <a href="#" class="list-group-item list-group-item-action">Atari
-                        Lynx</a> <a href="#" class="list-group-item list-group-item-action">Sega
-                        Game Gear</a> <a href="#"
-                                         class="list-group-item list-group-item-action">Atari Jaguar</a>
-                        <a href="#" class="list-group-item list-group-item-action">Game
-                            Boy</a> <a href="#" class="list-group-item list-group-item-action">Atari
-                        Lynx</a> <a href="#" class="list-group-item list-group-item-action">Sega
-                        Game Gear</a> <a href="#"
-                                         class="list-group-item list-group-item-action">Atari Jaguar</a>
-                        <a href="#" class="list-group-item list-group-item-action">Game
-                            Boy</a> <a href="#" class="list-group-item list-group-item-action">Atari
-                        Lynx</a> <a href="#" class="list-group-item list-group-item-action">Sega
-                        Game Gear</a> <a href="#"
-                                         class="list-group-item list-group-item-action">Atari Jaguar</a>
-                        <a href="#" class="list-group-item list-group-item-action"
-                           id="lastellistpr">Sega Saturn</a>
-                    </div>
+                    <div th:replace="fragments/menuth :: menu"></div>
                 </div>
                 <div class="col-md-9" style="padding-left: 0px;">
+                    <!-- Carousel -->
                     <div id="carouselExampleInterval" class="carousel slide"
                          data-ride="carousel">
                         <div class="carousel-inner">
@@ -107,7 +44,6 @@
                             <div class="carousel-item" data-interval="2000">
                                 <img src="img/2k.jpg" class="d-block w-100" alt="...">
                             </div>
-
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleInterval"
                            role="button" data-slide="prev"> <span
@@ -118,11 +54,11 @@
                             class="carousel-control-next-icon" aria-hidden="true"></span> <span
                             class="sr-only">Next</span>
                     </a>
-                    </div>
+                    </div> <!-- /Carousel -->
 
                     <br>
-
-                    <div class="container " style="padding-left: 0px;">
+                    <!-- Container with card -->
+                    <div class="container" style="padding-left: 0px;">
                         <th:block
                                 th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(listGame, 3)}">
                             <div class="row " th:each="partition: ${partitions}">
@@ -130,7 +66,7 @@
                                     <div class="card" style="width: 18rem; margin-bottom: 20px;" id="card1id">
                                         <img src="img/card1.jpg " class="card-img-top">
                                         <div class="card-body">
-                                            <h5 class="card-title " th:text="${ info.name }">Battletoads</h5>
+                                            <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
                                             <p class="card-text " th:text="${info.description}">Игры серии выполнены в
                                                 жанре «избей их всех». Сюжеты игр развиваются вокруг противостояния
                                                 боевых жаб и Тёмной Королевы, главного отрицательного героя игр
@@ -139,7 +75,8 @@
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-md-5"
-                                                         style="padding-top: 7px; padding-left: 40px;">100p
+                                                         style="padding-top: 7px; padding-left: 40px;"
+                                                         th:text="${info.oneDayPrice}">100p
                                                     </div>
                                                     <div class="col-md-7">
                                                         <a href="# " class="btn btn-primary"
@@ -150,74 +87,21 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> <!-- card -->
+                            </div>
                         </th:block>
-                    </div>
-
-
-                </div>
-
-
-            </div>
+                    </div> <!-- /Container with card -->
+                </div> <!-- /Col-md-9 -->
+            </div> <!-- /Row -->
         </div>
-
-
     </div>
 
-
     <!-- Footer -->
-    <footer class="page-footer font-small blue-grey lighten-5 ">
+    <div th:replace="fragments/footerth :: footer"></div>
 
-        <!-- Footer -->
-        <footer class="page-footer font-small teal pt-4 ">
-
-            <!-- Footer Text -->
-            <div class="container-fluid text-center text-md-left "
-                 id="contentfootertext ">
-
-                <!-- Grid row -->
-                <div class="row ">
-
-                    <div class="col-md-4 "></div>
-
-                    <!-- Grid column -->
-                    <div class="col-md-4 " id="footer1text">
-                        <h5 class="text-uppercase font-weight-bold ">Какой-то
-                            заголовок</h5>
-                        Здесь у нас информация о сайте, да-да.
-                    </div>
-                    <!-- Grid column -->
-                    <div class="col-md-4 "></div>
-
-                </div>
-                <!-- Grid row -->
-            </div>
-            <!-- Footer Text -->
-
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3 " id="copyrightid ">
-                © 2018 Gruntikright: <a href="https://vk.com/kenny1314 ">
-                RetroIgori.com</a>
-            </div>
-            <!-- Copyright -->
-
-        </footer>
 </div>
 
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo "
-        crossorigin="anonymous "></script>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1 "
-        crossorigin="anonymous "></script>
-<script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js "
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM "
-        crossorigin="anonymous "></script>
+<!-- Script bootstrap -->
+<div th:include="scriptth :: script"></div>
 </body>
 
 </html>

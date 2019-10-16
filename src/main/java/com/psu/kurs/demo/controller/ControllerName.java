@@ -34,6 +34,23 @@ public class ControllerName {
     @Autowired
     ProductsRepository productsRepository;
 
+    @GetMapping("/page")
+    public String page(Model model) {
+
+        List<Products> productsList;
+
+        try {
+            productsList = productsRepository.findAll();
+            model.addAttribute("listGame", productsList);
+            logger.info("sizeListProducts:" + productsList.size());
+            logger.info("product #1: " + productsList.get(1).toString());
+            logger.info("page");
+        } catch (Exception ex) {
+
+        }
+
+        return "page2";
+    }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -43,6 +60,7 @@ public class ControllerName {
 
         try {
             productsList = productsRepository.findAll();
+            model.addAttribute("listGame", productsList);
             logger.info("sizeListProducts:" + productsList.size());
             logger.info("product #1: " + productsList.get(1).toString());
             logger.info("WTF");
@@ -65,11 +83,11 @@ public class ControllerName {
 
 //        model.addAttribute("listGame", listGame);
 
-        return "page2";
+        return "index";
     }
 
     @GetMapping("/game")
-    public String page(Model model) {
+    public String game(Model model) {
         return "game";
     }
 
