@@ -4,7 +4,6 @@ import com.psu.kurs.demo.dao.PlatformsRepository;
 import com.psu.kurs.demo.dao.ProductsRepository;
 import com.psu.kurs.demo.dao.RoRepository;
 import com.psu.kurs.demo.dao.UsersRepository;
-import com.psu.kurs.demo.entity.After.Users;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.entity.Products;
 import org.slf4j.Logger;

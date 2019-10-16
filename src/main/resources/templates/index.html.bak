@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <title>Hello, world!</title>
+    <title>Hello, аа!</title>
 
 
     <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
@@ -27,10 +27,10 @@
         <!-- Havbar -->
         <div th:replace="fragments/navbarth :: navbar"></div>
 
-        <div class="container-fluet">
+        <div class="container-fluet" style="width: 1211px;">
             <div class="row">
                 <!-- Menu -->
-                <div class="col-md-3">
+                <div class="col-md-3" style="padding-right: 0px;">
                     <div th:replace="fragments/menuth :: menu"></div>
                 </div>
                 <div class="col-md-9" style="padding-left: 0px;">
@@ -101,7 +101,7 @@
 </div>
 
 <!-- Script bootstrap -->
-<div th:include="scriptth :: script"></div>
+<div th:include="fragments/scriptth :: script"></div>
 </body>
 
 </html>
