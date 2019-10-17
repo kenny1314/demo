@@ -135,4 +135,15 @@ a.list-group-item.list-group-item-action {
     height: 44px;
     /* background-color: #18bc9c; */
 }
+
+table#tabinfo2 {
+    /*border: 1px solid #a2a9b1;*/
+    background-color: #f8f9fa;;
+
+}
+
+#trinfo2{
+    vertical-align: top;
+}
+
 /* webapp*/

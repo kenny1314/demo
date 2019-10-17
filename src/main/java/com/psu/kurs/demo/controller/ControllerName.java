@@ -39,7 +39,22 @@ public class ControllerName {
     @Autowired
     PlatformsRepository platformsRepository;
 
+    @GetMapping("/about")
+    public String about(Model model) {
 
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("about");
+        } catch (Exception ex) {
+
+        }
+        
+        return "about";
+    }
     @GetMapping("/platform")
     public String platform(Model model) {
 
@@ -53,7 +68,7 @@ public class ControllerName {
         } catch (Exception ex) {
 
         }
-        
+
         return "platform";
     }
 
