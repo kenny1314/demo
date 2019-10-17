@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Index</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="maincl">
+
+        <!-- Header -->
+        <div th:replace="fragments/headerth :: header"></div>
+
+        <!-- Navbar -->
+        <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+        <div class="container-fluet" style="width: 1211px;">
+            <div class="row">
+                <!-- Menu -->
+                <div class="col-md-3" style="padding-right: 0px;">
+                    <div th:replace="fragments/menuth :: menu"></div>
+
+
+                </div>
+
+                <div class="col-md-9" style="padding-left: 0px;">
+                    <!-- Carousel -->
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                            <h2>Super Nintendo Entertainment System </h2>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-8" style=" text-align: left; ">
+                            <img src="/img/snes.jpg" style="height: 320px;">
+                        </div>
+                        <div class="col-md-4" style="align:center;">
+
+                            <table id="tabinfo2" style="width: 250px; margin-left: 20px;">
+                                <th colspan="2" style="background:#eaecf0; text-align: center;">
+                                    Характеристики
+                                </th>
+                                <tr id="trinfo2">
+                                    <td id="td2"><b>Разработчик</b></td>
+                                    <td id="td2">Nintendo Research & Development 2</td>
+                                </tr>
+                                <tr id="trinfo2">
+                                    <td id="col1tabinfo"><b>Производитель</b></td>
+                                    <td id="col2tabinfo">Nintendo
+                                    </td>
+                                </tr>
+                                <tr id="trinfo2">
+                                    <td id="col1tabinfo"><b>Дата выхода</b></td>
+                                    <td id="col2tabinfo">Япония 21 ноября 1990
+                                    </td>
+                                </tr>
+                                <tr id="trinfo2">
+                                    <td id="col1tabinfo"><b>Продано штук</b></td>
+                                    <td id="col2tabinfo">20 млн в США, 49 млн по всему миру
+                                    </td>
+                                </tr>
+                                <tr id="trinfo2">
+                                    <td id="col1tabinfo "><b>ЦП</b></td>
+                                    <td id="col2tabinfo">16-разрядный Ricoh 5A22, работающий на частоте 3,58 МГц
+                                    </td>
+                                </tr>
+                            </table>
+                        </div> <!-- /col3 характеристики -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Описание</h5>
+                            <p>
+                                Super Nintendo Entertainment System (также известная как Super Nintendo, Super NES и
+                                SNES[K 2]) — 16-разрядная игровая приставка, выпущенная компанией Nintendo в США,
+                                Бразилии, Европе и Австралии. В Японии она известна под названием Super Famicom (яп.
+                                スーパーファミコン су:па:фамикон), сокращение от Super Family Computer, или SFC. В Южной Корее
+                                она называлась Super Comboy (кор. 슈퍼 컴보이 Сюпхо кхомбои) и распространялась Hyundai
+                                Electronics. Хотя все перечисленные версии консоли одинаковы, региональная блокировка
+                                делает невозможной совместимость картриджей из разных стран.</p>
+                            <p>Super Nintendo Entertainment System стала второй домашней консолью Nintendo вслед за NES
+                                (которая выпускалась в Японии под названием Famicom). В SNES были представлены
+                                улучшенные графические и звуковые возможности по сравнению с другими консолями того
+                                времени. Кроме того, разработка дополнительных чипов, которые встраивались в картридж
+                                игры, позволяла ей оставаться конкурентоспособной на мировом рынке даже после выхода
+                                следующего поколения игровых приставок.</p>
+                            <p>Консоль приобрела популярность во многих странах, став самой продаваемой 16-битной
+                                приставкой, несмотря на упорную конкуренцию в Северной Америке со стороны Sega. SNES
+                                осталась популярна в эпоху 32-битных систем среди фанатов, коллекционеров и энтузиастов,
+                                работающих с эмуляцией (которые создают самодельные образы ПЗУ), несмотря на то, что
+                                Nintendo прекратила поддержку данной консоли.
+                            </p>
+                        </div>
+                    </div> <!-- /row описание -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>История</h5>
+                            <p>
+                                Когда оригинальная NES/Famicom была на вершине своей популярности, другие компании
+                                разрабатывали собственные игровые приставки. В 1987 и 1988 годах, соответственно, NEC и
+                                Sega выпустили свои консоли: PC Engine (известна в США как TurboGrafx-16) и Mega
+                                Drive/Genesis. Обе системы были построены с использованием 16-битной архитектуры,
+                                предоставляя улучшенные графику и звук по сравнению с 8-битной NES. И тем не менее она
+                                продолжала доминировать на игровом рынке на протяжении ещё нескольких лет, пока творение
+                                Sega, наконец, не достигло успеха. Изначально руководство компании Nintendo не
+                                выказывало никакого интереса к разработке новой системы, но пересмотрело свою позицию,
+                                когда NES начала устаревать. Её популярность на рынке стала снижаться, и Nintendo была
+                                вынуждена создать новую 16-битную консоль, чтобы успешно конкурировать с другими
+                                фирмами.</p>
+                        </div>
+                    </div> <!-- /row История -->
+
+
+                </div> <!-- /Col-md-9 -->
+            </div> <!-- /Row -->
+        </div>
+    </div> <!-- /MainCl -->
+
+    <div th:replace="fragments/footerth :: footer"></div>
+
+</div>
+
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+</body>
+
+</html>

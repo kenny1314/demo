@@ -41,47 +41,44 @@
 
                             <div class="col-md-6 " id="infodiscrip ">
                                 <h3 th:text="${product.title}">Battletods</h3>
-                                <table border="0 " id="tabinfo ">
+                                <table border="0 " id="tabinfo">
                                     <tr>
-                                        <td id="col1tabinfo ">Язык:</td>
+                                        <td id="col1tabinfo">Язык:</td>
                                         <td id="col2tabinfo" th:text="${product.languages.name}">Русский (Интерфейс)
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td id="col1tabinfo ">Платформа:</td>
-                                        <td id="col2tabinfo " th:text="${product.platforms.name}">Dendy</td>
+                                        <td id="col1tabinfo">Платформа:</td>
+                                        <td id="col2tabinfo" th:text="${product.platforms.name}">Dendy</td>
                                     </tr>
 
                                     <tr>
-                                        <td id="col1tabinfo ">Год выхода:</td>
-                                        <td id="col2tabinfo " th:text="${product.yearOfIssue}">8888</td>
+                                        <td id="col1tabinfo">Год выхода:</td>
+                                        <td id="col2tabinfo" th:text="${product.yearOfIssue}">8888</td>
                                     </tr>
                                     <tr>
-                                        <td id="col1tabinfo ">Возрастное огранчение:</td>
-                                        <td id="col2tabinfo " th:text="${product.ageLimits.year} + ' +'">18+</td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td id="col1tabinfo ">Жанр:</td>
-                                        <td id="col2tabinfo " th:text="${product.genres.name}">Экшн</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td id="col1tabinfo ">Издатель:</td>
-                                        <td id="col2tabinfo " th:text="${product.publishers.name}">Canami</td>
+                                        <td id="col1tabinfo">Возрастное огранчение:</td>
+                                        <td id="col2tabinfo" th:text="${product.ageLimits.year} + ' +'">18+</td>
                                     </tr>
                                     <tr>
-                                        <td id="col1tabinfo ">Количество:</td>
-                                        <td id="col2tabinfo " th:text="${product.quantity}">-1</td>
+                                        <td id="col1tabinfo">Жанр:</td>
+                                        <td id="col2tabinfo" th:text="${product.genres.name}">Экшн</td>
                                     </tr>
                                     <tr>
-                                        <td id="col1tabinfo ">Цена за день:</td>
-                                        <td id="col2tabinfo " th:text="${product.oneDayPrice}+' $'">-1</td>
+                                        <td id="col1tabinfo">Издатель:</td>
+                                        <td id="col2tabinfo" th:text="${product.publishers.name}">Canami</td>
                                     </tr>
                                     <tr>
-                                        <td id="col1tabinfo ">Полная цена:</td>
-                                        <td id="col2tabinfo " th:text="${product.fullPrice} +' $'">-1</td>
+                                        <td id="col1tabinfo">Количество:</td>
+                                        <td id="col2tabinfo" th:text="${product.quantity}">-1</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo">Цена за день:</td>
+                                        <td id="col2tabinfo" th:text="${product.oneDayPrice}+' $'">-1</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="col1tabinfo">Полная цена:</td>
+                                        <td id="col2tabinfo" th:text="${product.fullPrice} +' $'">-1</td>
                                     </tr>
 
                                 </table>

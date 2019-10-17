@@ -40,8 +40,25 @@ public class ControllerName {
     PlatformsRepository platformsRepository;
 
 
+    @GetMapping("/platform")
+    public String platform(Model model) {
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("platform");
+        } catch (Exception ex) {
+
+        }
+        
+        return "platform";
+    }
+
     @GetMapping("/dialogs")
-    public String dialog(Model model){
+    public String dialog(Model model) {
         return "dialogs";
     }
 
