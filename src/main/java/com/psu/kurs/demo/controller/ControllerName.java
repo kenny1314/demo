@@ -73,6 +73,22 @@ public class ControllerName {
         
         return "listplatforms";
     }
+    @GetMapping("/delivery")
+    public String delivery(Model model) {
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("about");
+        } catch (Exception ex) {
+
+        }
+
+        return "delivery";
+    }
 
 
     @GetMapping("/about")
