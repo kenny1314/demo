@@ -39,6 +39,42 @@ public class ControllerName {
     @Autowired
     PlatformsRepository platformsRepository;
 
+    @GetMapping("/vot")
+    public String affbout(Model model) {
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("about");
+        } catch (Exception ex) {
+
+        }
+
+        return "about";
+    }
+
+
+    @GetMapping("/listplatforms")
+    public String listplatforms(Model model) {
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("about");
+        } catch (Exception ex) {
+
+        }
+        
+        return "listplatforms";
+    }
+
+
     @GetMapping("/about")
     public String about(Model model) {
 
@@ -52,9 +88,10 @@ public class ControllerName {
         } catch (Exception ex) {
 
         }
-        
+
         return "about";
     }
+
     @GetMapping("/platform")
     public String platform(Model model) {
 
