@@ -173,10 +173,10 @@ public class ControllerName {
         return "index";
     }
 
-    @GetMapping("/game")
-    public String game(Model model) {
-        return "game";
-    }
+//    @GetMapping("/game")
+//    public String game(Model model) {
+//        return "game";
+//    }
 
     @GetMapping("/game/{id}")
     public String game(@PathVariable String id, Model model) {
