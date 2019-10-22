@@ -1,9 +1,7 @@
 package com.psu.kurs.demo.controller;
 
-import com.psu.kurs.demo.dao.PlatformsRepository;
-import com.psu.kurs.demo.dao.ProductsRepository;
-import com.psu.kurs.demo.dao.RoRepository;
-import com.psu.kurs.demo.dao.UsersRepository;
+import com.psu.kurs.demo.dao.*;
+import com.psu.kurs.demo.entity.Genres;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.entity.Products;
 import org.slf4j.Logger;
@@ -38,6 +36,35 @@ public class ControllerName {
 
     @Autowired
     PlatformsRepository platformsRepository;
+
+    @Autowired
+    GenresRepository genresRepository;
+
+
+    @GetMapping("/genres")
+    public String genres(Model model) {
+
+        List<Platforms> platformsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            genresList=genresRepository.findAll();
+            model.addAttribute("genresList",genresList);
+
+            logger.info("sizeListProducts:" + genresList.size());
+            logger.info("genres");
+        } catch (Exception ex) {
+
+        }
+
+        return "genres";
+    }
+
+
 
     @GetMapping("/vot")
     public String affbout(Model model) {
@@ -172,6 +199,12 @@ public class ControllerName {
 
         return "index";
     }
+
+
+
+
+
+
 
 //    @GetMapping("/game")
 //    public String game(Model model) {

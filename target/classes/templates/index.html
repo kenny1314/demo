@@ -65,6 +65,7 @@
                                     <div class="card" style="width: 18rem; margin-bottom: 20px;" id="card1id">
                                         <img src="img/card1.jpg " class="card-img-top">
                                         <div class="card-body">
+                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>
                                             <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
                                             <p class="card-text " th:text="${info.description}">Игры серии выполнены в
                                                 жанре «избей их всех». Сюжеты игр развиваются вокруг противостояния
@@ -78,7 +79,7 @@
                                                          th:text="${info.oneDayPrice}">100p
                                                     </div>
                                                     <div class="col-md-7">
-                                                        <a href="# " class="btn btn-primary"
+                                                        <a th:href="@{'/game/' +${info.id}}"  class="btn btn-primary"
                                                            style="margin-left: 19px">В корзину</a>
                                                     </div>
                                                 </div>
