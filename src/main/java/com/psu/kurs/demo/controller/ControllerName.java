@@ -4,6 +4,7 @@ import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.Genres;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.entity.Products;
+import com.psu.kurs.demo.services.ReadFileToClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -39,6 +41,27 @@ public class ControllerName {
 
     @Autowired
     GenresRepository genresRepository;
+
+    @GetMapping("/getplatforms")
+    public String getPlatforms(Model model) throws IOException {
+//
+//        Platforms platforms=new Platforms();
+////
+//        platforms.setId(2L);
+//        platforms.setName("Gruntik master system");
+//        platforms.setCpu("gruntikcpu");
+//        platformsRepository.save(platforms);
+//
+        Long counter=6L;
+        List<Platforms> platformsList = ReadFileToClass.getListFromFile();
+        for (Platforms pl:platformsList){
+            pl.setId(1L+counter++);
+        }
+        platformsRepository.saveAll(platformsList);
+
+        return "getplatforms";
+    }
+
 
 
     @GetMapping("/genres")
@@ -97,7 +120,7 @@ public class ControllerName {
         } catch (Exception ex) {
 
         }
-        
+
         return "listplatforms";
     }
     @GetMapping("/delivery")

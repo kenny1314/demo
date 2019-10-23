@@ -1,5 +1,7 @@
 package com.psu.kurs.demo.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,9 +10,18 @@ import java.util.List;
 public class Platforms {
     private Long id;
     private String name;
+    private String manufacturer;
+    private String generation;
+    private String relaseDate;
+    private String piecesSold;
+    private String cpu;
+    private String description;
+    private String story;
+
     private List<Products> productsList;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -30,7 +41,79 @@ public class Platforms {
         this.name = name;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @Basic
+    @Column(name = "manufacturer")
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    @Basic
+    @Column(name = "generation")
+    public String getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(String generation) {
+        this.generation = generation;
+    }
+
+    @Basic
+    @Column(name = "relase_date")
+    public String getRelaseDate() {
+        return relaseDate;
+    }
+
+    public void setRelaseDate(String relaseDate) {
+        this.relaseDate = relaseDate;
+    }
+
+    @Basic
+    @Column(name = "pieces_sold")
+    public String getPiecesSold() {
+        return piecesSold;
+    }
+
+    public void setPiecesSold(String piecesSold) {
+        this.piecesSold = piecesSold;
+    }
+
+    @Basic
+    @Column(name = "cpu")
+    public String getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(String cpu) {
+        this.cpu = cpu;
+    }
+
+    @Basic
+    @Type(type = "text")
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Basic
+    @Type(type = "text")
+    @Column(name = "story")
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "platforms_id")
     public List<Products> getProductsList() {
         return productsList;
