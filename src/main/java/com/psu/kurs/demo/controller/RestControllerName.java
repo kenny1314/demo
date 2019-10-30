@@ -5,6 +5,7 @@ import com.psu.kurs.demo.dao.ImagesTRepository;
 import com.psu.kurs.demo.dao.PlatformsRepository;
 import com.psu.kurs.demo.entity.Employee;
 import com.psu.kurs.demo.entity.ImagesT;
+import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.services.GetImageBufferBD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +35,17 @@ public class RestControllerName {
 
 
     @GetMapping("/testp")
-    public void testP(){
+    public String testP() {
 
-        Employee employee = new Employee();
-        employee.setId(1L);
-        employee.setName("igor");
-employeeRepository.save(employee);
-        logger.info("em: "+employee.toString());
+        return "toString\n"+platformsRepository.getOne(1L).toString();
 
 
+//
+//        ImagesT imagesT = imagesTRepository.getOne(1L);
+//
+//        Platforms platforms = platformsRepository.getOne(1L);
+//        platforms.setImagesT(imagesT);
+//        platformsRepository.save(platforms);
 
     }
 
@@ -64,7 +67,7 @@ employeeRepository.save(employee);
         String encodedString = Base64.getEncoder().encodeToString(data);
         logger.info("str: " + encodedString);
 
-        ImagesT imagesT = new ImagesT(9L, file.getName().toString(), encodedString,"nULL1","nULL2");
+        ImagesT imagesT = new ImagesT(9L, file.getName().toString(), encodedString, "nULL1", "nULL2");
 
         logger.info("imagesT: " + imagesT.toString());
 
@@ -92,7 +95,7 @@ employeeRepository.save(employee);
 
     @RequestMapping(value = "/getimg/{id}", method = RequestMethod.GET)
     public void getImageBD(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
-                           HttpServletResponse response,@PathVariable String id) throws IOException {
+                           HttpServletResponse response, @PathVariable String id) throws IOException {
         logger.info("id: " + id);
 
 //        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(1L);
@@ -114,12 +117,12 @@ employeeRepository.save(employee);
             idNew = Long.valueOf(id);
         }
 
-        ImagesT imagesT=imagesTRepository.getOne(idNew);
+        ImagesT imagesT = imagesTRepository.getOne(idNew);
         BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesT);
 
 
         response.setContentType(imagesT.getContentType());
-        ImageIO.write(bufferedImage,imagesT.getExtension(), response.getOutputStream());
+        ImageIO.write(bufferedImage, imagesT.getExtension(), response.getOutputStream());
 
 
         return;

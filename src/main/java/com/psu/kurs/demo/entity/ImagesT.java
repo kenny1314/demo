@@ -8,14 +8,21 @@ import java.util.List;
 @Entity
 @Table(name = "imagest", schema = "cursovaya", catalog = "kurss")
 public class ImagesT {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
     private String name;
+
+    @Type(type = "text")
     private String data;
     private String contentType;
     private String extension;
 
-//    @OneToOne(mappedBy = "imagest")
-//    private Platforms platform;
+    @OneToOne(mappedBy = "imagesT")
+    private Platforms platforms;
+
 
     public ImagesT() {
     }
@@ -28,9 +35,6 @@ public class ImagesT {
         this.extension = extension;
     }
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -39,8 +43,6 @@ public class ImagesT {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -49,10 +51,6 @@ public class ImagesT {
         this.name = name;
     }
 
-
-    @Basic
-    @Type(type = "text")
-    @Column(name = "data")
     public String getData() {
         return data;
     }
@@ -61,8 +59,6 @@ public class ImagesT {
         this.data = data;
     }
 
-    @Basic
-    @Column(name = "content_type")
     public String getContentType() {
         return contentType;
     }
@@ -71,8 +67,6 @@ public class ImagesT {
         this.contentType = contentType;
     }
 
-    @Basic
-    @Column(name = "extension")
     public String getExtension() {
         return extension;
     }
@@ -81,13 +75,13 @@ public class ImagesT {
         this.extension = extension;
     }
 
-//    public Platforms getPlatform() {
-//        return platform;
-//    }
-//
-//    public void setPlatform(Platforms platform) {
-//        this.platform = platform;
-//    }
+    public Platforms getPlatform() {
+        return platforms;
+    }
+
+    public void setPlatform(Platforms platform) {
+        this.platforms = platform;
+    }
 
     @Override
     public String toString() {

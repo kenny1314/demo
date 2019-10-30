@@ -8,6 +8,10 @@ import java.util.List;
 @Entity
 @Table(name = "platforms", schema = "cursovaya", catalog = "kurss")
 public class Platforms {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
     private String name;
     private String manufacturer;
@@ -15,19 +19,22 @@ public class Platforms {
     private String relaseDate;
     private String piecesSold;
     private String cpu;
+
+    @Type(type = "text")
     private String description;
+
+    @Type(type = "text")
     private String story;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinTable(name = "emp1_workstation", joinColumns = {@JoinColumn(name = "platforms_id", referencedColumnName = "id")},
-//            inverseJoinColumns = {@JoinColumn(name = "imagest_id", referencedColumnName = "id")})
-//    private ImagesT imagesT;
-
+    @OneToMany(targetEntity = Products.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
     private List<Products> productsList;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagest_id", referencedColumnName = "id")
+    private ImagesT imagesT;
+
+
     public Long getId() {
         return id;
     }
@@ -36,8 +43,6 @@ public class Platforms {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -46,8 +51,6 @@ public class Platforms {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "manufacturer")
     public String getManufacturer() {
         return manufacturer;
     }
@@ -56,8 +59,6 @@ public class Platforms {
         this.manufacturer = manufacturer;
     }
 
-    @Basic
-    @Column(name = "generation")
     public String getGeneration() {
         return generation;
     }
@@ -66,8 +67,6 @@ public class Platforms {
         this.generation = generation;
     }
 
-    @Basic
-    @Column(name = "relase_date")
     public String getRelaseDate() {
         return relaseDate;
     }
@@ -76,8 +75,6 @@ public class Platforms {
         this.relaseDate = relaseDate;
     }
 
-    @Basic
-    @Column(name = "pieces_sold")
     public String getPiecesSold() {
         return piecesSold;
     }
@@ -86,8 +83,6 @@ public class Platforms {
         this.piecesSold = piecesSold;
     }
 
-    @Basic
-    @Column(name = "cpu")
     public String getCpu() {
         return cpu;
     }
@@ -96,9 +91,6 @@ public class Platforms {
         this.cpu = cpu;
     }
 
-    @Basic
-    @Type(type = "text")
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -107,9 +99,6 @@ public class Platforms {
         this.description = description;
     }
 
-    @Basic
-    @Type(type = "text")
-    @Column(name = "story")
     public String getStory() {
         return story;
     }
@@ -118,8 +107,6 @@ public class Platforms {
         this.story = story;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "platforms_id")
     public List<Products> getProductsList() {
         return productsList;
     }
@@ -128,13 +115,13 @@ public class Platforms {
         this.productsList = productsList;
     }
 
-//    public ImagesT getImagesT() {
-//        return imagesT;
-//    }
-//
-//    public void setImagesT(ImagesT imagesT) {
-//        this.imagesT = imagesT;
-//    }
+    public ImagesT getImagesT() {
+        return imagesT;
+    }
+
+    public void setImagesT(ImagesT imagesT) {
+        this.imagesT = imagesT;
+    }
 
     @Override
     public String toString() {
@@ -149,7 +136,7 @@ public class Platforms {
                 ", description='" + description + '\'' +
                 ", story='" + story + '\'' +
                 ", productsList=" + productsList +
-//                ", imagesT=" + imagesT.toString() +
+                ", imagesT=" + imagesT.toString() +
                 '}';
     }
 }

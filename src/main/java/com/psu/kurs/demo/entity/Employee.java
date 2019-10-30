@@ -26,9 +26,12 @@ public class Employee {
     @Type(type = "text")
     private String name;
 
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "emp_workstation", joinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "workstation_id", referencedColumnName = "id")})
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "emp_workstation", joinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "workstation_id", referencedColumnName = "id")})
+    @JoinColumn(name = "workstation_id", referencedColumnName = "id")
     private WorkStation workStation;
 
     public Long getId() {
