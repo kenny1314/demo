@@ -58,8 +58,7 @@ public class ControllerName {
 
 
     @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
-                            @RequestParam("file") MultipartFile file){
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
@@ -86,12 +85,14 @@ public class ControllerName {
 
                 imagesTRepository.save(imagesT);
 
-                return "Вы удачно загрузили " + name + " в " + convFile.getName() + "!";
+
+
+                return "Вы удачно загрузили "+ convFile.getName() + " _____ "+file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] +"!";
             } catch (Exception e) {
-                return "Вам не удалось загрузить " + name + " => " + e.getMessage();
+                return "Вам не удалось загрузить " +   file.getName()+ " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + name + " потому что файл пустой.";
+            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
     }
 

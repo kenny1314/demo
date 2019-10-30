@@ -27,6 +27,7 @@ public class RestControllerName {
     @Autowired
     ImagesTRepository imagesTRepository;
 
+    //не надо использовать //загрузка одного файла в базу данных
     @RequestMapping(value = "/gruntikimg", method = RequestMethod.GET)
     public void getImage(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
                          HttpServletResponse response) throws IOException {
@@ -69,7 +70,7 @@ public class RestControllerName {
     }
 
 
-    @RequestMapping(value = "/gruntikgetimg/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getimg/{id}", method = RequestMethod.GET)
     public void getImageBD(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
                            HttpServletResponse response,@PathVariable String id) throws IOException {
         logger.info("id: " + id);

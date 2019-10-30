@@ -22,6 +22,7 @@ public class ImagesT {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     public Long getId() {
         return id;
