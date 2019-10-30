@@ -44,7 +44,8 @@
                     </div>
                     <hr>
 
-                    <div class="row" th:each="i : ${platforms}">
+
+                    <div class="row" th:each="i : ${#numbers.sequence(1,5)}">
                     <div class="card border-secondary mb-3" style="width: 802px;margin-left: 75px;">
                         <div class="card-body" style="
                         padding-top: 10px;
@@ -58,7 +59,7 @@
 
                                     <a href="/platform">
                                     <p class="card-text" contenteditable="false"
-                                       style="text-align: center;margin-bottom: 2px;"><b th:text="${ i.name }">Super nintendo intertaiment
+                                       style="text-align: center;margin-bottom: 2px;"><b>Super nintendo intertaiment
                                         system.Super nintendo intertaiment
                                         system.</b></p>
                                     <img src="img/2k.jpg" style="height: 160px; text-align: center; ">
@@ -75,22 +76,23 @@
 <!--                                            <td id="td2">Nintendo Research & Development 2</td>-->
 <!--                                        </tr>-->
                                         <tr id="trinfo3">
-                                            <td id="col1tabinfo"><b th:text="'Производитель #' + ${i.id} ">Производитель</b></td>
-                                            <td id="col2tabinfo" th:text="${i.manufacturer}">Nintendo</td>
+                                            <td id="col1tabinfo"><b th:text="'Производитель #' + ${i} ">Производитель</b></td>
+                                            <td id="col2tabinfo">Nintendo
+                                            </td>
                                         </tr>
                                         <tr id="trinfo3">
                                             <td id="col1tabinfo"><b>Дата выхода</b></td>
-                                            <td id="col2tabinfo" th:text="${i.relaseDate}" >Япония 21 ноября 1990
+                                            <td id="col2tabinfo">Япония 21 ноября 1990
                                             </td>
                                         </tr>
                                         <tr id="trinfo3">
                                             <td id="col1tabinfo"><b>Продано штук</b></td>
-                                            <td id="col2tabinfo" th:text="${i.piecesSold}">20 млн в США, 49 млн по всему миру
+                                            <td id="col2tabinfo">20 млн в США, 49 млн по всему миру
                                             </td>
                                         </tr>
                                         <tr id="trinfo3">
                                             <td id="col1tabinfo "><b>ЦП</b></td>
-                                            <td id="col2tabinfo" th:text="${i.cpu}">16-разрядный Ricoh 5A22, работающий на частоте 3,58 МГц
+                                            <td id="col2tabinfo">16-разрядный Ricoh 5A22, работающий на частоте 3,58 МГц
                                             </td>
                                         </tr>
 

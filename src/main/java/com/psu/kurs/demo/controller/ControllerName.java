@@ -42,6 +42,18 @@ public class ControllerName {
     @Autowired
     GenresRepository genresRepository;
 
+
+    @Autowired
+    ImagesTRepository imagesTRepository;
+
+    @GetMapping("/getimg")
+    public String getImg(Model model){
+
+        return "imgpage";
+    }
+
+
+
     @GetMapping("/getplatforms")
     public String getPlatforms(Model model) throws IOException {
 //
@@ -198,12 +210,15 @@ public class ControllerName {
         return "page2";
     }
 
+
     @GetMapping("/")
     public String index(Model model) {
 
 
         List<Platforms> platformsList;
         List<Products> productsList;
+
+
 
         try {
             //для меню
