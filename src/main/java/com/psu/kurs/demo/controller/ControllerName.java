@@ -2,6 +2,7 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.Genres;
+import com.psu.kurs.demo.entity.ImagesT;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.entity.Products;
 import com.psu.kurs.demo.services.ReadFileToClass;
@@ -10,10 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -46,12 +50,88 @@ public class ControllerName {
     @Autowired
     ImagesTRepository imagesTRepository;
 
+    @GetMapping("/uppage")
+    public String upPage() {
+
+        return "upload";
+    }
+
+
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
+                            @RequestParam("file") MultipartFile file){
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+
+//                File file = new File("input2.jpg");
+
+                File convFile = new File( file.getOriginalFilename() );
+                FileOutputStream fos = new FileOutputStream( convFile );
+                fos.write( file.getBytes() );
+                fos.close();
+
+                BufferedImage bufferedImage = ImageIO.read(convFile);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, "jpeg", bos);
+                byte[] data = bos.toByteArray();
+                logger.info("string" + data.toString());
+
+                String encodedString = Base64.getEncoder().encodeToString(data);
+                logger.info("str: " + encodedString);
+
+                ImagesT imagesT = new ImagesT(9L, convFile.getName().toString(), encodedString);
+
+                logger.info("imagesT: " + imagesT.toString());
+
+                imagesTRepository.save(imagesT);
+
+                return "Вы удачно загрузили " + name + " в " + convFile.getName() + "!";
+            } catch (Exception e) {
+                return "Вам не удалось загрузить " + name + " => " + e.getMessage();
+            }
+        } else {
+            return "Вам не удалось загрузить " + name + " потому что файл пустой.";
+        }
+    }
+
+
+
+//    @PostMapping("/upload")
+//    public String uploadFile(@RequestParam("file") MultipartFile file ) {
+//
+//
+////        if (file.exists()) {
+////            logger.info("file is empty");
+////        }
+//
+//        try {
+//            logger.info(file.getName());
+//
+//
+////            File file = new File("input2.jpg");
+//
+//
+//            byte[] bytes = file.getBytes();
+//            BufferedOutputStream stream =
+//                    new BufferedOutputStream(new FileOutputStream(new File(file.getName() + "-uploaded")));
+//            stream.write(bytes);
+//            stream.close();
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//
+//
+//        return "dialogs";
+//    }
+
+
     @GetMapping("/getimg")
-    public String getImg(Model model){
+    public String getImg(Model model) {
 
         return "imgpage";
     }
-
 
 
     @GetMapping("/getplatforms")
@@ -64,16 +144,15 @@ public class ControllerName {
 //        platforms.setCpu("gruntikcpu");
 //        platformsRepository.save(platforms);
 //
-        Long counter=6L;
+        Long counter = 6L;
         List<Platforms> platformsList = ReadFileToClass.getListFromFile();
-        for (Platforms pl:platformsList){
-            pl.setId(1L+counter++);
+        for (Platforms pl : platformsList) {
+            pl.setId(1L + counter++);
         }
         platformsRepository.saveAll(platformsList);
 
         return "getplatforms";
     }
-
 
 
     @GetMapping("/genres")
@@ -87,8 +166,8 @@ public class ControllerName {
             platformsList = platformsRepository.findAll();
             model.addAttribute("platforms", platformsList);
 
-            genresList=genresRepository.findAll();
-            model.addAttribute("genresList",genresList);
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
 
             logger.info("sizeListProducts:" + genresList.size());
             logger.info("genres");
@@ -98,7 +177,6 @@ public class ControllerName {
 
         return "genres";
     }
-
 
 
     @GetMapping("/vot")
@@ -135,6 +213,7 @@ public class ControllerName {
 
         return "listplatforms";
     }
+
     @GetMapping("/delivery")
     public String delivery(Model model) {
 
@@ -219,7 +298,6 @@ public class ControllerName {
         List<Products> productsList;
 
 
-
         try {
             //для меню
             platformsList = platformsRepository.findAll();
@@ -237,11 +315,6 @@ public class ControllerName {
 
         return "index";
     }
-
-
-
-
-
 
 
 //    @GetMapping("/game")
