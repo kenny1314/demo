@@ -20,13 +20,9 @@ public class GetImageBufferBD {
     private static Logger logger = LoggerFactory.getLogger(GetImageBufferBD.class);
 
 
-    public static BufferedImage getImgThroughID(ImagesTRepository imagesTRepository, Long id) {
+    public static BufferedImage getImgThroughID(ImagesT imagesT) {
 
-        ImagesT imagesT = imagesTRepository.getOne(id);
-        logger.info("siae:" + imagesTRepository.findAll().size());
-        logger.info("hello");
         logger.info(imagesT.toString());
-
 
         String decodeString = imagesT.getData();
         byte[] decodedBytes = Base64.getDecoder().decode(decodeString);
@@ -40,7 +36,6 @@ public class GetImageBufferBD {
         }
 
         return bufferedImage;
-//        return "null";
     }
 
 }

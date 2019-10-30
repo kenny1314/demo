@@ -25,11 +25,6 @@ public class ControllerName {
 
     private static Logger logger = LoggerFactory.getLogger(ControllerName.class);
 
-
-//    @Autowired
-//    GameServices gameServices;
-
-
     @Autowired
     UsersRepository usersRepository;
 
@@ -57,6 +52,8 @@ public class ControllerName {
     }
 
 
+
+
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
         if (!file.isEmpty()) {
@@ -72,18 +69,19 @@ public class ControllerName {
 
                 BufferedImage bufferedImage = ImageIO.read(convFile);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpeg", bos);
+                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
                 byte[] data = bos.toByteArray();
                 logger.info("string" + data.toString());
 
                 String encodedString = Base64.getEncoder().encodeToString(data);
                 logger.info("str: " + encodedString);
 
-                ImagesT imagesT = new ImagesT(9L, convFile.getName().toString(), encodedString);
+                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString,file.getContentType(),file.getContentType().split("\\/")[1]);
 
                 logger.info("imagesT: " + imagesT.toString());
 
                 imagesTRepository.save(imagesT);
+
 
 
 

@@ -18,10 +18,15 @@ public class Platforms {
     private String description;
     private String story;
 
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "emp1_workstation", joinColumns = {@JoinColumn(name = "platforms_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "imagest_id", referencedColumnName = "id")})
+//    private ImagesT imagesT;
+
     private List<Products> productsList;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -121,5 +126,30 @@ public class Platforms {
 
     public void setProductsList(List<Products> productsList) {
         this.productsList = productsList;
+    }
+
+//    public ImagesT getImagesT() {
+//        return imagesT;
+//    }
+//
+//    public void setImagesT(ImagesT imagesT) {
+//        this.imagesT = imagesT;
+//    }
+
+    @Override
+    public String toString() {
+        return "Platforms{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", generation='" + generation + '\'' +
+                ", relaseDate='" + relaseDate + '\'' +
+                ", piecesSold='" + piecesSold + '\'' +
+                ", cpu='" + cpu + '\'' +
+                ", description='" + description + '\'' +
+                ", story='" + story + '\'' +
+                ", productsList=" + productsList +
+//                ", imagesT=" + imagesT.toString() +
+                '}';
     }
 }

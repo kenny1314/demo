@@ -1,7 +1,9 @@
 package com.psu.kurs.demo.controller;
 
+import com.psu.kurs.demo.dao.EmployeeRepository;
 import com.psu.kurs.demo.dao.ImagesTRepository;
 import com.psu.kurs.demo.dao.PlatformsRepository;
+import com.psu.kurs.demo.entity.Employee;
 import com.psu.kurs.demo.entity.ImagesT;
 import com.psu.kurs.demo.services.GetImageBufferBD;
 import org.slf4j.Logger;
@@ -27,6 +29,24 @@ public class RestControllerName {
     @Autowired
     ImagesTRepository imagesTRepository;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+
+    @GetMapping("/testp")
+    public void testP(){
+
+        Employee employee = new Employee();
+        employee.setId(1L);
+        employee.setName("igor");
+employeeRepository.save(employee);
+        logger.info("em: "+employee.toString());
+
+
+
+    }
+
+
     //не надо использовать //загрузка одного файла в базу данных
     @RequestMapping(value = "/gruntikimg", method = RequestMethod.GET)
     public void getImage(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
@@ -44,7 +64,7 @@ public class RestControllerName {
         String encodedString = Base64.getEncoder().encodeToString(data);
         logger.info("str: " + encodedString);
 
-        ImagesT imagesT = new ImagesT(9L, file.getName().toString(), encodedString);
+        ImagesT imagesT = new ImagesT(9L, file.getName().toString(), encodedString,"nULL1","nULL2");
 
         logger.info("imagesT: " + imagesT.toString());
 
@@ -94,11 +114,12 @@ public class RestControllerName {
             idNew = Long.valueOf(id);
         }
 
-        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesTRepository, idNew);
+        ImagesT imagesT=imagesTRepository.getOne(idNew);
+        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesT);
 
 
-        response.setContentType("image/jpeg");
-        ImageIO.write(bufferedImage, "jpeg", response.getOutputStream());
+        response.setContentType(imagesT.getContentType());
+        ImageIO.write(bufferedImage,imagesT.getExtension(), response.getOutputStream());
 
 
         return;
