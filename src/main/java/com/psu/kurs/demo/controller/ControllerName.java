@@ -52,19 +52,28 @@ public class ControllerName {
     }
 
 
+    @RequestMapping(value = "/upload2", method = RequestMethod.POST)
+    public @ResponseBody
+    String formUpload(@RequestParam("file") MultipartFile file,
+                      @RequestParam("name") String name,
+                      @RequestParam("manufacturer") String manufacturer,
+                      @RequestParam("relaseDate") String relaseDate,
+                      @RequestParam("generation") String generation,
+                      @RequestParam("piecesSold") String piecesSold,
+                      @RequestParam("cpu") String cpu,
+                      @RequestParam("description") String description,
+                      @RequestParam("story") String story
 
-
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+    ) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
 
 //                File file = new File("input2.jpg");
 
-                File convFile = new File( file.getOriginalFilename() );
-                FileOutputStream fos = new FileOutputStream( convFile );
-                fos.write( file.getBytes() );
+                File convFile = new File(file.getOriginalFilename());
+                FileOutputStream fos = new FileOutputStream(convFile);
+                fos.write(file.getBytes());
                 fos.close();
 
                 BufferedImage bufferedImage = ImageIO.read(convFile);
@@ -76,24 +85,72 @@ public class ControllerName {
                 String encodedString = Base64.getEncoder().encodeToString(data);
                 logger.info("str: " + encodedString);
 
-                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString,file.getContentType(),file.getContentType().split("\\/")[1]);
+                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
 
                 logger.info("imagesT: " + imagesT.toString());
 
                 imagesTRepository.save(imagesT);
 
+                Platforms platform=new Platforms(5L,name,manufacturer,generation,relaseDate,piecesSold,cpu,description,story);
+
+                platform.setImagesT(imagesT);
+                platformsRepository.save(platform);
+
+                logger.info("hell: "+platform.toString());
 
 
-
-                return "Вы удачно загрузили "+ convFile.getName() + " _____ "+file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] +"!";
+                return "form:\n"+
+                        "   " +name+"   "+manufacturer+"   "+relaseDate+"   "+generation+"   "+piecesSold+" "+cpu+"   "
+                        +description+"    "+story+
+                        "  " + "name: " + name + "Вы удачно загру____зили " + convFile.getName() + " _____ " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
-                return "Вам не удалось загрузить " +   file.getName()+ " => " + e.getMessage();
+                e.printStackTrace();
+                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
             return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
     }
 
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public @ResponseBody
+    String handleFileUpload(@RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+
+//                File file = new File("input2.jpg");
+
+                File convFile = new File(file.getOriginalFilename());
+                FileOutputStream fos = new FileOutputStream(convFile);
+                fos.write(file.getBytes());
+                fos.close();
+
+                BufferedImage bufferedImage = ImageIO.read(convFile);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
+                byte[] data = bos.toByteArray();
+                logger.info("string" + data.toString());
+
+                String encodedString = Base64.getEncoder().encodeToString(data);
+                logger.info("str: " + encodedString);
+
+                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
+
+                logger.info("imagesT: " + imagesT.toString());
+
+                imagesTRepository.save(imagesT);
+
+
+                return "Вы удачно загрузили " + convFile.getName() + " _____ " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+            } catch (Exception e) {
+                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+            }
+        } else {
+            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+        }
+    }
 
 
 //    @PostMapping("/upload")
@@ -193,6 +250,24 @@ public class ControllerName {
         }
 
         return "about";
+    }
+
+    //addplatform
+    @GetMapping("/addplatform")
+    public String addPlatform(Model model) {
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("about");
+        } catch (Exception ex) {
+
+        }
+
+        return "addPlatform";
     }
 
 

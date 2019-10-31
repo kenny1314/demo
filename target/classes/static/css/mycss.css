@@ -142,12 +142,25 @@ table#tabinfo2 {
 
 }
 
-#trinfo2{
+#trinfo2 {
     vertical-align: top;
 }
 
 #trinfo3 {
     vertical-align: top;
 }
+
+#labform1 {
+    padding-right: 10px;
+    padding-left: 10px;
+    text-align: right;
+}
+
+#inputtextplatform{
+    padding-right: 210px;
+}
+
+
+
 
 /* webapp*/

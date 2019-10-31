@@ -35,6 +35,21 @@ public class Platforms {
     private ImagesT imagesT;
 
 
+    public Platforms() {
+    }
+
+    public Platforms(Long id,String name, String manufacturer, String generation, String relaseDate, String piecesSold, String cpu, String description, String story) {
+        this.id=id;
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.generation = generation;
+        this.relaseDate = relaseDate;
+        this.piecesSold = piecesSold;
+        this.cpu = cpu;
+        this.description = description;
+        this.story = story;
+    }
+
     public Long getId() {
         return id;
     }
