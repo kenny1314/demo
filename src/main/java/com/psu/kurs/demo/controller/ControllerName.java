@@ -51,6 +51,31 @@ public class ControllerName {
     }
 
 
+
+
+    @GetMapping("/addgame")
+    public String addGame(Model model){
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("addgame");
+        } catch (Exception ex) {
+
+        }
+        return "addGame";
+    }
+
+    @PostMapping("/uploadgame")
+    public String uploadGame(){
+        return "Game added";
+    }
+
+
+
     @RequestMapping(value = "/upload2", method = RequestMethod.POST)
     public @ResponseBody
     String formUpload(@RequestParam("file") MultipartFile file,
