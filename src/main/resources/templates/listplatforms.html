@@ -56,12 +56,14 @@
                                 <div class="col-md-6"
                                      style="text-align: center;padding-bottom: 5px; vertical-align: bottom; padding-left: 25px;">
 
-                                    <a href="/platform">
+<!--                                    <a href="/platform">-->
+                                    <a th:href="@{'/platform/' + ${i.id}}">
                                     <p class="card-text" contenteditable="false"
                                        style="text-align: center;margin-bottom: 2px;"><b th:text="${ i.name }">Super nintendo intertaiment
                                         system.Super nintendo intertaiment
                                         system.</b></p>
-                                    <img src="img/2k.jpg" style="height: 160px; text-align: center; ">
+<!--                                    <img src="img/2k.jpg" style="height: 160px; text-align: center; ">-->
+                                    <img th:src="@{'/getimg/' + ${i.id}}" style="height: 160px; text-align: center; ">
                                     </a>
                                 </div>
 

@@ -17,8 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ControllerName {
@@ -67,9 +66,29 @@ public class ControllerName {
     ) {
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
 
-//                File file = new File("input2.jpg");
+                //получение последнего id из списка платформ
+                List<Platforms> platformsList = platformsRepository.findAll();
+                int siz = platformsList.size();
+                List<Long> listSize = new ArrayList<>();
+
+                Long actualCount = -1L;
+
+                logger.info("size: " + siz);
+                if (siz > 0) {
+                    for (Platforms pl : platformsList) {
+                        listSize.add(pl.getId());
+                    }
+
+                    actualCount = Collections.max(listSize);
+                    logger.info("___max value in list: " + actualCount);
+                    actualCount++;
+                    logger.info("___next id in these tables: " + actualCount);
+                } else {
+                    actualCount = 0L;
+                }
+
+                byte[] bytes = file.getBytes();
 
                 File convFile = new File(file.getOriginalFilename());
                 FileOutputStream fos = new FileOutputStream(convFile);
@@ -80,29 +99,24 @@ public class ControllerName {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
                 byte[] data = bos.toByteArray();
-                logger.info("string" + data.toString());
+//                logger.info("string" + data.toString());
 
                 String encodedString = Base64.getEncoder().encodeToString(data);
                 logger.info("str: " + encodedString);
 
-                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
+                ImagesT imagesT = new ImagesT(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
 
-                logger.info("imagesT: " + imagesT.toString());
+                Platforms platform = new Platforms(actualCount, name, manufacturer, generation, relaseDate, piecesSold, cpu, description, story, imagesT);
 
-                imagesTRepository.save(imagesT);
-
-                Platforms platform=new Platforms(5L,name,manufacturer,generation,relaseDate,piecesSold,cpu,description,story);
-
-                platform.setImagesT(imagesT);
                 platformsRepository.save(platform);
 
-                logger.info("hell: "+platform.toString());
+                logger.info("platform.toString(): " + platform.toString());
 
-
-                return "form:\n"+
-                        "   " +name+"   "+manufacturer+"   "+relaseDate+"   "+generation+"   "+piecesSold+" "+cpu+"   "
-                        +description+"    "+story+
-                        "  " + "name: " + name + "Вы удачно загру____зили " + convFile.getName() + " _____ " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+                convFile.delete();
+                return "form:\n" +
+                        "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
+                        + description + "    " + story +
+                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
@@ -323,15 +337,48 @@ public class ControllerName {
         return "about";
     }
 
+
+    @GetMapping("/platform/{id}")
+    public String getPlatformId(@PathVariable String id, Model model) {
+
+        logger.info("id: " + id);
+
+        Long idNew = 1L;
+
+        if (id != null) {
+            idNew = Long.valueOf(id);
+        }
+
+        List<Platforms> platformsList;
+        Platforms platform;
+
+        try {
+            //для данных
+            platformsList = platformsRepository.findAll();
+            platform = platformsRepository.getOne(idNew);
+            model.addAttribute("platforms", platformsList);
+            model.addAttribute("platform", platform);
+            logger.info("platform");
+        } catch (Exception ex) {
+
+        }
+
+        return "platform";
+    }
+
+
     @GetMapping("/platform")
     public String platform(Model model) {
 
         List<Platforms> platformsList;
+        Platforms platform;
 
         try {
             //для меню
             platformsList = platformsRepository.findAll();
+            platform = platformsRepository.getOne(1L);
             model.addAttribute("platforms", platformsList);
+            model.addAttribute("platform", platform);
             logger.info("platform");
         } catch (Exception ex) {
 

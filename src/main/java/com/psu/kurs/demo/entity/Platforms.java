@@ -3,6 +3,7 @@ package com.psu.kurs.demo.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.List;
 public class Platforms {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     private String name;
@@ -38,7 +39,7 @@ public class Platforms {
     public Platforms() {
     }
 
-    public Platforms(Long id,String name, String manufacturer, String generation, String relaseDate, String piecesSold, String cpu, String description, String story) {
+    public Platforms(Long id, String name, String manufacturer, String generation, String relaseDate, String piecesSold, String cpu, String description, String story, ImagesT imagesT) {
         this.id=id;
         this.name = name;
         this.manufacturer = manufacturer;
@@ -48,6 +49,7 @@ public class Platforms {
         this.cpu = cpu;
         this.description = description;
         this.story = story;
+        this.imagesT=imagesT;
     }
 
     public Long getId() {

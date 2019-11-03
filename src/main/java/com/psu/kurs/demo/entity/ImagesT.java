@@ -10,7 +10,7 @@ import java.util.List;
 public class ImagesT {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+//    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     private String name;

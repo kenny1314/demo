@@ -43,7 +43,7 @@
     height: 30px;"></button>
     <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
         <ul class="navbar-nav mr-auto" th:each="platfom: ${platforms}">
-            <li><a href="/platform" class="list-group-item list-group-item-action" th:text="${platfom.name}">Sega Master
+            <li><a th:href="@{'/platform/' + ${platfom.id}}" class="list-group-item list-group-item-action" th:text="${platfom.name}">Sega Master
                 System</a></li>
         </ul>
     </div>
