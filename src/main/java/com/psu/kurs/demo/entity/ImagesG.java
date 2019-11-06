@@ -3,11 +3,10 @@ package com.psu.kurs.demo.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "imagest", schema = "cursovaya", catalog = "kurss")
-public class ImagesT extends Images {
+@Table(name = "imagesg", schema = "cursovaya", catalog = "kurss")
+public class ImagesG extends Images {
 
     @Id
 //    @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,14 +19,14 @@ public class ImagesT extends Images {
     private String contentType;
     private String extension;
 
-    @OneToOne(mappedBy = "imagesT")
-    private Platforms platforms;
+    //TODO genres
+    @OneToOne(mappedBy = "imagesG")
+    private Genres genres;
 
-
-    public ImagesT() {
+    public ImagesG() {
     }
 
-    public ImagesT(Long id, String name, String data, String contentType, String extension) {
+    public ImagesG(Long id, String name, String data, String contentType, String extension) {
         this.id = id;
         this.name = name;
         this.data = data;
@@ -75,17 +74,17 @@ public class ImagesT extends Images {
         this.extension = extension;
     }
 
-    public Platforms getPlatform() {
-        return platforms;
+    public Genres getGenres() {
+        return genres;
     }
 
-    public void setPlatform(Platforms platform) {
-        this.platforms = platform;
+    public void setGenres(Genres genres) {
+        this.genres = genres;
     }
 
     @Override
     public String toString() {
-        return "ImagesT{" +
+        return "ImagesG{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", contentType='" + contentType + '\'' +

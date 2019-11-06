@@ -3,6 +3,7 @@ package com.psu.kurs.demo.services;
 import com.psu.kurs.demo.controller.RestControllerName;
 import com.psu.kurs.demo.dao.ImagesTRepository;
 import com.psu.kurs.demo.dao.PlatformsRepository;
+import com.psu.kurs.demo.entity.Images;
 import com.psu.kurs.demo.entity.ImagesT;
 import com.psu.kurs.demo.entity.Platforms;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class GetImageBufferBD {
     private static Logger logger = LoggerFactory.getLogger(GetImageBufferBD.class);
 
 
-    public static BufferedImage getImgThroughID(ImagesT imagesT) {
+    public static BufferedImage getImgThroughID(Images imagesT) {
 
         logger.info(imagesT.toString());
 

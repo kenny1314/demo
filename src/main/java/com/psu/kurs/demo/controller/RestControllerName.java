@@ -1,9 +1,8 @@
 package com.psu.kurs.demo.controller;
 
-import com.psu.kurs.demo.dao.EmployeeRepository;
-import com.psu.kurs.demo.dao.ImagesTRepository;
-import com.psu.kurs.demo.dao.PlatformsRepository;
+import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.Employee;
+import com.psu.kurs.demo.entity.ImagesG;
 import com.psu.kurs.demo.entity.ImagesT;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.services.GetImageBufferBD;
@@ -29,6 +28,13 @@ public class RestControllerName {
 
     @Autowired
     ImagesTRepository imagesTRepository;
+
+    @Autowired
+    GenresRepository genresRepository;
+
+    @Autowired
+    ImagesGRepository imagesGRepository;
+
 
     @Autowired
     EmployeeRepository employeeRepository;
@@ -91,6 +97,43 @@ public class RestControllerName {
 
         return;
     }
+
+
+    @RequestMapping(value = "/getimgg/{id}", method = RequestMethod.GET)
+    public void getImageBDGenres(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
+                           HttpServletResponse response, @PathVariable String id) throws IOException {
+        logger.info("id: " + id);
+
+//        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(1L);
+//GetImageBufferBD.getImgThroughID(1L);
+
+        logger.info("mmm: " + genresRepository.findAll().size());
+        logger.info("mmm: " + imagesGRepository.findAll().size());
+
+//        GetImageBufferBD.getImgThroughID(imagesTRepository,1L);
+
+
+//        GetImgTry2 getImg=new GetImgTry2();
+//
+//        logger.info("getimgtry2: "+getImg.getStr());
+//        getImg.getImg();
+        Long idNew = 1L;
+//
+        if (id != null) {
+            idNew = Long.valueOf(id);
+        }
+
+        ImagesG imagesG = imagesGRepository.getOne(idNew);
+        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesG);
+
+
+        response.setContentType(imagesG.getContentType());
+        ImageIO.write(bufferedImage, imagesG.getExtension(), response.getOutputStream());
+
+
+        return;
+    }
+
 
 
     @RequestMapping(value = "/getimg/{id}", method = RequestMethod.GET)

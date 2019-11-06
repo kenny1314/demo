@@ -1,5 +1,5 @@
-INSERT INTO cursovaya.genres (id, name) VALUES (3, 'Arcade');
-INSERT INTO cursovaya.genres (id, name) VALUES (2, 'Adventure');
-INSERT INTO cursovaya.genres (id, name) VALUES (1, 'Action');
-INSERT INTO cursovaya.genres (id, name) VALUES (4, 'Fighting');
-INSERT INTO cursovaya.genres (id, name) VALUES (5, 'Strategy');
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (1, 'Аркада', 1);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (2, 'Экшон', 2);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (3, 'Приключения', 3);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (4, 'Файтинг', 4);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (5, 'Стратегии', 5);

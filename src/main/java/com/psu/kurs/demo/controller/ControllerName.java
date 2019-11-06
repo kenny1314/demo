@@ -1,10 +1,7 @@
 package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
-import com.psu.kurs.demo.entity.Genres;
-import com.psu.kurs.demo.entity.ImagesT;
-import com.psu.kurs.demo.entity.Platforms;
-import com.psu.kurs.demo.entity.Products;
+import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.ReadFileToClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +41,19 @@ public class ControllerName {
     @Autowired
     ImagesTRepository imagesTRepository;
 
+
+    @GetMapping("/pg")
+    public String pg() {
+
+        Products products = productsRepository.getOne(1L);
+        Genres genres = products.getGenres();
+        logger.info("pg: " + genres.toString());
+
+
+        return "dialogs";
+    }
+
+
     @GetMapping("/uppage")
     public String upPage() {
 
@@ -51,10 +61,8 @@ public class ControllerName {
     }
 
 
-
-
     @GetMapping("/addgame")
-    public String addGame(Model model){
+    public String addGame(Model model) {
 
         List<Platforms> platformsList;
 
@@ -70,10 +78,91 @@ public class ControllerName {
     }
 
     @PostMapping("/uploadgame")
-    public String uploadGame(){
+    public String uploadGame() {
         return "Game added";
     }
 
+
+    @GetMapping("/addGenres")
+    public String addGenres(Model model) {
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            logger.info("addgame");
+        } catch (Exception ex) {
+
+        }
+
+        return "addGenres";
+    }
+
+
+    @RequestMapping(value = "/uploadGenres", method = RequestMethod.POST)
+    public @ResponseBody
+    String formUploadGenres(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
+        if (!file.isEmpty()) {
+            try {
+
+                //получение последнего id из списка платформ
+                List<Genres> genresList = genresRepository.findAll();
+                int siz = genresList.size();
+                List<Long> listSize = new ArrayList<>();
+
+                Long actualCount = -1L;
+
+                logger.info("size: " + siz);
+                if (siz > 0) {
+                    for (Genres gr : genresList) {
+                        listSize.add(gr.getId());
+                    }
+
+                    actualCount = Collections.max(listSize);
+                    logger.info("___max value in list: " + actualCount);
+                    actualCount++;
+                    logger.info("___next id in these tables: " + actualCount);
+                } else {
+                    actualCount = 0L;
+                }
+
+                byte[] bytes = file.getBytes();
+
+                File convFile = new File(file.getOriginalFilename());
+                FileOutputStream fos = new FileOutputStream(convFile);
+                fos.write(file.getBytes());
+                fos.close();
+
+                BufferedImage bufferedImage = ImageIO.read(convFile);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
+                byte[] data = bos.toByteArray();
+                logger.info("string genres" + data.toString());
+
+                String encodedString = Base64.getEncoder().encodeToString(data);
+                logger.info("str: " + encodedString);
+
+                ImagesG imagesG = new ImagesG(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
+
+                Genres genres = new Genres(actualCount, name,imagesG);
+
+                genresRepository.save(genres);
+
+                logger.info("genres.toString(): " + genres.toString());
+
+                convFile.delete();
+                return "form:\n" +
+                        "   " + name +
+                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+            }
+        } else {
+            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+        }
+    }
 
 
     @RequestMapping(value = "/upload2", method = RequestMethod.POST)

@@ -6,12 +6,28 @@ import java.util.List;
 @Entity
 @Table(name = "genres", schema = "cursovaya", catalog = "kurss")
 public class Genres {
-    private Long id;
-    private String name;
-    private List<Products> productsList;
-
     @Id
     @Column(name = "id")
+    private Long id;
+    private String name;
+
+    @OneToMany(targetEntity = Products.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    private List<Products> productsList;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagesg_id", referencedColumnName = "id")
+    private ImagesG imagesG;
+
+    public Genres() {
+    }
+
+    public Genres(Long id, String name, ImagesG imagesG) {
+        this.id = id;
+        this.name = name;
+        this.imagesG = imagesG;
+    }
+
     public Long getId() {
         return id;
     }
@@ -20,8 +36,6 @@ public class Genres {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -30,13 +44,30 @@ public class Genres {
         this.name = name;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "genres_id")
+
     public List<Products> getProductsList() {
         return productsList;
     }
 
     public void setProductsList(List<Products> productsList) {
         this.productsList = productsList;
+    }
+
+    public ImagesG getImagesG() {
+        return imagesG;
+    }
+
+    public void setImagesG(ImagesG imagesG) {
+        this.imagesG = imagesG;
+    }
+
+    @Override
+    public String toString() {
+        return "Genres{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", productsList=" + productsList +
+                ", img= "+imagesG.toString()+
+                '}';
     }
 }
