@@ -61,46 +61,80 @@
                             </div>
                         </div>
 
+
                         <div class="form-group row">
-                            <label id="labform1" class="col-sm-2 col-form-label">Язык</label>
-                            <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Язык" name="languages">
+                            <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Язык</label>
+                            <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
+                                <select class="form-control form-control-sm" id="optionsList" name="langFormGame"
+                                        style="height: 35px;">
+                                    <option th:each="option: ${languagesList}"
+                                            th:value="${option.name}"
+                                            th:text="${option.name}"
+                                    ></option>
+                                </select>
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label id="labform1" class="col-sm-2 col-form-label">Платформа</label>
-                            <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Платформа" name="platforms">
+                            <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Платформа</label>
+                            <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
+                                <select class="form-control form-control-sm" id="optionsList" name="platformFormGame"
+                                        style="height: 35px;">
+                                    <option th:each="option: ${platforms}"
+                                            th:value="${option.name}"
+                                            th:text="${option.name}"
+                                    ></option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row">
+
+                        <div class="form-group row" style="margin-bottom: 2px;">
                             <label id="labform1" class="col-sm-2 col-form-label">Год выпуска</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
                                 <input type="text" class="form-control" placeholder="Год выпуска" name="yearOfIssue">
                             </div>
                         </div>
 
+                        <div class="form-group row" style="margin-bottom: 7px">
+                                <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Возрастное ограничение</label>
+                            <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px;  margin-top: 13px;">
+                                <select class="form-control form-control-sm" id="optionsList" name="ageLimitFormGame"
+                                        style="height: 35px;">
+                                    <option th:each="option: ${ageLimitsList}"
+                                            th:value="${option.year}"
+                                            th:text="${option.year}+'+'"
+                                    ></option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
-                            <label id="labform1" class="col-sm-2 col-form-label">Возрастное ограничение</label>
-                            <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Возрастное ограничение"
-                                       name="ageLimits"  style=" margin-top: 13px;">
+                            <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Жанр</label>
+                            <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
+                                <select class="form-control form-control-sm" id="optionsList" name="genreFormGame"
+                                        style="height: 35px;">
+                                    <option th:each="option: ${genresList}"
+                                            th:value="${option.name}"
+                                            th:text="${option.name}"
+                                    ></option>
+                                </select>
+                            </div>
+                        </div>
 
-                            </div>
-                        </div>
+
                         <div class="form-group row">
-                            <label id="labform1" class="col-sm-2 col-form-label">Жанр</label>
-                            <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Жанр" name="genres">
+                            <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Издатель</label>
+                            <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
+                                <select class="form-control form-control-sm" id="optionsList" name="publisherFormGame"
+                                        style="height: 35px;">
+                                    <option th:each="option: ${publishersList}"
+                                            th:value="${option.name}"
+                                            th:text="${option.name}"
+                                    ></option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label id="labform1" class="col-sm-2 col-form-label">Издатель</label>
-                            <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Издатель" name="publishers">
-                            </div>
-                        </div>
+
                         <div class="form-group row">
                             <label id="labform1" class="col-sm-2 col-form-label">Количество</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">

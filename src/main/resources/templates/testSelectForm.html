@@ -39,14 +39,22 @@
                     </div> <!-- /row -->
                     <hr>
 
-                    <select class="form-control form-control-sm">
-                        <option th:value="m1" th:utext="smallsel">Small select</option>
-                    </select>
-                    <form action="/result" method="get" th:object="${selectedOption}">
-                        <select id="optionsList" name="optionsLIstId">
+
+                    <form action="/result" method="post" th:object="${selectedOption}">
+                        <select class="form-control form-control-sm" id="optionsList" name="optionsLIstId">
                             <option th:each="option: ${liststr}"
                                     th:value="${option}"
                                     th:text="${option}"
+                            ></option>
+                        </select>
+                        <button type="submit">submit</button>
+                    </form>
+
+                    <form action="/result" method="post" th:object="${selectedOption}">
+                        <select class="form-control form-control-sm" id="optionsList" name="optionsLIstId">
+                            <option th:each="option: ${listlang}"
+                                    th:value="${option.name}"
+                                    th:text="${option.name}"
                             ></option>
                         </select>
                         <button type="submit">submit</button>

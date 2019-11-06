@@ -37,6 +37,14 @@ public class ControllerName {
     @Autowired
     GenresRepository genresRepository;
 
+    @Autowired
+    LanguagesRepository languagesRepository;
+
+    @Autowired
+    AgeLimitsRepository ageLimitsRepository;
+
+    @Autowired
+    PublishersRepository publishersRepository;
 
     @Autowired
     ImagesTRepository imagesTRepository;
@@ -56,6 +64,10 @@ public class ControllerName {
             stringList.add("gruntov");
             stringList.add("sergeevich");
             model.addAttribute("liststr",stringList);
+
+            List <Languages> languagesList=languagesRepository.findAll();
+            model.addAttribute("listlang",languagesList);
+
             logger.info("addgame");
         } catch (Exception ex) {
 
@@ -64,8 +76,8 @@ public class ControllerName {
         return "testSelectForm";
     }
 
-    @GetMapping("/result")
-    public @ResponseBody String getListSelect(@ModelAttribute("optionsLIstId") String selectedOption){
+    @PostMapping("/result")
+    public @ResponseBody String getListSelect(@RequestParam("optionsLIstId")String selectedOption){
 
         return " Selected: "+selectedOption;
     }
@@ -101,14 +113,27 @@ public class ControllerName {
             platformsList = platformsRepository.findAll();
             model.addAttribute("platforms", platformsList);
             logger.info("addgame");
+
+            List<Languages> languagesList=languagesRepository.findAll();
+            model.addAttribute("languagesList",languagesList);
+
+            List<AgeLimits> ageLimitsList = ageLimitsRepository.findAll();
+            model.addAttribute("ageLimitsList",ageLimitsList);
+
+            List<Genres> genresList=genresRepository.findAll();
+            model.addAttribute("genresList",genresList);
+
+            List<Publishers> publishersList=publishersRepository.findAll();
+            model.addAttribute("publishersList",publishersList);
+
         } catch (Exception ex) {
 
         }
         return "addGame";
     }
 
-    @PostMapping("/uploadgame")
-    public String uploadGame() {
+    @PostMapping("/uploadGame")
+    public @ResponseBody String uploadGame() {
         return "Game added";
     }
 
