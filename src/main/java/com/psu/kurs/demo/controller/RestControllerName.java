@@ -40,22 +40,6 @@ public class RestControllerName {
     EmployeeRepository employeeRepository;
 
 
-    @GetMapping("/testp")
-    public String testP() {
-
-        return "toString\n"+platformsRepository.getOne(1L).toString();
-
-
-//
-//        ImagesT imagesT = imagesTRepository.getOne(1L);
-//
-//        Platforms platforms = platformsRepository.getOne(1L);
-//        platforms.setImagesT(imagesT);
-//        platformsRepository.save(platforms);
-
-    }
-
-
     //не надо использовать //загрузка одного файла в базу данных
     @RequestMapping(value = "/gruntikimg", method = RequestMethod.GET)
     public void getImage(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
@@ -98,27 +82,17 @@ public class RestControllerName {
         return;
     }
 
-
+    //получить изображение жанры
     @RequestMapping(value = "/getimgg/{id}", method = RequestMethod.GET)
     public void getImageBDGenres(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
-                           HttpServletResponse response, @PathVariable String id) throws IOException {
+                                 HttpServletResponse response, @PathVariable String id) throws IOException {
         logger.info("id: " + id);
-
-//        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(1L);
-//GetImageBufferBD.getImgThroughID(1L);
 
         logger.info("mmm: " + genresRepository.findAll().size());
         logger.info("mmm: " + imagesGRepository.findAll().size());
 
-//        GetImageBufferBD.getImgThroughID(imagesTRepository,1L);
-
-
-//        GetImgTry2 getImg=new GetImgTry2();
-//
-//        logger.info("getimgtry2: "+getImg.getStr());
-//        getImg.getImg();
         Long idNew = 1L;
-//
+
         if (id != null) {
             idNew = Long.valueOf(id);
         }
@@ -126,36 +100,24 @@ public class RestControllerName {
         ImagesG imagesG = imagesGRepository.getOne(idNew);
         BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesG);
 
-
         response.setContentType(imagesG.getContentType());
         ImageIO.write(bufferedImage, imagesG.getExtension(), response.getOutputStream());
-
 
         return;
     }
 
 
-
+    //получить изображение платформы
     @RequestMapping(value = "/getimg/{id}", method = RequestMethod.GET)
     public void getImageBD(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
                            HttpServletResponse response, @PathVariable String id) throws IOException {
         logger.info("id: " + id);
 
-//        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(1L);
-//GetImageBufferBD.getImgThroughID(1L);
-
         logger.info("mmm: " + platformsRepository.findAll().size());
         logger.info("mmm: " + imagesTRepository.findAll().size());
 
-//        GetImageBufferBD.getImgThroughID(imagesTRepository,1L);
-
-
-//        GetImgTry2 getImg=new GetImgTry2();
-//
-//        logger.info("getimgtry2: "+getImg.getStr());
-//        getImg.getImg();
         Long idNew = 1L;
-//
+
         if (id != null) {
             idNew = Long.valueOf(id);
         }
@@ -163,11 +125,10 @@ public class RestControllerName {
         ImagesT imagesT = imagesTRepository.getOne(idNew);
         BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesT);
 
-
         response.setContentType(imagesT.getContentType());
         ImageIO.write(bufferedImage, imagesT.getExtension(), response.getOutputStream());
 
-
         return;
     }
+
 }

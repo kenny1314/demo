@@ -41,6 +41,36 @@ public class ControllerName {
     @Autowired
     ImagesTRepository imagesTRepository;
 
+    @GetMapping("/testselect")
+    public String testSelect(Model model){
+
+
+        List<Platforms> platformsList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+            List<String> stringList =new ArrayList<>();
+            stringList.add("igor");
+            stringList.add("gruntov");
+            stringList.add("sergeevich");
+            model.addAttribute("liststr",stringList);
+            logger.info("addgame");
+        } catch (Exception ex) {
+
+        }
+
+        return "testSelectForm";
+    }
+
+    @GetMapping("/result")
+    public @ResponseBody String getListSelect(@ModelAttribute("optionsLIstId") String selectedOption){
+
+        return " Selected: "+selectedOption;
+    }
+
+
 
     @GetMapping("/pg")
     public String pg() {
