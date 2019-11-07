@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products", schema = "cursovaya", catalog = "kurss")
 public class Products {
+    @Id
+    @Column(name = "id")
     private Long id;
     private String title;
     private String description;
@@ -15,14 +17,50 @@ public class Products {
     private Double fullPrice;
     private Integer quantity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "age_limits_id")
     private AgeLimits ageLimits;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genres_id")
     private Genres genres;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "languages_id")
     private Languages languages;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "platforms_id")
     private Platforms platforms;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publishers_id")
     private Publishers publishers;
 
-    @Id
-    @Column(name = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagesp_id", referencedColumnName = "id")
+    private ImagesP imagesP;
+
+    public Products() {
+    }
+
+    public Products(Long id, String title, String description, int yearOfIssue, Double oneDayPrice, Double fullPrice,
+                    Integer quantity, AgeLimits ageLimits, Genres genres, Languages languages, Platforms platforms, Publishers publishers) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.yearOfIssue = yearOfIssue;
+        this.oneDayPrice = oneDayPrice;
+        this.fullPrice = fullPrice;
+        this.quantity = quantity;
+        this.ageLimits = ageLimits;
+        this.genres = genres;
+        this.languages = languages;
+        this.platforms = platforms;
+        this.publishers = publishers;
+    }
+
+
     public Long getId() {
         return id;
     }
@@ -31,8 +69,6 @@ public class Products {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "title")
     public String getTitle() {
         return title;
     }
@@ -41,8 +77,6 @@ public class Products {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -51,8 +85,6 @@ public class Products {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "year_of_issue")
     public int getYearOfIssue() {
         return yearOfIssue;
     }
@@ -61,8 +93,6 @@ public class Products {
         this.yearOfIssue = yearOfIssue;
     }
 
-    @Basic
-    @Column(name = "one_day_price")
     public Double getOneDayPrice() {
         return oneDayPrice;
     }
@@ -71,8 +101,6 @@ public class Products {
         this.oneDayPrice = oneDayPrice;
     }
 
-    @Basic
-    @Column(name = "full_price")
     public Double getFullPrice() {
         return fullPrice;
     }
@@ -81,8 +109,6 @@ public class Products {
         this.fullPrice = fullPrice;
     }
 
-    @Basic
-    @Column(name = "quantity")
     public Integer getQuantity() {
         return quantity;
     }
@@ -91,9 +117,6 @@ public class Products {
         this.quantity = quantity;
     }
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "age_limits_id")
     public AgeLimits getAgeLimits() {
         return ageLimits;
     }
@@ -102,8 +125,6 @@ public class Products {
         this.ageLimits = ageLimits;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "genres_id")
     public Genres getGenres() {
         return genres;
     }
@@ -112,8 +133,6 @@ public class Products {
         this.genres = genres;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "languages_id")
     public Languages getLanguages() {
         return languages;
     }
@@ -122,9 +141,6 @@ public class Products {
         this.languages = languages;
     }
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "platforms_id")
     public Platforms getPlatforms() {
         return platforms;
     }
@@ -133,14 +149,20 @@ public class Products {
         this.platforms = platforms;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publishers_id")
     public Publishers getPublishers() {
         return publishers;
     }
 
     public void setPublishers(Publishers publishers) {
         this.publishers = publishers;
+    }
+
+    public ImagesP getImagesP() {
+        return imagesP;
+    }
+
+    public void setImagesP(ImagesP imagesP) {
+        this.imagesP = imagesP;
     }
 
     @Override

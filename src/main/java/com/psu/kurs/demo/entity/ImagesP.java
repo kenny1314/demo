@@ -5,8 +5,8 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "imagesg", schema = "cursovaya", catalog = "kurss")
-public class ImagesG extends Images {
+@Table(name = "imagesp", schema = "cursovaya", catalog = "kurss")
+public class ImagesP extends Images {
 
     @Id
 //    @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,14 +20,14 @@ public class ImagesG extends Images {
     private String extension;
 
     //TODO genres
-    @OneToOne(mappedBy = "imagesG")
-    private Genres genres;
+    @OneToOne(mappedBy = "imagesP")
+    private Products products;
 
-    public ImagesG() {
+    public ImagesP() {
         super();
     }
 
-    public ImagesG(Long id, String name, String data, String contentType, String extension) {
+    public ImagesP(Long id, String name, String data, String contentType, String extension) {
         this.id = id;
         this.name = name;
         this.data = data;
@@ -75,17 +75,17 @@ public class ImagesG extends Images {
         this.extension = extension;
     }
 
-    public Genres getGenres() {
-        return genres;
+    public Products getProducts() {
+        return products;
     }
 
-    public void setGenres(Genres genres) {
-        this.genres = genres;
+    public void setProducts(Products products) {
+        this.products = products;
     }
 
     @Override
     public String toString() {
-        return "ImagesG{" +
+        return "ImagesP{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", contentType='" + contentType + '\'' +

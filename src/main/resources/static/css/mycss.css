@@ -1,23 +1,14 @@
 .maincl {
-    /* margin-top: 30px; */
-    margin-left: 70px;
-    margin-right: 70px;
+    margin: auto;
     width: 1226px;
-    color: black;
     background-color: white;
     border-radius: 10px;
+    min-height: calc(100vh - 85px);
 }
-
-
-/* 
-footer {
-    border-radius: 10px;
-} */
 
 #logo {
     width: 140px;
     margin-left: 35px;
-    /* width: 70; */
 }
 
 #imgl {
@@ -48,9 +39,6 @@ footer {
 }
 
 #carouselExampleInterval.carousel.slide {
-    /* width: 700px;
-    margin-top: 20px;
-    margin-left: 100px; */
     width: 750px;
     margin-left: 80px;
     margin-top: 20px;
@@ -67,13 +55,14 @@ footer {
 
 #copyrightid {
     background-color: rgb(227, 228, 228);
-    /* border-radius: 10px; */
 }
 
+/* wrapper*/
 .bodycl {
+
+
     background-color: rgb(227, 228, 228);
     padding-top: 30px;
-    padding-bottom: 30px;
 }
 
 #firstellistpr {
@@ -91,7 +80,6 @@ a.list-group-item.list-group-item-action {
 }
 
 #card1id {
-    /* margin-left: 130px; */
     height: 435px;
     width: 286px;
 }
@@ -107,8 +95,6 @@ a.list-group-item.list-group-item-action {
 }
 
 #infoimg {
-    /* padding-top: 5px; */
-    /* background-color: rgb(227, 228, 228); */
 }
 
 #infodiscrip {
@@ -133,11 +119,9 @@ a.list-group-item.list-group-item-action {
 #btncart {
     width: 116px;
     height: 44px;
-    /* background-color: #18bc9c; */
 }
 
 table#tabinfo2 {
-    /*border: 1px solid #a2a9b1;*/
     background-color: #f8f9fa;;
 
 }
@@ -156,13 +140,6 @@ table#tabinfo2 {
     text-align: right;
 }
 
-#inputtextplatform{
+#inputtextplatform {
     padding-right: 210px;
 }
-
-
-
-
-
-
-/* webapp*/

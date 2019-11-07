@@ -12,6 +12,7 @@
 
 <body>
 <div class="bodycl">
+    <div class="site">
     <div class="maincl">
 
         <!-- Header -->
@@ -124,10 +125,9 @@
         </div> <!-- /container -->
     </div> <!-- /MainCl -->
 
-    <div th:replace="fragments/footerth :: footer"></div>
-
+    </div>
 </div>
-
+<div th:replace="fragments/footerth :: footer"></div>
 <!-- Script bootstrap -->
 <div th:include="fragments/scriptth :: script"></div>
 </body>

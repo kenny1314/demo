@@ -20,9 +20,11 @@
 </head>
 
 <body>
+
 <div class="bodycl">
     <h1>Add platforms</h1>
-    <div class="maincl">
+    <div class="site">
+    <div class="maincl" >
 
         <!-- Header -->
         <div th:replace="fragments/headerth :: header"></div>
@@ -68,7 +70,7 @@
                                 <select class="form-control form-control-sm" id="optionsList" name="langFormGame"
                                         style="height: 35px;">
                                     <option th:each="option: ${languagesList}"
-                                            th:value="${option.name}"
+                                            th:value="${option.id}"
                                             th:text="${option.name}"
                                     ></option>
                                 </select>
@@ -81,7 +83,7 @@
                                 <select class="form-control form-control-sm" id="optionsList" name="platformFormGame"
                                         style="height: 35px;">
                                     <option th:each="option: ${platforms}"
-                                            th:value="${option.name}"
+                                            th:value="${option.id}"
                                             th:text="${option.name}"
                                     ></option>
                                 </select>
@@ -101,7 +103,7 @@
                                 <select class="form-control form-control-sm" id="optionsList" name="ageLimitFormGame"
                                         style="height: 35px;">
                                     <option th:each="option: ${ageLimitsList}"
-                                            th:value="${option.year}"
+                                            th:value="${option.id}"
                                             th:text="${option.year}+'+'"
                                     ></option>
                                 </select>
@@ -114,7 +116,7 @@
                                 <select class="form-control form-control-sm" id="optionsList" name="genreFormGame"
                                         style="height: 35px;">
                                     <option th:each="option: ${genresList}"
-                                            th:value="${option.name}"
+                                            th:value="${option.id}"
                                             th:text="${option.name}"
                                     ></option>
                                 </select>
@@ -128,7 +130,7 @@
                                 <select class="form-control form-control-sm" id="optionsList" name="publisherFormGame"
                                         style="height: 35px;">
                                     <option th:each="option: ${publishersList}"
-                                            th:value="${option.name}"
+                                            th:value="${option.id}"
                                             th:text="${option.name}"
                                     ></option>
                                 </select>
@@ -189,11 +191,10 @@
         </div>
     </div> <!-- /MainCl -->
 
-    <div th:replace="fragments/footerth :: footer"></div>
 
+</div> <!-- /site class -->
 </div>
-
-
+<div th:replace="fragments/footerth :: footer"></div>
 <script>
     $('#inputGroupFile02').on('change', function () {
         //get the file name

@@ -50,7 +50,7 @@ public class ControllerName {
     ImagesTRepository imagesTRepository;
 
     @GetMapping("/testselect")
-    public String testSelect(Model model){
+    public String testSelect(Model model) {
 
 
         List<Platforms> platformsList;
@@ -59,14 +59,14 @@ public class ControllerName {
             //для меню
             platformsList = platformsRepository.findAll();
             model.addAttribute("platforms", platformsList);
-            List<String> stringList =new ArrayList<>();
+            List<String> stringList = new ArrayList<>();
             stringList.add("igor");
             stringList.add("gruntov");
             stringList.add("sergeevich");
-            model.addAttribute("liststr",stringList);
+            model.addAttribute("liststr", stringList);
 
-            List <Languages> languagesList=languagesRepository.findAll();
-            model.addAttribute("listlang",languagesList);
+            List<Languages> languagesList = languagesRepository.findAll();
+            model.addAttribute("listlang", languagesList);
 
             logger.info("addgame");
         } catch (Exception ex) {
@@ -77,11 +77,11 @@ public class ControllerName {
     }
 
     @PostMapping("/result")
-    public @ResponseBody String getListSelect(@RequestParam("optionsLIstId")String selectedOption){
+    public @ResponseBody
+    String getListSelect(@RequestParam("optionsLIstId") String selectedOption) {
 
-        return " Selected: "+selectedOption;
+        return " Selected: " + selectedOption;
     }
-
 
 
     @GetMapping("/pg")
@@ -114,17 +114,17 @@ public class ControllerName {
             model.addAttribute("platforms", platformsList);
             logger.info("addgame");
 
-            List<Languages> languagesList=languagesRepository.findAll();
-            model.addAttribute("languagesList",languagesList);
+            List<Languages> languagesList = languagesRepository.findAll();
+            model.addAttribute("languagesList", languagesList);
 
             List<AgeLimits> ageLimitsList = ageLimitsRepository.findAll();
-            model.addAttribute("ageLimitsList",ageLimitsList);
+            model.addAttribute("ageLimitsList", ageLimitsList);
 
-            List<Genres> genresList=genresRepository.findAll();
-            model.addAttribute("genresList",genresList);
+            List<Genres> genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
 
-            List<Publishers> publishersList=publishersRepository.findAll();
-            model.addAttribute("publishersList",publishersList);
+            List<Publishers> publishersList = publishersRepository.findAll();
+            model.addAttribute("publishersList", publishersList);
 
         } catch (Exception ex) {
 
@@ -133,8 +133,94 @@ public class ControllerName {
     }
 
     @PostMapping("/uploadGame")
-    public @ResponseBody String uploadGame() {
-        return "Game added";
+    public @ResponseBody
+    String uploadGame(@RequestParam("title") String title,
+                      @RequestParam("langFormGame") String language,
+                      @RequestParam("platformFormGame") String platform,
+                      @RequestParam("yearOfIssue") String yearOfIssue,
+                      @RequestParam("ageLimitFormGame") String ageLimits,
+                      @RequestParam("genreFormGame") String genre,
+                      @RequestParam("publisherFormGame") String publisher,
+                      @RequestParam("quantity") String quantity,
+                      @RequestParam("oneDayPrice") String oneDayPrice,
+                      @RequestParam("fullPrice") String fullPrice,
+                      @RequestParam("description") String description,
+                      @RequestParam("file") MultipartFile file) {
+
+
+
+
+
+        if (!file.isEmpty()) {
+            try {
+
+                //получение последнего id из списка платформ
+                List<Products> productsList = productsRepository.findAll();
+                int siz = productsList.size();
+                List<Long> listSize = new ArrayList<>();
+
+                Long actualCount = -1L;
+
+                logger.info("size: " + siz);
+                if (siz > 0) {
+                    for (Products prod : productsList) {
+                        listSize.add(prod.getId());
+                    }
+
+                    actualCount = Collections.max(listSize);
+                    logger.info("___max value in list: " + actualCount);
+                    actualCount++;
+                    logger.info("___next id in these tables: " + actualCount);
+                } else {
+                    actualCount = 0L;
+                }
+
+
+                Products product = new Products();
+                product.setId(actualCount);
+                product.setTitle(title);
+                product.setLanguages(languagesRepository.getOne(Long.valueOf(language)));
+                product.setPlatforms(platformsRepository.getOne(Long.valueOf(platform)));
+                product.setYearOfIssue(Integer.parseInt(yearOfIssue));
+                product.setAgeLimits(ageLimitsRepository.getOne(Long.valueOf(ageLimits)));
+                product.setGenres(genresRepository.getOne(Long.valueOf(genre)));
+                product.setPublishers(publishersRepository.getOne(Long.valueOf(publisher)));
+                product.setQuantity(Integer.parseInt(quantity));
+                product.setOneDayPrice(Double.parseDouble(oneDayPrice));
+                product.setFullPrice(Double.parseDouble(fullPrice));
+                product.setDescription(description);
+
+                logger.info(product.toString());
+
+
+                Images images = getImagesClass(file, actualCount);
+                //TODO imageP
+                ImagesP imagesP = new ImagesP(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
+
+                product.setImagesP(imagesP);
+
+                productsRepository.save(product);
+
+                logger.info("product.toString(): " + product.toString());
+
+                return "form:\n" + "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
+                        " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
+                        " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
+                        " description: " + description +
+                "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+            }
+        } else {
+            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+        }
+//
+//
+//        return "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
+//                " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
+//                " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
+//                " description: " + description;
     }
 
 
@@ -152,6 +238,29 @@ public class ControllerName {
         }
 
         return "addGenres";
+    }
+
+
+    public Images getImagesClass(MultipartFile file, Long actualCount) throws IOException {
+        byte[] bytes = file.getBytes();
+
+        File convFile = new File(file.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        BufferedImage bufferedImage = ImageIO.read(convFile);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
+        byte[] data = bos.toByteArray();
+        logger.info("string genres" + data.toString());
+
+        String encodedString = Base64.getEncoder().encodeToString(data);
+        logger.info("str: " + encodedString);
+
+        Images image = new Images(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
+        convFile.delete();
+        return image;
     }
 
 
@@ -182,31 +291,16 @@ public class ControllerName {
                     actualCount = 0L;
                 }
 
-                byte[] bytes = file.getBytes();
+                Images images = getImagesClass(file, actualCount);
+                ImagesG imagesG = new ImagesG(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
 
-                File convFile = new File(file.getOriginalFilename());
-                FileOutputStream fos = new FileOutputStream(convFile);
-                fos.write(file.getBytes());
-                fos.close();
-
-                BufferedImage bufferedImage = ImageIO.read(convFile);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
-                byte[] data = bos.toByteArray();
-                logger.info("string genres" + data.toString());
-
-                String encodedString = Base64.getEncoder().encodeToString(data);
-                logger.info("str: " + encodedString);
-
-                ImagesG imagesG = new ImagesG(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
-
-                Genres genres = new Genres(actualCount, name,imagesG);
+                Genres genres = new Genres(actualCount, name, imagesG);
 
                 genresRepository.save(genres);
 
                 logger.info("genres.toString(): " + genres.toString());
 
-                convFile.delete();
+
                 return "form:\n" +
                         "   " + name +
                         "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
@@ -257,23 +351,8 @@ public class ControllerName {
                     actualCount = 0L;
                 }
 
-                byte[] bytes = file.getBytes();
-
-                File convFile = new File(file.getOriginalFilename());
-                FileOutputStream fos = new FileOutputStream(convFile);
-                fos.write(file.getBytes());
-                fos.close();
-
-                BufferedImage bufferedImage = ImageIO.read(convFile);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
-                byte[] data = bos.toByteArray();
-//                logger.info("string" + data.toString());
-
-                String encodedString = Base64.getEncoder().encodeToString(data);
-                logger.info("str: " + encodedString);
-
-                ImagesT imagesT = new ImagesT(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
+                Images images = getImagesClass(file, actualCount);
+                ImagesT imagesT = new ImagesT(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
 
                 Platforms platform = new Platforms(actualCount, name, manufacturer, generation, relaseDate, piecesSold, cpu, description, story, imagesT);
 
@@ -281,7 +360,6 @@ public class ControllerName {
 
                 logger.info("platform.toString(): " + platform.toString());
 
-                convFile.delete();
                 return "form:\n" +
                         "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
                         + description + "    " + story +
