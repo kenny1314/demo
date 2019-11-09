@@ -1,10 +1,7 @@
 package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
-import com.psu.kurs.demo.entity.Employee;
-import com.psu.kurs.demo.entity.ImagesG;
-import com.psu.kurs.demo.entity.ImagesT;
-import com.psu.kurs.demo.entity.Platforms;
+import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.GetImageBufferBD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +31,12 @@ public class RestControllerName {
 
     @Autowired
     ImagesGRepository imagesGRepository;
+
+    @Autowired
+    ProductsRepository productsRepository;
+
+    @Autowired
+    ImagesPRepository imagesPRepository;
 
 
     @Autowired
@@ -78,6 +81,30 @@ public class RestControllerName {
 
         response.setContentType("image/jpeg");
         ImageIO.write(bufferedImage, "jpeg", response.getOutputStream());
+
+        return;
+    }
+
+    //получить изображение Продукта
+    @RequestMapping(value = "/getimgp/{id}", method = RequestMethod.GET)
+    public void getImageBDProducts(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
+                                 HttpServletResponse response, @PathVariable String id) throws IOException {
+        logger.info("id: " + id);
+
+        logger.info("mmm: " + productsRepository.findAll().size());
+        logger.info("mmm: " + imagesPRepository.findAll().size());
+
+        Long idNew = 1L;
+
+        if (id != null) {
+            idNew = Long.valueOf(id);
+        }
+
+        ImagesP imagesP = imagesPRepository.getOne(idNew);
+        BufferedImage bufferedImage = GetImageBufferBD.getImgThroughID(imagesP);
+
+        response.setContentType(imagesP.getContentType());
+        ImageIO.write(bufferedImage, imagesP.getExtension(), response.getOutputStream());
 
         return;
     }

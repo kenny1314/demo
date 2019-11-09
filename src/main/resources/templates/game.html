@@ -37,7 +37,8 @@
                     <div class="container" id="gamediscrip">
                         <div class="row ">
                             <div class="col-md-6 " id="infoimg">
-                                <img src="/img/p1.jpg " id="imggame">
+                                <img th:src="@{'/getimgp/' + ${product.id}}" style="height: 390px; width: 340px">
+<!--                                <img src="/img/p1.jpg " id="imggame" >-->
                             </div>
 
                             <div class="col-md-6 " id="infodiscrip ">

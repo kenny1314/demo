@@ -664,6 +664,7 @@ public class ControllerName {
 
         List<Platforms> platformsList;
         List<Products> productsList;
+        List<Genres> genresList;
 
 
         try {
@@ -675,6 +676,10 @@ public class ControllerName {
             model.addAttribute("productsList", productsList);
             logger.info("sizeListProducts:" + productsList.size());
 //            logger.info("product #1: " + productsList.get(1).toString());
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList",genresList);
+
             logger.info("index");
         } catch (Exception ex) {
 
