@@ -1,49 +1,29 @@
 package com.psu.kurs.demo.controller;
 
-import com.psu.kurs.demo.config.model.User;
-import com.psu.kurs.demo.config.service.SecurityService;
-import com.psu.kurs.demo.config.service.UserService;
-import com.psu.kurs.demo.config.service.UserServiceImpl;
-import com.psu.kurs.demo.config.validator.UserValidator;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.ReadFileToClass;
+import com.psu.kurs.demo.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ControllerName {
 
     private static Logger logger = LoggerFactory.getLogger(ControllerName.class);
-
-//    @Autowired
-//    UsersRepository usersRepository;
-
-//    @Autowired
-//    RoRepository roRepository;
 
 
     @Autowired
@@ -68,101 +48,51 @@ public class ControllerName {
     ImagesTRepository imagesTRepository;
 
     @Autowired
-    private UserServiceImpl userService;
-
+    RoleRepository roleRepository;
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    UserService userService;
 
     @GetMapping("/registration")
-    public String registration(Model model) {
-//        model.addAttribute("userForm", new User());
-//        logger.info("mess"+name+" "+pass);
-        logger.info("mess");
-
-        model.addAttribute("userForm", new User());
-
-        return "registration";
-
-//        return "redirect:/about";
-//        return "registration";
+    public String reg(Model model) {
+logger.info("get registration");
+        return "/registration";
     }
 
     @PostMapping("/registration")
-    public @ResponseBody String registration() {
-        logger.info("reg");
-//        userValidator.validate(userForm, bindingResult);
+    public String addUser(@RequestParam("username") String username,
+                          @RequestParam("password") String password,
+                          Model model) {
+logger.info("post reg");
 
-//        if (bindingResult.hasErrors()) {
-//            return "registration";
-//        }
-
-//        userService.save(userForm);
-//
-//        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-
-        return "/about";
+        if (userService.findByUsername(username) != null) {
+            model.addAttribute("error", "Пользователь " + username + " уже зарегистрирован");
+            return "/registration";
+        }
+        if (!(username.matches("^[a-zA-Z0-9]+$"))) {
+            model.addAttribute("error", "Имя пользователя может содержать только латиницу и цифры");
+            return "/registration";
+        }
+        User user = new User(1, username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        userService.save(user);
+        model.addAttribute("error", "Всё хорошо");
+        return "redirect:/";
     }
-//    @PostMapping("/registration")
-//    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-//        userValidator.validate(userForm, bindingResult);
-//
-//        if (bindingResult.hasErrors()) {
-//            return "registration";
-//        }
-//
-//        userService.save(userForm);
-//
-//        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-//
-//        return "redirect:/about";
-//    }
+
+    @GetMapping(value = {"/inde"})
+    public @ResponseBody String inx(Model model){
+        logger.info("Вы зарегались, наверно");
+        return "Вы успешно зарегистрировались";
+    }
 
     @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-
-        model.addAttribute("message", "security.");
-
-        if (error != null) {
-            model.addAttribute("error", "Your username and password is invalid.");
-        }
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
-logger.info("login in");
-
+    public String login() {
         return "login";
     }
 
-//    @GetMapping({"/", "/welcome"})
-//    public String welcome(Model model) {
-//        return "index";
-//    }
-
-//    @GetMapping("/logins")
-//    public String logins(){
-//        logger.info("______logins");
-//        return "login";
-//    }
-//
-//
-//    @GetMapping("/login")
-//    public String logn(){
-//        logger.info("______llllllffffllgin");
-//        return "login";
-//    }
-
-//    @GetMapping("/welcome")
-//    public String wel(){
-//        logger.info("______llllllllgin");
-//        return "welcome";
-//    }
+    @GetMapping("/403")
+    public String error403() {
+        return "/error/403";
+    }
 
 
     @GetMapping("/testselect")
@@ -264,9 +194,6 @@ logger.info("login in");
                       @RequestParam("file") MultipartFile file) {
 
 
-
-
-
         if (!file.isEmpty()) {
             try {
 
@@ -323,7 +250,7 @@ logger.info("login in");
                         " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
                         " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
                         " description: " + description +
-                "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+                        "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
@@ -774,7 +701,9 @@ logger.info("login in");
     }
 
 
-    @GetMapping("/")
+
+
+    @GetMapping(value = {"/"})
     public String index(Model model) {
 
 
@@ -794,7 +723,7 @@ logger.info("login in");
 //            logger.info("product #1: " + productsList.get(1).toString());
 
             genresList = genresRepository.findAll();
-            model.addAttribute("genresList",genresList);
+            model.addAttribute("genresList", genresList);
 
             logger.info("index");
         } catch (Exception ex) {
