@@ -38,24 +38,24 @@ public class Initializer implements ApplicationListener<ApplicationReadyEvent> {
         if (roleRepository.findAll().size() == 0) {
             System.out.println("\n______________INITIALIZATION______________");
 
-//            //roles
-//            Role role = new Role();
-//            role.setName("ROLE_ADMIN");
-//            roleRepository.saveAndFlush(role);
-//            role = new Role();
-//            role.setName("ROLE_USER");
-//            roleRepository.saveAndFlush(role);
-//
-//            //users
-//            User user = new User();
-//            user.setUsername("admin");
-//            user.setPassword("1234");
-//            user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN")));
-//            userService.save(user);
-//            user = new User();
-//            user.setUsername("user");
-//            user.setPassword("1234");
-//            userService.save(user);
+            //roles
+            Role role = new Role();
+            role.setName("ROLE_ADMIN");
+            roleRepository.saveAndFlush(role);
+            role = new Role();
+            role.setName("ROLE_USER");
+            roleRepository.saveAndFlush(role);
+
+            //users
+            User user = new User();
+            user.setUsername("admin");
+            user.setPassword("1234");
+            user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN")));
+            userService.save(user);
+            user = new User();
+            user.setUsername("user");
+            user.setPassword("1234");
+            userService.save(user);
 
 
         }

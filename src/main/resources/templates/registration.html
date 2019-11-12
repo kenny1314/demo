@@ -7,54 +7,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
     <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
-    <title>Get platforms</title>
+    <title>Index</title>
 </head>
+
 <body>
-<div class="container register">
-    <div class="row">
-        <div class="col-md-3 register-left">
-            <h3>Добро пожаловать</h3>
-            <h3>Добро пожаловать</h3>
-            <h3>Добро пожаловать</h3>
-            <p>Вы уже зарегестрированы?</p>
-            <form action="/login">
-                <input class="btn btn-outline-info" type="submit" name="" value="Войти"/><br/>
-            </form>
-        </div>
+<div class="bodycl">
+    <div class="site">
+        <div class="maincl">
 
-        <div class="col-md-9 ">
-            <h3 class="register-heading" th:text="${error}">Регистрация пользователя</h3>
-            <div class="register-form">
-                <form action="/registration" method="post">
-                    <div class="form-row ">
-                        <div class="form-group col-md-6">
-                            <input type="text" class="form-control" placeholder="Логин *" value=""
-                                   minlength="3" maxlength="20" name="username"/>
-                        </div>
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+
 
                     </div>
-<!--                    <div class="form-row ">-->
-<!--                        <div class="form-group col-md-6">-->
-<!--                            <input type="email" class="form-control" placeholder="Email *" required value=""/>-->
-<!--                        </div>-->
-<!--                    </div>-->
 
-                    <div class="form-row ">
-                        <div class="form-group col-md-6">
-                            <input type="password" class="form-control" placeholder="Пароль *" minlength="4"
-                                   maxlength="20" value="" id="password" required name="password"/>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+                        <!-- Carousel -->
+
+                        <div class="container register">
+
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8" style="  padding-top: 15px;">
+                                    <h3>Регистрация нового пользователя</h3>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-3 register-left"></div>
+
+                                <div class="col-md-4 ">
+
+                                    <div class="register-form">
+                                        <form action="/registration" method="post">
+                                            <div class="form-group col-md-12" style=" text-align: center">
+                                                <div th:if="${error}">
+                                                    <div class="alert alert-danger">
+                                                        Данный ник уже занят
+                                                    </div>
+                                                </div>
+
+                                                <h5>Введите данные</h5>
+                                            </div>
+                                            <div class="form-row ">
+                                                <div class="form-group col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Логин *"
+                                                           value=""
+                                                           minlength="3" maxlength="20" name="username"/>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <input type="password" class="form-control" placeholder="Пароль *"
+                                                           minlength="4"
+                                                           maxlength="20" value="" id="password" required
+                                                           name="password"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <input type="password" class="form-control"
+                                                           placeholder="Подтвердить Пароль *"
+                                                           minlength="4" maxlength="20" value="" id="confirm_password"
+                                                           required/>
+                                                </div>
+                                            </div>
+                                            <div class="form-row" style="margin-left: 0px;">
+                                                <div class="form-group col-md-3"></div>
+                                                <div class="form-group col-md-6">
+                                                    <input type="submit" class="btn btn-outline-success"
+                                                           value="Подтвердить"/>
+                                                </div>
+                                                <div class="form-group col-md-3"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div> <!-- !col-md-4 form -->
+
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3" style="text-align: center; padding-top: 10px;">
+                                    <h5>Вы уже зарегистрированы?</h5>
+                                    <form action="/login">
+                                        <input class="btn btn-outline-info" type="submit" name="" value="Войти"/><br/>
+                                    </form>
+                                </div>
+                                <div class="col-md-1"></div>
+
+                            </div>
+
                         </div>
-<!--                        <div class="form-group col-md-6">-->
-<!--                            <input type="password" class="form-control" placeholder="Подтвердить Пароль *"-->
-<!--                                   minlength="4" maxlength="20" value="" id="confirm_password" required/>-->
-<!--                        </div>-->
-                        <input type="submit" class="btn btn-outline-success" value="Подтвердить"/>
-                    </div>
-                </form>
+
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
             </div>
-        </div>
-    </div>
+        </div> <!-- /MainCl -->
 
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
 </div>
 
 <script>
@@ -63,7 +130,7 @@
 
     function validatePassword() {
         if (password.value != confirm_password.value) {
-            confirm_password.setCustomValidity("Passwords Don't Match");
+            confirm_password.setCustomValidity("Пароли не совпадают");
         } else {
             confirm_password.setCustomValidity('');
         }
@@ -74,5 +141,10 @@
 
 
 </script>
+
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
 </body>
+
 </html>

@@ -1,4 +1,0 @@
-INSERT INTO cursovaya.languages (id, name) VALUES (4, 'Japanese');
-INSERT INTO cursovaya.languages (id, name) VALUES (1, 'Russian');
-INSERT INTO cursovaya.languages (id, name) VALUES (3, 'Chinese');
-INSERT INTO cursovaya.languages (id, name) VALUES (2, 'Huinglish');

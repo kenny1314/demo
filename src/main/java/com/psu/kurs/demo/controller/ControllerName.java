@@ -54,7 +54,25 @@ public class ControllerName {
 
     @GetMapping("/registration")
     public String reg(Model model) {
-logger.info("get registration");
+        logger.info("get registration");
+
+
+        List<Platforms> platformsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
+
+            logger.info("registration");
+        } catch (Exception ex) {
+
+        }
+
         return "/registration";
     }
 
@@ -62,7 +80,24 @@ logger.info("get registration");
     public String addUser(@RequestParam("username") String username,
                           @RequestParam("password") String password,
                           Model model) {
-logger.info("post reg");
+        logger.info("post reg");
+
+
+        List<Platforms> platformsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
+
+            logger.info("registration");
+        } catch (Exception ex) {
+
+        }
 
         if (userService.findByUsername(username) != null) {
             model.addAttribute("error", "Пользователь " + username + " уже зарегистрирован");
@@ -79,13 +114,29 @@ logger.info("post reg");
     }
 
     @GetMapping(value = {"/inde"})
-    public @ResponseBody String inx(Model model){
+    public @ResponseBody
+    String inx(Model model) {
         logger.info("Вы зарегались, наверно");
         return "Вы успешно зарегистрировались";
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        List<Platforms> platformsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
+
+            logger.info("login");
+        } catch (Exception ex) {
+
+        }
         return "login";
     }
 
@@ -699,8 +750,6 @@ logger.info("post reg");
 
         return "page2";
     }
-
-
 
 
     @GetMapping(value = {"/"})
