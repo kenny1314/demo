@@ -1,6 +1,5 @@
 package com.psu.kurs.demo.dao;
 
-import com.psu.kurs.demo.entity.After.Users;
 import com.psu.kurs.demo.entity.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 

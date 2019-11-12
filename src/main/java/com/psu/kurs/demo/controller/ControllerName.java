@@ -1,31 +1,49 @@
 package com.psu.kurs.demo.controller;
 
+import com.psu.kurs.demo.config.model.User;
+import com.psu.kurs.demo.config.service.SecurityService;
+import com.psu.kurs.demo.config.service.UserService;
+import com.psu.kurs.demo.config.service.UserServiceImpl;
+import com.psu.kurs.demo.config.validator.UserValidator;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.ReadFileToClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class ControllerName {
 
     private static Logger logger = LoggerFactory.getLogger(ControllerName.class);
 
-    @Autowired
-    UsersRepository usersRepository;
+//    @Autowired
+//    UsersRepository usersRepository;
 
-    @Autowired
-    RoRepository roRepository;
+//    @Autowired
+//    RoRepository roRepository;
 
 
     @Autowired
@@ -48,6 +66,97 @@ public class ControllerName {
 
     @Autowired
     ImagesTRepository imagesTRepository;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private UserValidator userValidator;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+//        model.addAttribute("userForm", new User());
+//        logger.info("mess"+name+" "+pass);
+        logger.info("mess");
+
+        model.addAttribute("userForm", new User());
+
+        return "registration";
+
+//        return "redirect:/about";
+//        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String registratio1n(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+        userValidator.validate(userForm, bindingResult);
+
+        logger.info("post");
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.save(userForm);
+
+        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+
+//        return "about";
+        return "redirect:/about";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model, String error, String logout) {
+
+        model.addAttribute("message", "security.");
+
+        if (error != null) {
+            model.addAttribute("error", "Your username and password is invalid.");
+        }
+
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
+
+logger.info("login in");
+
+        return "login";
+    }
+
+//    @GetMapping({"/", "/welcome"})
+//    public String welcome(Model model) {
+//        return "index";
+//    }
+
+//    @GetMapping("/logins")
+//    public String logins(){
+//        logger.info("______logins");
+//        return "login";
+//    }
+//
+//
+//    @GetMapping("/login")
+//    public String logn(){
+//        logger.info("______llllllffffllgin");
+//        return "login";
+//    }
+
+//    @GetMapping("/welcome")
+//    public String wel(){
+//        logger.info("______llllllllgin");
+//        return "welcome";
+//    }
+
 
     @GetMapping("/testselect")
     public String testSelect(Model model) {

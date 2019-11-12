@@ -1,3 +1,14 @@
+/* makes main-menu open on hover */
+.menu-item:hover > .dropdown-menu {
+    display: block;
+}
+
+/* makes sub-menu S open on hover */
+.submenu-item:hover > .dropdown-menu {
+    display: block;
+}
+
+
 .maincl {
     margin: auto;
     width: 1226px;
