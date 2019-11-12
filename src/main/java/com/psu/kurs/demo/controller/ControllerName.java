@@ -94,27 +94,34 @@ public class ControllerName {
     }
 
     @PostMapping("/registration")
-    public String registratio1n(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
+    public @ResponseBody String registration() {
+        logger.info("reg");
+//        userValidator.validate(userForm, bindingResult);
 
-        logger.info("post");
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "registration";
+//        }
 
-        userValidator.validate(userForm, bindingResult);
+//        userService.save(userForm);
+//
+//        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-
-        userService.save(userForm);
-
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-
-//        return "about";
-        return "redirect:/about";
+        return "/about";
     }
+//    @PostMapping("/registration")
+//    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+//        userValidator.validate(userForm, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            return "registration";
+//        }
+//
+//        userService.save(userForm);
+//
+//        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+//
+//        return "redirect:/about";
+//    }
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {

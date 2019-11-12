@@ -1,29 +1,31 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Logins</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Reg</title>
 </head>
+
 <body>
-<h1>Registration</h1>
 
 <div class="container">
-    <form method="POST" action="/registration" class="form-signin">
-        <h2 class="form-heading">Registration</h2>
 
-        <h3 th:text="${message}"></h3>
-        <div class="form-group ">
+    <form method="POST" action="/registration">
+        <h2 class="form-signin-heading">Create your account</h2>
+        <input type="text" path="username" class="form-control" placeholder="Username"
+               autofocus="true"/>
 
-            <input type="text" class="form-control" placeholder="name" name="name"/>
-            <input type="text" class="form-control" placeholder="pass" name="pass"/>
-            <input type="password" path="passwordConfirm" class="form-control"
-                   placeholder="Confirm your password">
+        <input type="password" path="password" class="form-control" placeholder="Password"/>
+        <input type="password" path="passwordConfirm" class="form-control"
+               placeholder="Confirm your password"/>
 
-             <button class=" btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-            <!--            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>-->
-        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form>
+
 </div>
 
 </body>
