@@ -1,9 +1,6 @@
 package com.psu.kurs.demo.entity;
 
-import com.psu.kurs.demo.entity.After.Game;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

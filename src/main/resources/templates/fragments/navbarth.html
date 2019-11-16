@@ -6,6 +6,8 @@
     <!--    <a href="/platform"><img src="../../../../resources/static/img/3ch.png" id="imgl"></a>-->
     <!--    <a class="navbar-brand " href="# " id="gameofconsole">РЕТРО ИГОРЫ</a>-->
     <a class="navbar-brand " href="/" style="margin-left: 65px;margin-right: 145px;">Главная</a>
+<!--    <a class="navbar-brand " href="/" style="margin-left: 65px;margin-right: 145px;">'[[${#httpServletRequest.remoteUser}]]'</a>-->
+
     <!--    <button class="navbar-toggler " type="button " data-toggle="collapse " data-target="#navbarColor01 "-->
     <!--            aria-controls="navbarColor01 " aria-expanded="false " aria-label="Toggle navigation ">-->
     <!--        <span class="navbar-toggler-icon "></span>-->
@@ -48,10 +50,12 @@
 <!--                <a class="nav-link " href="/addplatform">Добавить платформу</a>-->
             </li>
             <li class="nav-item ">
-                <a class="nav-link " href="/addgame">Добавить игру</a>
+<!--                <a class="nav-link " href="/addgame">Добавить игру</a>-->
+                <a class="nav-link " href="/addgame">Add game</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link " href="/addGenres">Добавить жанр</a>
+<!--                <a class="nav-link " href="/addGenres">Добавить жанр</a>-->
+                <a class="nav-link " href="/addGenres">Add genre</a>
             </li>
 
             <li class="nav-item ">
@@ -62,6 +66,9 @@
             </li>
             <li class="nav-item ">
                 <a class="nav-link " href="/registration">Регистрация</a>
+            </li>
+            <li>
+                <a class="nav-link ">'[[${#httpServletRequest.remoteUser}]]'</a>
             </li>
 
 <!--            <li class="nav-item ">-->

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,6 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsServiceImpl")
@@ -33,7 +38,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/registration","/", "/index","/inde", "/getimgp/**","/getimg/**","/getimgg/**", "/css/**", "/img/**", "/genres", "/403",
-                        "/listplatforms", "/delivery", "/about"/*,"/addplatform","/addGenres" */).permitAll()
+                        "/listplatforms", "/delivery", "/about","/testDB","/game/**" /*,"/addplatform","/addGenres" */).permitAll()
+                .antMatchers("/testinput").permitAll()
                 .antMatchers("/addGenres").hasAnyRole("ADMIN")
                 .antMatchers("/addplatform").hasAnyRole("USER")
                 .anyRequest().authenticated()

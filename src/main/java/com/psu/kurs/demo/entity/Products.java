@@ -41,6 +41,9 @@ public class Products {
     @JoinColumn(name = "imagesp_id", referencedColumnName = "id")
     private ImagesP imagesP;
 
+    @OneToOne(mappedBy = "products")
+    private Requests requests;
+
     public Products() {
     }
 
@@ -165,6 +168,14 @@ public class Products {
         this.imagesP = imagesP;
     }
 
+    public Requests getRequests() {
+        return requests;
+    }
+
+    public void setRequests(Requests requests) {
+        this.requests = requests;
+    }
+
     @Override
     public String toString() {
         return "Products{" +
@@ -180,6 +191,7 @@ public class Products {
                 ", languages=" + languages.getName() +
                 ", platforms=" + platforms.getName() +
                 ", publishers=" + publishers.getName() +
+//                ", requests=" + requests.getId() +
                 '}';
     }
 

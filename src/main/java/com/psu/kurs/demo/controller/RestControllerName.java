@@ -39,8 +39,8 @@ public class RestControllerName {
     ImagesPRepository imagesPRepository;
 
 
-    @Autowired
-    EmployeeRepository employeeRepository;
+//    @Autowired
+//    EmployeeRepository employeeRepository;
 
 
     //не надо использовать //загрузка одного файла в базу данных

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -51,6 +52,38 @@ public class ControllerName {
     RoleRepository roleRepository;
     @Autowired
     UserService userService;
+
+    @Autowired
+    RequestsRepository requestsRepository;
+
+
+    @GetMapping("/testinput")
+    public String testinput(){
+
+        return "testinput";
+    }
+
+
+    @GetMapping("/testDB")
+//    @RolesAllowed("ROLE_ADMIN")
+    public String testDB() {
+
+        Requests requests = new Requests();
+
+        Products products=productsRepository.getOne(4L);
+
+        requests.setId(1L);
+        requests.setProducts(products);
+        requests.setDate("11.03.1999");
+        requests.setIdBucket(99L);
+        requests.setNumberOfDays(10);
+        requests.setPrice(products.getOneDayPrice());
+
+        requestsRepository.save(requests);
+
+        return "redirect:/";
+    }
+
 
     @GetMapping("/registration")
     public String reg(Model model) {
