@@ -1,6 +1,7 @@
 package com.psu.kurs.demo.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 //5 доп таблиц
 
@@ -41,8 +42,10 @@ public class Products {
     @JoinColumn(name = "imagesp_id", referencedColumnName = "id")
     private ImagesP imagesP;
 
-    @OneToOne(mappedBy = "products")
-    private Requests requests;
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "products_id")
+    private List<Requests> requestsList;
+
 
     public Products() {
     }
@@ -168,12 +171,13 @@ public class Products {
         this.imagesP = imagesP;
     }
 
-    public Requests getRequests() {
-        return requests;
+
+    public List<Requests> getRequestsList() {
+        return requestsList;
     }
 
-    public void setRequests(Requests requests) {
-        this.requests = requests;
+    public void setRequestsList(List<Requests> requestsList) {
+        this.requestsList = requestsList;
     }
 
     @Override

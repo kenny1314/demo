@@ -71,63 +71,60 @@
                                             </a>
                                             <!--                                        <img src="img/card1.jpg " class="card-img-top">-->
                                             <div class="card-body">
-                                                <!--                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>-->
-                                                <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
-                                                <p class="card-text " th:text="${info.description}"
-                                                   style="width: 247px;height: 123px; margin-bottom: 10px;">
-                                                    Игры серии выполнены в
-                                                    жанре «избей их всех». Сюжеты игр развиваются вокруг противостояния
-                                                    боевых жаб и Тёмной Королевы, главного отрицательного героя игр
-                                                    серии.</p>
-                                                <hr style="margin-top: 5px;margin-bottom: 5px;">
-                                                <div class="row">
-<!--                                                    <div class="col-md-2"></div>-->
-<!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
-
-                                                    <div class="col-md-6" style="text-align: center;padding-left: 42px;"><b th:text="${info.oneDayPrice+' р/д'}">100р</b></div>
-                                                    <div class="col-md-6"></div>
-                                                </div>
-                                                <hr style="margin-top: 5px;margin-bottom: 5px;">
-
-                                                <div class="container">
-                                                    <div class="row" style="padding-left: 10px;">
-                                                        <!--                                                        <div class="col-md-1"-->
-                                                        <!--                                                             style="padding-left: 0px;padding-right: 0px;">-->
-                                                        <!--&lt;!&ndash;                                                            &lt;!&ndash; th:text="${info.oneDayPrice}" &ndash;&gt; 100p&ndash;&gt;-->
-                                                        <!--                                                        </div>-->
+                                                <form method="post" th:action="@{'/testDB/'+${info.id}}">
+                                                    <!--                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>-->
+                                                    <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
+                                                    <p class="card-text " th:text="${info.description}"
+                                                       style="width: 247px;height: 123px; margin-bottom: 10px;">
+                                                        Игры серии выполнены в
+                                                        жанре «избей их всех». Сюжеты игр развиваются вокруг
+                                                        противостояния
+                                                        боевых жаб и Тёмной Королевы, главного отрицательного героя игр
+                                                        серии.</p>
+                                                    <hr style="margin-top: 5px;margin-bottom: 5px;">
+                                                    <div class="row">
+                                                        <!--                                                    <div class="col-md-2"></div>-->
+                                                        <!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
 
                                                         <div class="col-md-6"
-                                                             style="padding-left: 5px;padding-right: 5px;">
-                                                            <div class="input-group"><span class="input-group-btn">
-                                    <button type="button" class="btn btn-success btn-number" disabled="disabled" data-type="minus"
-                                            data-field=${'quant['+info.id+']'}>
-<!--                                            th:text="${'quant['+info.id+']'}"-->
-                                        <!--TODO разобраться как вставить значение -->
+                                                             style="text-align: center;padding-left: 42px;"><b
+                                                                th:text="${info.oneDayPrice+' р/д'}">100р</b></div>
+                                                        <div class="col-md-6"></div>
+                                                    </div>
+                                                    <hr style="margin-top: 5px;margin-bottom: 5px;">
 
+                                                    <div class="container">
+                                                        <div class="row" style="padding-left: 10px;">
+                                                            <div class="col-md-6"
+                                                                 style="padding-left: 5px;padding-right: 5px;">
+                                                                <div class="input-group"><span class="input-group-btn">
+                                    <button type="button btn-number" class="btn btn-success btn-number"
+                                            disabled="disabled" data-type="minus" th:id="${'quant['+info.id+']'}">
                                     -</button>
-                                                                <!-- name="quant[1]" -->
-                                                            </span> <input type="text" th:name="${'quant['+info.id+']'}"
+                                                            </span> <input type="text" th:id="${'quant['+info.id+']'}"
+                                                                           th:name="inputplus"
                                                                            class="form-control input-number" value="1"
                                                                            min="1"
                                                                            max="10" style="text-align: center;">
-                                                                <span class="input-group-btn">
+                                                                    <span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
-                                            data-field="quant[1]">+</button>
-                                </span>
+                                            th:id="${'quant['+info.id+']'}">+</button></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6"
+                                                                 style="padding-left: 8px;padding-right: 0px;">
+                                                                <button th:href="@{'/testDB/'+${info.id}}"
+                                                                        class="btn btn-primary" type="submit"
+                                                                >В корзину
+                                                                </button>
+
+
                                                             </div>
                                                         </div>
-<!-- -->
-
-
-                                                        <!--                                                        <div class="col-md-4"></div>-->
-                                                        <div class="col-md-6"
-                                                             style="padding-left: 8px;padding-right: 0px;">
-                                                            <a th:href="@{'/testDB'}" class="btn btn-primary"
-                                                            >В корзину</a>
-                                                        </div>
                                                     </div>
-                                                </div>
+                                                </form> <!-- form -->
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -151,29 +148,29 @@
 
     //plugin bootstrap minus and plus
     //http://jsfiddle.net/laelitenetwork/puJ6G/
-    $('.btn-number').click(function(e){
+    $('.btn-number').click(function (e) {
         e.preventDefault();
 
-        fieldName = $(this).attr('data-field');
-        type      = $(this).attr('data-type');
-        var input = $("input[name='"+fieldName+"']");
+        fieldName = $(this).attr('id');
+        type = $(this).attr('data-type');
+        var input = $("input[id='" + fieldName + "']");
         var currentVal = parseInt(input.val());
         if (!isNaN(currentVal)) {
-            if(type == 'minus') {
+            if (type == 'minus') {
 
-                if(currentVal > input.attr('min')) {
+                if (currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
                 }
-                if(parseInt(input.val()) == input.attr('min')) {
+                if (parseInt(input.val()) == input.attr('min')) {
                     $(this).attr('disabled', true);
                 }
 
-            } else if(type == 'plus') {
+            } else if (type == 'plus') {
 
-                if(currentVal < input.attr('max')) {
+                if (currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
                 }
-                if(parseInt(input.val()) == input.attr('max')) {
+                if (parseInt(input.val()) == input.attr('max')) {
                     $(this).attr('disabled', true);
                 }
 
@@ -182,24 +179,24 @@
             input.val(0);
         }
     });
-    $('.input-number').focusin(function(){
+    $('.input-number').focusin(function () {
         $(this).data('oldValue', $(this).val());
     });
-    $('.input-number').change(function() {
+    $('.input-number').change(function () {
 
-        minValue =  parseInt($(this).attr('min'));
-        maxValue =  parseInt($(this).attr('max'));
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
         valueCurrent = parseInt($(this).val());
 
         name = $(this).attr('name');
-        if(valueCurrent >= minValue) {
-            $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][id='" + name + "']").removeAttr('disabled')
         } else {
             alert('Sorry, the minimum value was reached');
             $(this).val($(this).data('oldValue'));
         }
-        if(valueCurrent <= maxValue) {
-            $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][id='" + name + "']").removeAttr('disabled')
         } else {
             alert('Sorry, the maximum value was reached');
             $(this).val($(this).data('oldValue'));
@@ -222,7 +219,7 @@
             e.preventDefault();
         }
     });
-                        </script>
+</script>
 </body>
 
 </html>

@@ -7,11 +7,12 @@ import java.util.List;
 @Table(name = "requests", schema = "cursovaya", catalog = "kurss")
 public class Requests {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "products_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "products_id")
     private Products products;
 
     private Long idBucket;
@@ -41,13 +42,8 @@ public class Requests {
         this.id = id;
     }
 
-    public Products getProducts() {
-        return products;
-    }
 
-    public void setProducts(Products products) {
-        this.products = products;
-    }
+
 
     public Long getIdBucket() {
         return idBucket;
@@ -79,6 +75,14 @@ public class Requests {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Products getProducts() {
+        return products;
+    }
+
+    public void setProducts(Products products) {
+        this.products = products;
     }
 
     @Override

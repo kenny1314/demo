@@ -19,6 +19,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -58,28 +61,100 @@ public class ControllerName {
 
 
     @GetMapping("/testinput")
-    public String testinput(){
+    public String testinput() {
 
         return "testinput";
     }
 
 
-    @GetMapping("/testDB")
-//    @RolesAllowed("ROLE_ADMIN")
-    public String testDB() {
+    @PostMapping("/testDB/{id}")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String testDB(@PathVariable("id") String id, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
+//    public String testDB(@PathVariable("id") String id, Model model) {
+
+        logger.info("_______________________________________ " + numberOfDays + "______________");
+
+        List<Platforms> platformsList;
+        List<Products> productsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            productsList = productsRepository.findAll();
+            model.addAttribute("productsList", productsList);
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
+
+        } catch (Exception ex) {
+
+        }
+
 
         Requests requests = new Requests();
 
-        Products products=productsRepository.getOne(4L);
+        Products products = productsRepository.getOne(Long.valueOf(id));
 
-        requests.setId(1L);
-        requests.setProducts(products);
-        requests.setDate("11.03.1999");
-        requests.setIdBucket(99L);
-        requests.setNumberOfDays(10);
+        Date date = new Date();
+        User user = userService.findByUsername(principal.getName());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
+        requests.setDate(simpleDateFormat.format(new Date()));
+
+        requests.setIdBucket(user.getId());
+        requests.setNumberOfDays(Integer.parseInt(numberOfDays));
         requests.setPrice(products.getOneDayPrice());
+        requests.setProducts(products);
 
-        requestsRepository.save(requests);
+
+        boolean trAdd = false;
+
+        List<Requests> requestsList = requestsRepository.findAll();
+
+        if (requestsRepository.findAll().size() > 0) {
+            for (int i = 0; i < requestsRepository.findAll().size(); i++) {
+                if ((requestsList.get(i).getIdBucket() == requests.getIdBucket()) &&
+                        (requestsList.get(i).getProducts().getId() == requests.getProducts().getId())) {
+
+                    Long oldID = requestsList.get(i).getId();
+                    logger.info("id old: " + oldID);
+                    logger.info("((((Такая корзина и продукт уже есть уже есть");
+
+                    requestsRepository.deleteById(oldID);
+                    logger.info("drop the mic: "+oldID);
+                    requests.setId(oldID);
+                    requestsRepository.save(requests);
+                    logger.info("add to db");
+                    trAdd = true;
+                    break;
+                }
+            }
+        }
+        if (!trAdd) {
+            logger.info("tradd: "+trAdd);
+            requestsRepository.save(requests);
+        }
+
+
+//        requestsRepository.save(requests);
+
+
+//        requestsRepository.getOne(Long.valueOf(i)).getIdBucket()
+
+
+//        for (int i = 0; i < requestsList.size(); i++) {
+//            for (int j = 1; j < requestsList.size(); j++) {
+//                if ((requestsList.get(i).getIdBucket() == requestsList.get(j).getIdBucket()) &&
+//                        (requestsList.get(i).getProducts().getId() == requestsList.get(j).getProducts().getId())) {
+////                    logger.info("id old: "+requestsList.get(i).getProducts().getId());
+//                    logger.info("id old: "+requestsList.get(i).getId());
+//                    logger.info("((((Такая корзина и продукт уже есть уже есть");
+//
+//                }
+//            }
+//        }
 
         return "redirect:/";
     }
