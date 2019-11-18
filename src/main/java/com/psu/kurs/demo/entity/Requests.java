@@ -1,13 +1,12 @@
 package com.psu.kurs.demo.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "requests", schema = "cursovaya", catalog = "kurss")
 public class Requests {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -15,7 +14,9 @@ public class Requests {
     @JoinColumn(name = "products_id")
     private Products products;
 
-    private Long idBucket;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "basket_id")
+    private Basket basket;
 
     private String date;
 
@@ -25,10 +26,9 @@ public class Requests {
     public Requests() {
     }
 
-    public Requests(Long id, Products products, Long idBucket, String date, int numberOfDays, double price) {
-        this.id = id;
+    public Requests(Products products, Basket basket, String date, int numberOfDays, double price) {
         this.products = products;
-        this.idBucket = idBucket;
+        this.basket = basket;
         this.date = date;
         this.numberOfDays = numberOfDays;
         this.price = price;
@@ -40,17 +40,6 @@ public class Requests {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-
-
-
-    public Long getIdBucket() {
-        return idBucket;
-    }
-
-    public void setIdBucket(Long idBucket) {
-        this.idBucket = idBucket;
     }
 
     public String getDate() {
@@ -85,12 +74,20 @@ public class Requests {
         this.products = products;
     }
 
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
+
     @Override
     public String toString() {
         return "Requests{" +
                 "id=" + id +
                 ", products=" + products +
-                ", idBucket=" + idBucket +
+//                ", idBucket=" + basket.getId() +
                 ", date='" + date + '\'' +
                 ", numberOfDays=" + numberOfDays +
                 ", price=" + price +

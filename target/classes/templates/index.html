@@ -96,19 +96,19 @@
                                                     <div class="container">
                                                         <div class="row" style="padding-left: 10px;">
                                                             <div class="col-md-6"
-                                                                 style="padding-left: 5px;padding-right: 5px;">
+                                                                 style="padding-left: 4px;padding-right: 4px;">
                                                                 <div class="input-group"><span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number"
-                                            disabled="disabled" data-type="minus" th:id="${'quant['+info.id+']'}">
+                                            data-type="minus" th:id="${'quant['+info.id+']'}" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                     -</button>
                                                             </span> <input type="text" th:id="${'quant['+info.id+']'}"
                                                                            th:name="inputplus"
-                                                                           class="form-control input-number" value="1"
+                                                                           class="form-control input-number" value="3"
                                                                            min="1"
                                                                            max="10" style="text-align: center;">
                                                                     <span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
-                                            th:id="${'quant['+info.id+']'}">+</button></span>
+                                            th:id="${'quant['+info.id+']'}" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">+</button></span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6"
@@ -188,15 +188,18 @@
         maxValue = parseInt($(this).attr('max'));
         valueCurrent = parseInt($(this).val());
 
-        name = $(this).attr('name');
+        // var name = $(this).attr('name');
+        // alert('name '+name);
+        fieldName = $(this).attr('id');
+        // alert('field_name '+fieldName);
         if (valueCurrent >= minValue) {
-            $(".btn-number[data-type='minus'][id='" + name + "']").removeAttr('disabled')
+            $(".btn-number[data-type='minus'][id='" + fieldName + "']").removeAttr('disabled')
         } else {
             alert('Sorry, the minimum value was reached');
             $(this).val($(this).data('oldValue'));
         }
         if (valueCurrent <= maxValue) {
-            $(".btn-number[data-type='plus'][id='" + name + "']").removeAttr('disabled')
+            $(".btn-number[data-type='plus'][id='" + fieldName + "']").removeAttr('disabled')
         } else {
             alert('Sorry, the maximum value was reached');
             $(this).val($(this).data('oldValue'));

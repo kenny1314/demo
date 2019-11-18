@@ -59,6 +59,9 @@ public class ControllerName {
     @Autowired
     RequestsRepository requestsRepository;
 
+    @Autowired
+    BasketRepository basketRepository;
+
 
     @GetMapping("/testinput")
     public String testinput() {
@@ -66,12 +69,65 @@ public class ControllerName {
         return "testinput";
     }
 
+    @GetMapping("/basket")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String basket(Model model, Principal principal) {
+
+        List<Platforms> platformsList;
+        List<Products> productsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            productsList = productsRepository.findAll();
+            model.addAttribute("productsList", productsList);
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
+
+        } catch (Exception ex) {
+
+        }
+
+
+        Basket basket;
+
+        User user = userService.findByUsername(principal.getName());
+        if (basketRepository.existsById(user.getId())) {
+            basket = basketRepository.getOne(user.getId());
+        } else {
+            basket = new Basket();
+            basket.setId(user.getId());
+            basketRepository.save(basket);
+        }
+
+
+        List<Products> productsListBasket = new ArrayList<>();
+
+        if (basket.getRequestsList().size() > 0) {
+            for (Requests req : basket.getRequestsList()) {
+                productsListBasket.add(req.getProducts());
+            }
+
+            model.addAttribute("requestsList", basket.getRequestsList());
+            model.addAttribute("productsListBasket", productsListBasket);
+        }
+
+
+        model.addAttribute("finalPrice", basket.getFinalPrice());
+
+        return "basket";
+    }
+
 
     @PostMapping("/testDB/{id}")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String testDB(@PathVariable("id") String id, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
-//    public String testDB(@PathVariable("id") String id, Model model) {
 
+        logger.info("principal: " + principal.getName());
         logger.info("_______________________________________ " + numberOfDays + "______________");
 
         List<Platforms> platformsList;
@@ -103,11 +159,27 @@ public class ControllerName {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
         requests.setDate(simpleDateFormat.format(new Date()));
 
-        requests.setIdBucket(user.getId());
+        Basket basket = null;
+
+
+        if (basketRepository.existsById(user.getId())) {
+            basket = basketRepository.getOne(user.getId());
+        } else {
+            basket = new Basket();
+            basket.setId(user.getId());
+            basketRepository.save(basket);
+
+        }
+
+
+        requests.setBasket(basket);
+
+
         requests.setNumberOfDays(Integer.parseInt(numberOfDays));
         requests.setPrice(products.getOneDayPrice());
         requests.setProducts(products);
 
+        requestsRepository.save(requests); //для заполнения таблицы
 
         boolean trAdd = false;
 
@@ -115,16 +187,19 @@ public class ControllerName {
 
         if (requestsRepository.findAll().size() > 0) {
             for (int i = 0; i < requestsRepository.findAll().size(); i++) {
-                if ((requestsList.get(i).getIdBucket() == requests.getIdBucket()) &&
+//                if ((requestsList.get(i).getIdBucket() == requests.getIdBucket()) &&
+                if ((requestsList.get(i).getBasket().getId() == requests.getBasket().getId()) &&
                         (requestsList.get(i).getProducts().getId() == requests.getProducts().getId())) {
 
                     Long oldID = requestsList.get(i).getId();
                     logger.info("id old: " + oldID);
                     logger.info("((((Такая корзина и продукт уже есть уже есть");
 
+                    basketRepository.save(basket);
+
                     requestsRepository.deleteById(oldID);
-                    logger.info("drop the mic: "+oldID);
-                    requests.setId(oldID);
+                    logger.info("drop the mic: " + oldID);
+//                    requests.setId(oldID);
                     requestsRepository.save(requests);
                     logger.info("add to db");
                     trAdd = true;
@@ -133,28 +208,20 @@ public class ControllerName {
             }
         }
         if (!trAdd) {
-            logger.info("tradd: "+trAdd);
+            logger.info("tradd: " + trAdd);
+            basketRepository.save(basket);
             requestsRepository.save(requests);
         }
 
+        double finalPrice = 0;
+        for (Requests value : requestsList) {
+            if (value.getBasket().getId() == basket.getId()) {
+                finalPrice += value.getPrice() * value.getNumberOfDays();
+            }
+        }
+        basket.setFinalPrice(finalPrice);
+        basketRepository.save(basket);
 
-//        requestsRepository.save(requests);
-
-
-//        requestsRepository.getOne(Long.valueOf(i)).getIdBucket()
-
-
-//        for (int i = 0; i < requestsList.size(); i++) {
-//            for (int j = 1; j < requestsList.size(); j++) {
-//                if ((requestsList.get(i).getIdBucket() == requestsList.get(j).getIdBucket()) &&
-//                        (requestsList.get(i).getProducts().getId() == requestsList.get(j).getProducts().getId())) {
-////                    logger.info("id old: "+requestsList.get(i).getProducts().getId());
-//                    logger.info("id old: "+requestsList.get(i).getId());
-//                    logger.info("((((Такая корзина и продукт уже есть уже есть");
-//
-//                }
-//            }
-//        }
 
         return "redirect:/";
     }
