@@ -12,7 +12,7 @@
 
 <body>
 <div class="bodycl">
-    <h1>hello</h1>
+    <!--    <h1>hello</h1>-->
     <div class="site">
         <div class="maincl">
 
@@ -86,30 +86,54 @@
                                                         <!--                                                    <div class="col-md-2"></div>-->
                                                         <!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
 
-                                                        <div class="col-md-6"
+                                                        <div class="col-md-7"
                                                              style="text-align: center;padding-left: 42px;"><b
-                                                                th:text="${info.oneDayPrice+' р/д'}">100р</b></div>
-                                                        <div class="col-md-6"></div>
+                                                                th:text="${info.oneDayPrice+' р/день'}">100р</b></div>
+                                                        <div class="col-md-5" >
+                                                            <h6 th:id="${info.id}"></h6>
+                                                        </div>
                                                     </div>
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
 
                                                     <div class="container">
+
                                                         <div class="row" style="padding-left: 10px;">
                                                             <div class="col-md-6"
                                                                  style="padding-left: 4px;padding-right: 4px;">
                                                                 <div class="input-group"><span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number"
-                                            data-type="minus" th:id="${'quant['+info.id+']'}" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+                                            data-type="minus" th:id="${'quant['+info.id+']'}"
+                                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 36.994048px;">
                                     -</button>
-                                                            </span> <input type="text" th:id="${'quant['+info.id+']'}"
+                                                            </span>
+                                                                    <input type="hidden" th:id="${'custId['+info.id+']'}" name="custId"
+                                                                           th:value="${info.oneDayPrice}">
+<!--                                                                    <input   onchange="incr(this)" type="text"-->
+                                                                    <input   th:onchange="neincr(this.id)" type="text"
+                                                                           th:id="${'quant['+info.id+']'}"
                                                                            th:name="inputplus"
                                                                            class="form-control input-number" value="3"
                                                                            min="1"
-                                                                           max="10" style="text-align: center;">
+                                                                           max="10" style="text-align: center;" th:alt="${info.oneDayPrice}" th:title="${info.id}">
+
+                                                                    <script>
+                                                                        function incr(e) {
+                                                                            var temp = e.value * e.alt;
+                                                                            alert(temp);
+                                                                            document.getElementById(e.title).innerText=temp+'р';
+                                                                        }
+                                                                        function neincr(e) {
+                                                                            alert(e)
+                                                                        }
+
+                                                                    </script>
                                                                     <span class="input-group-btn">
+
+
                                     <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
-                                            th:id="${'quant['+info.id+']'}" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">+</button></span>
-                                                                </div>
+                                            th:id="${'quant['+info.id+']'}"
+                                            style="border-top-left-radius: 0px;border-bottom-left-radius: 0px; height: 36.994048px;">+</button></span>
+                                                                </div> <!-- div bot-->
                                                             </div>
                                                             <div class="col-md-6"
                                                                  style="padding-left: 8px;padding-right: 0px;">
@@ -121,7 +145,7 @@
 
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> <!-- button-->
                                                 </form> <!-- form -->
                                             </div>
 

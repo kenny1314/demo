@@ -69,6 +69,20 @@ public class ControllerName {
         return "testinput";
     }
 
+    @GetMapping("/delProdBask/{id}")
+    public String delProdBasket(@PathVariable(value = "id", required = false) String id) {
+
+        if (requestsRepository.existsById(Long.valueOf(id))) {
+            requestsRepository.deleteById(Long.valueOf(id));
+        } else {
+            logger.info("product doesn't exist" + id);
+
+        }
+
+        return "redirect:/basket";
+    }
+
+
     @GetMapping("/basket")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String basket(Model model, Principal principal) {

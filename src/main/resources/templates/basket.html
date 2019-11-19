@@ -12,7 +12,7 @@
 
 <body>
 <div class="bodycl">
-    <h1>basket</h1>
+    <!--    <h1>basket</h1>-->
     <div class="site">
         <div class="maincl">
 
@@ -46,36 +46,73 @@
                             <div class="col-md-6">
                                 <h5>Список товаров</h5>
                             </div>
-                            <div class="col-md-3">
-                                <h5>Количество дней</h5>
+                            <div class="col-md-2" style="text-align: center">
+                                <h5>Кол. дней</h5>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <h5>Цена за день</h5>
+                            </div>
+                            <div class="col-md-2">
+                                <h5>Удалить</h5>
                             </div>
                         </div>
                         <hr>
 
                         <th:block th:each="i : ${#numbers.sequence( 0, #lists.size(requestsList)-1)}">
-<!--                        <div class="row" th:each="product: ${productsListBasket}">-->
-                        <div class="row" >
-                            <!--                            <th:block  th:each="request :${requestsList}">-->
-                            <div class="col-md-3">
-                                <p th:text="${requestsList[i].id}"></p>
+                            <!--                        <div class="row" th:each="product: ${productsListBasket}">-->
+                            <div class="row">
+                                <!--                            <th:block  th:each="request :${requestsList}">-->
+                                <div class="col-md-3">
+                                    <a th:href="@{'/game/' +${productsListBasket[i].id}}">
+                                        <img th:src="@{'/getimgp/' + ${productsListBasket[i].id}}"
+                                             style="width: 200px; height: 112px">
+                                    </a>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <span th:text="'Код: '+${productsListBasket[i].id}"
+                                          style="color: #888888; font-size: smaller" th:id="idProd"></span>
+                                    <a th:href="@{'/game/' +${productsListBasket[i].id}}" style="color: #0aa285">
+                                        <!--                                    <a th:href="@{'/game/' +${productsListBasket[i].id}}" style="color: black">-->
+                                        <p th:text="${productsListBasket[i].title}"></p>
+                                    </a>
+                                </div>
+                                <div class="col-md-2" style="text-align: center">
+<!--                                    <p th:text="${requestsList[i].numberOfDays}"></p>-->
+
+                                    <div class="input-group"><span class="input-group-btn">
+                                    <button type="button btn-number" class="btn btn-success btn-number"
+                                            data-type="minus" th:id="${'quant['+requestsList[i].id+']'}"
+                                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 36.994048px;">
+                                    -</button></span>
+                                        <input type="text"
+                                               th:id="${'quant['+requestsList[i].id+']'}"
+                                               th:name="inputplus"
+                                               class="form-control input-number" th:value="${requestsList[i].numberOfDays}"
+                                               min="1"
+                                               max="10" style="text-align: center;" th:alt="${productsListBasket[i].oneDayPrice}"
+                                               >
+
+                                        <span class="input-group-btn">
+                                    <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
+                                            th:id="${'quant['+requestsList[i].id+']'}"
+                                            style="border-top-left-radius: 0px;border-bottom-left-radius: 0px; height: 36.994048px;">+</button></span>
+                                    </div> <!-- div bot-->
+
+                                </div>
+                                <div class="col-md-2" style="text-align: center">
+                                    <p th:text="${productsListBasket[i].oneDayPrice}"></p>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 22px;">
+                                    <!--                                    <p>Удолить</p>-->
+                                    <a th:text="Удолить" th:href="@{'/delProdBask/' +${requestsList[i].id}}">
+                                    </a>
+                                </div>
+
                             </div>
-                            <div class="col-md-3">
-                                <p th:text="${productsListBasket[i].title}"></p>
-                            </div>
-                            <div class="col-md-3">
-                                <p th:text="${requestsList[i].numberOfDays}"></p>
-                            </div>
-                            <div class="col-md-3">
-                                <p th:text="${productsListBasket[i].oneDayPrice}"></p>
-                            </div>
-                        </div>
-                        <hr>
+                            <hr th:id="bID">
                         </th:block>
 
-                        <hr th:id="finId">
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="col-md-3"></div>
@@ -84,6 +121,8 @@
                                 <h5 th:text="'Цена: '+${finalPrice}"></h5>
                             </div>
                         </div>
+
+
 
 
                     </div> <!-- /Col-md-9 -->
