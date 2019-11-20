@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 
 <div class="container-fluet" style="
@@ -8,14 +8,71 @@
     <div class=" row ">
 
         <div class="col-md-4"><a href="/"> <img id="logo" src="../img/logo2.png"></a></div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <form class="form-inline my-2 my-lg-0 searchcl ">
                 <input class="form-control mr-sm-2 inputclsearch" id="srch1" type="text " placeholder="Search ">
                 <button class="btn btn-secondary my-2 my-sm-0 " type="submit ">Search</button>
             </form>
         </div>
-        <div class="col-md-2" id="contid">
-            тел. 375298265750<br> тел. 375296666666
+        <!--        <div class="col-md-2" id="contid">-->
+        <!--            тел. 375298265750<br> тел. 375296666666-->
+        <!--        </div>-->
+        <!--        <div class="col-md-2" id="contid2">-->
+        <!--            <div class="row">-->
+        <!--                <a class="nav-link " href="/login" sec:authorize="isAnonymous()" style="padding-bottom: 3px;padding-top: 11px;">Вход</a>-->
+        <!--            </div>-->
+        <!--            <div class="row">-->
+        <!--                <a class="nav-link " href="/registration" sec:authorize="isAnonymous()" style="padding-top: 3px;">Регистрация</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="col-md-1">-->
+        <!--        </div>-->
+
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-6" sec:authorize="isAnonymous()">
+<!--                    <div class="row">-->
+<!--                        тел. 375298265750<br> тел. 375296666666-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <a class="nav-link " href="/login"-->
+<!--                           style="padding-bottom: 3px;padding-top: 11px;">Вход</a>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <a class="nav-link " href="/registration"-->
+<!--                           style="padding-top: 3px;">Регистрация</a>-->
+<!--                    </div>-->
+                </div>
+                <div class="col-md-6" sec:authorize="isAnonymous()" style="padding-left: 37px">
+                    <div class="row" style="text-align: center; padding-left: 22px;">
+                        <a class="nav-link " href="/login"
+                           style="padding-bottom: 3px;padding-top: 11px;">Вход</a>
+                    </div>
+                    <div class="row">
+                        <a class="nav-link " href="/registration"
+                           style="padding-top: 3px;">Регистрация</a>
+                    </div>
+                </div>
+
+                <div class="col-md-8" sec:authorize="isAuthenticated()" style="padding-left: 100px;padding-top: 16px;">
+                    <div class="row" >
+<!--                        <a href="/"> [[${#httpServletRequest.remoteUser}]]</a>-->
+                        <h6 href="/" style="margin-bottom: 4px;"> [[${#httpServletRequest.remoteUser}]]</h6>
+                    </div>
+                    <div class="row" style="padding-top: 3px;">
+                        <a href="/">Личный кабинет</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4" sec:authorize="isAuthenticated()">
+                    <div class="row">
+                        <a class="nav-link " href="/logout"
+                           style="padding-top: 27px;padding-left: 27px;">Выход</a>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>

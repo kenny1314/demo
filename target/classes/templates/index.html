@@ -90,7 +90,7 @@
                                                              style="text-align: center;padding-left: 42px;"><b
                                                                 th:text="${info.oneDayPrice+' р/день'}">100р</b></div>
                                                         <div class="col-md-5" >
-                                                            <h6 th:id="${info.id}"></h6>
+                                                            <b th:id="${info.id}"></b>
                                                         </div>
                                                     </div>
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
@@ -103,13 +103,13 @@
                                                                 <div class="input-group"><span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number"
                                             data-type="minus" th:id="${'quant['+info.id+']'}"
-                                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 36.994048px;">
+                                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 35.994048px;">
                                     -</button>
                                                             </span>
                                                                     <input type="hidden" th:id="${'custId['+info.id+']'}" name="custId"
                                                                            th:value="${info.oneDayPrice}">
 <!--                                                                    <input   onchange="incr(this)" type="text"-->
-                                                                    <input   th:onchange="neincr(this.id)" type="text"
+                                                                    <input   onchange="incr(this)" type="text"
                                                                            th:id="${'quant['+info.id+']'}"
                                                                            th:name="inputplus"
                                                                            class="form-control input-number" value="3"
@@ -119,7 +119,7 @@
                                                                     <script>
                                                                         function incr(e) {
                                                                             var temp = e.value * e.alt;
-                                                                            alert(temp);
+                                                                            // alert(temp);
                                                                             document.getElementById(e.title).innerText=temp+'р';
                                                                         }
                                                                         function neincr(e) {
@@ -132,7 +132,7 @@
 
                                     <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
                                             th:id="${'quant['+info.id+']'}"
-                                            style="border-top-left-radius: 0px;border-bottom-left-radius: 0px; height: 36.994048px;">+</button></span>
+                                            style="border-top-left-radius: 0px;border-bottom-left-radius: 0px; height: 35.994048px;">+</button></span>
                                                                 </div> <!-- div bot-->
                                                             </div>
                                                             <div class="col-md-6"
