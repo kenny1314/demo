@@ -13,117 +13,141 @@
 <body>
 <div class="bodycl">
     <div class="site">
-    <div class="maincl">
+        <div class="maincl">
 
 
-        <!-- Header -->
-        <div th:replace="fragments/headerth :: header"></div>
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
 
-        <!-- Navbar -->
-        <div th:replace="fragments/navbarth :: navbar"></div>
-
-
-        <div class="container-fluet" style="width: 1211px;">
-            <div class="row">
-                <!-- Menu -->
-                <div class="col-md-3" style="padding-right: 0px;">
-                    <div th:replace="fragments/menuth :: menu"></div>
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
 
 
-                </div>
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
 
 
-
-                <div class="col-md-9" style="padding-left: 0px;"  th:object="${platform}" >
-                    <!-- Carousel -->
-
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10" style="padding-top: 15px; text-align: center">
-                            <h3 th:text="*{name}">Super Nintendo Entertainment System </h3>
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-8" style=" text-align: left; ">
-                            <img  th:src="@{'/getimg/' + *{id}}" style="height: 320px; width: 600px">
-                        </div>
-                        <div class="col-md-4" style="align:center;">
-
-                            <table id="tabinfo2" style="width: 250px; margin-left: 20px;">
-                                <th colspan="2" style="background:#eaecf0; text-align: center;" >
-                                    Характеристики
-                                </th>
-
-                                <tr id="trinfo2">
-                                    <td id="col1tabinfo"><b>Производитель</b></td>
-                                    <td id="col2tabinfo" th:text="*{manufacturer}">Nintendo
-                                    </td>
-                                </tr>
-                                <tr id="trinfo2">
-                                    <td id="col1tabinfo"><b>Дата выхода</b></td>
-                                    <td id="col2tabinfo" th:text="*{relaseDate}">Япония 21 ноября 1990
-                                    </td>
-                                </tr>
-                                <tr id="trinfo2">
-                                    <td id="td2"><b>Поколение</b></td>
-                                    <td id="td2" th:text="*{generation}">tHreee</td>
-                                </tr>
-                                <tr id="trinfo2">
-                                    <td id="col1tabinfo"><b>Продано штук</b></td>
-                                    <td id="col2tabinfo" th:text="*{piecesSold}">20 млн в США, 49 млн по всему миру
-                                    </td>
-                                </tr>
-                                <tr id="trinfo2">
-                                    <td id="col1tabinfo "><b>ЦП</b></td>
-                                    <td id="col2tabinfo" th:text="*{cpu}">16-разрядный Ricoh 5A22, работающий на частоте 3,58 МГц
-                                    </td>
-                                </tr>
-                            </table>
-                        </div> <!-- /col3 характеристики -->
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5>Описание</h5>
-                            <p th:text="*{description}">
-                                Super Nintendo Entertainment System (также известная как Super Nintendo, Super NES и
-                                SNES[K 2]) — 16-разрядная игровая приставка, выпущенная компанией Nintendo в США,
-                                Бразилии, Европе и Австралии. В Японии она известна под названием Super Famicom (яп.
-                                スーパーファミコン су:па:фамикон), сокращение от Super Family Computer, или SFC. В Южной Корее
-                                она называлась Super Comboy (кор. 슈퍼 컴보이 Сюпхо кхомбои) и распространялась Hyundai
-                                Electronics. Хотя все перечисленные версии консоли одинаковы, региональная блокировка
-                                делает невозможной совместимость картриджей из разных стран.</p>
+
+                    <div class="col-md-9" style="padding-left: 0px;" th:object="${platform}">
+                        <!-- Carousel -->
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" style="padding-top: 15px; text-align: center">
+                                <h3 th:text="*{name}">Super Nintendo Entertainment System </h3>
+                            </div>
+                            <div class="col-md-3" style="padding-top: 15px">
+                                <div class="row">
+                                    <button class="btn btn-success" style="margin-right: 15px">Все игры</button>
+                                  <a th:href="${'/delplatform/'+platform.id}">  <button class="btn btn-danger" >Удалить</button></a>
+                                    <!--TODO удалить по id -->
+                                </div>
+                            </div>
                         </div>
-                    </div> <!-- /row описание -->
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5>История</h5>
-                            <p th:text="*{story}">
-                                Когда оригинальная NES/Famicom была на вершине своей популярности, другие компании
-                                разрабатывали собственные игровые приставки. В 1987 и 1988 годах, соответственно, NEC и
-                                Sega выпустили свои консоли: PC Engine (известна в США как TurboGrafx-16) и Mega
-                                Drive/Genesis. Обе системы были построены с использованием 16-битной архитектуры,
-                                предоставляя улучшенные графику и звук по сравнению с 8-битной NES. И тем не менее она
-                                продолжала доминировать на игровом рынке на протяжении ещё нескольких лет, пока творение
-                                Sega, наконец, не достигло успеха. Изначально руководство компании Nintendo не
-                                выказывало никакого интереса к разработке новой системы, но пересмотрело свою позицию,
-                                когда NES начала устаревать. Её популярность на рынке стала снижаться, и Nintendo была
-                                вынуждена создать новую 16-битную консоль, чтобы успешно конкурировать с другими
-                                фирмами.</p>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-8" style=" text-align: left; ">
+                                <img th:src="@{'/getimg/' + *{id}}" style="height: 320px; width: 600px">
+                            </div>
+                            <div class="col-md-4" style="align:center;">
+
+                                <table id="tabinfo2" style="width: 250px; margin-left: 20px;">
+                                    <th colspan="2" style="background:#eaecf0; text-align: center;">
+                                        Характеристики
+                                    </th>
+
+                                    <tr id="trinfo2">
+                                        <td id="col1tabinfo"><b>Производитель</b></td>
+                                        <td id="col2tabinfo" th:text="*{manufacturer}">Nintendo
+                                        </td>
+                                    </tr>
+                                    <tr id="trinfo2">
+                                        <td id="col1tabinfo"><b>Дата выхода</b></td>
+                                        <td id="col2tabinfo" th:text="*{relaseDate}">Япония 21 ноября 1990
+                                        </td>
+                                    </tr>
+                                    <tr id="trinfo2">
+                                        <td id="td2"><b>Поколение</b></td>
+                                        <td id="td2" th:text="*{generation}">tHreee</td>
+                                    </tr>
+                                    <tr id="trinfo2">
+                                        <td id="col1tabinfo"><b>Продано штук</b></td>
+                                        <td id="col2tabinfo" th:text="*{piecesSold}">20 млн в США, 49 млн по всему миру
+                                        </td>
+                                    </tr>
+                                    <tr id="trinfo2">
+                                        <td id="col1tabinfo "><b>ЦП</b></td>
+                                        <td id="col2tabinfo" th:text="*{cpu}">16-разрядный Ricoh 5A22, работающий на
+                                            частоте 3,58 МГц
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!--<div class="col-md-3"></div>-->
+                                <!--<div class="col-md-6">-->
+
+
+                                <!--</div>-->
+                                <div class="col-md-3"></div>
+
+                            </div> <!-- /col3 характеристики -->
+
                         </div>
-                    </div> <!-- /row История -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5>Описание</h5>
+                                <p th:text="*{description}">
+                                    Super Nintendo Entertainment System (также известная как Super Nintendo, Super NES и
+                                    SNES[K 2]) — 16-разрядная игровая приставка, выпущенная компанией Nintendo в США,
+                                    Бразилии, Европе и Австралии. В Японии она известна под названием Super Famicom (яп.
+                                    スーパーファミコン су:па:фамикон), сокращение от Super Family Computer, или SFC. В Южной
+                                    Корее
+                                    она называлась Super Comboy (кор. 슈퍼 컴보이 Сюпхо кхомбои) и распространялась Hyundai
+                                    Electronics. Хотя все перечисленные версии консоли одинаковы, региональная
+                                    блокировка
+                                    делает невозможной совместимость картриджей из разных стран.</p>
+                            </div>
+                        </div> <!-- /row описание -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5>История</h5>
+                                <p th:text="*{story}">
+                                    Когда оригинальная NES/Famicom была на вершине своей популярности, другие компании
+                                    разрабатывали собственные игровые приставки. В 1987 и 1988 годах, соответственно,
+                                    NEC и
+                                    Sega выпустили свои консоли: PC Engine (известна в США как TurboGrafx-16) и Mega
+                                    Drive/Genesis. Обе системы были построены с использованием 16-битной архитектуры,
+                                    предоставляя улучшенные графику и звук по сравнению с 8-битной NES. И тем не менее
+                                    она
+                                    продолжала доминировать на игровом рынке на протяжении ещё нескольких лет, пока
+                                    творение
+                                    Sega, наконец, не достигло успеха. Изначально руководство компании Nintendo не
+                                    выказывало никакого интереса к разработке новой системы, но пересмотрело свою
+                                    позицию,
+                                    когда NES начала устаревать. Её популярность на рынке стала снижаться, и Nintendo
+                                    была
+                                    вынуждена создать новую 16-битную консоль, чтобы успешно конкурировать с другими
+                                    фирмами.</p>
+                            </div>
+                        </div> <!-- /row История -->
 
 
-                </div> <!-- /Col-md-9 -->
-            </div> <!-- /Row -->
-        </div>
-    </div> <!-- /MainCl -->
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
 
-<!--    <div th:replace="fragments/footerth :: footer"></div>-->
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
     </div>
 </div>
 <div th:replace="fragments/footerth :: footer"></div>

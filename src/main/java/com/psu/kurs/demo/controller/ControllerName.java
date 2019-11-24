@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -61,6 +62,44 @@ public class ControllerName {
 
     @Autowired
     BasketRepository basketRepository;
+
+    @GetMapping("/del")
+    public @ResponseBody
+    String delPr() {
+
+        productsRepository.deleteById(4L);
+        return "mmm";
+    }
+
+
+    //TODO возможно сюда добавить тригер
+    @GetMapping("/delplatform/{id}")
+    public String delPlatformId(@PathVariable String id, Model model) {
+
+
+        List<Products> productsList = productsRepository.findAll();
+        for (Products prod : productsList) {
+            logger.info("id plaf:" + prod.getPlatforms().getId());
+            logger.info("id get:" + Long.valueOf(id));
+            if (prod.getPlatforms().getId().equals(Long.valueOf(id))) {
+                logger.info("Такая платформа ессть в продуктах");
+
+                prod.setIdd(1L);
+                prod.setPlatforms(platformsRepository.getOne(1L));
+                productsRepository.save(prod);
+            }
+        }
+
+        if (platformsRepository.existsById(Long.valueOf(id))) {
+//            Platforms platforms = platformsRepository.getOne(Long.valueOf(id));
+//            platforms.setProductsList(productsRepository.findAll());
+//            platformsRepository.save(platforms);
+            platformsRepository.deleteById(Long.valueOf(id));
+        }
+
+
+        return "redirect:/listplatforms";
+    }
 
 
     @GetMapping("/testinput")
@@ -139,7 +178,8 @@ public class ControllerName {
 
     @PostMapping("/testDB/{id}")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
-    public String testDB(@PathVariable("id") String id, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
+//    public String testDB(@PathVariable("id") String id, @RequestParam("currentURL") String currentURL, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
+    public String testDB(@PathVariable("id") String id, @RequestParam(name = "currentURL", required = false) String currentURL, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
 
         logger.info("principal: " + principal.getName());
         logger.info("_______________________________________ " + numberOfDays + "______________");
@@ -235,9 +275,15 @@ public class ControllerName {
         }
         basket.setFinalPrice(finalPrice);
         basketRepository.save(basket);
+        logger.info("currentURL: " + currentURL);
 
+//        return "redirect:/";
+        if (currentURL == null) {
+            return "redirect:/";
+        } else {
+            return "redirect:/" + currentURL;
+        }
 
-        return "redirect:/";
     }
 
 
@@ -979,7 +1025,7 @@ public class ControllerName {
 //    }
 
     @GetMapping("/game/{id}")
-    public String game(@PathVariable String id, Model model) {
+    public String game(@PathVariable String id, Model model, HttpServletRequest request) {
         logger.info("gameID");
         logger.info("game id: " + id);
 
@@ -987,6 +1033,7 @@ public class ControllerName {
         List<Products> productsList;
         List<Platforms> platformsList;
 
+        String str = new String();
         try {
             product = productsRepository.findById(Long.parseLong(id)).get();
             model.addAttribute("product", product);
@@ -995,6 +1042,15 @@ public class ControllerName {
             platformsList = platformsRepository.findAll();
             model.addAttribute("platforms", platformsList);
 
+            http:
+//localhost:8080/
+
+            str = request.getRequestURL().toString();
+//            str = toString().split("http://localhost:8080/");
+            //22;
+
+//            model.addAttribute("currentURL","request.getRequestURL().toString()");
+            model.addAttribute("currentURL", str.substring(22));
 
         } catch (Exception ex) {
             ex.printStackTrace();

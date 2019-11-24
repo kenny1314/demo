@@ -11,12 +11,22 @@ public class Products {
     @Id
     @Column(name = "id")
     private Long id;
+    @Column(name = "idd")
+    private Long idd;
     private String title;
     private String description;
     private int yearOfIssue;
     private Double oneDayPrice;
     private Double fullPrice;
     private Integer quantity;
+
+    public Long getIdd() {
+        return idd;
+    }
+
+    public void setIdd(Long idd) {
+        this.idd = idd;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "age_limits_id")
@@ -38,11 +48,12 @@ public class Products {
     @JoinColumn(name = "publishers_id")
     private Publishers publishers;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     @JoinColumn(name = "imagesp_id", referencedColumnName = "id")
     private ImagesP imagesP;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+//    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany
     @JoinColumn(name = "products_id")
     private List<Requests> requestsList;
 

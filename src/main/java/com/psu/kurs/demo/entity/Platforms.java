@@ -27,8 +27,8 @@ public class Platforms {
     @Type(type = "text")
     private String story;
 
-    @OneToMany(targetEntity = Products.class, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @OneToMany(targetEntity = Products.class)
+    @JoinColumn(name = "idd")
     private List<Products> productsList;
 
     @OneToOne(cascade = CascadeType.ALL)
