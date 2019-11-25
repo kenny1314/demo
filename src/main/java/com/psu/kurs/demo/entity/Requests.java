@@ -18,6 +18,10 @@ public class Requests {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "final_order_id")
+    private FinalOrder finalOrder;
+
     private String date;
 
     private int numberOfDays;
@@ -80,6 +84,14 @@ public class Requests {
 
     public void setBasket(Basket basket) {
         this.basket = basket;
+    }
+
+    public FinalOrder getFinalOrder() {
+        return finalOrder;
+    }
+
+    public void setFinalOrder(FinalOrder finalOrder) {
+        this.finalOrder = finalOrder;
     }
 
     @Override

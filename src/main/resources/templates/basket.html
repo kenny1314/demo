@@ -131,11 +131,24 @@
                         </th:block>
 
                         <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3"></div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label id="labform1" class="col-sm-6 col-form-label">Тип доставки</label>
+                                    <div class="col-sm-6" style="padding-left: 0px;">
+                                        <select class="form-control form-control-sm" id="optionsList" name="ageLimitFormGame"
+                                                style="height: 35px;">
+                                            <option value="Самовывоз">Самовывоз</option>
+                                            <option value="Курьер">Курьер</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-3">
-                                <h5 th:text="'Цена: '+${finalPrice}"></h5>
+                                <button class="btn btn-success" style="height: 35px;">Оформить заказ</button>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5 th:text="'Цена: '+${finalPrice}" style="padding-top: 5px;"></h5>
                             </div>
                         </div>
 

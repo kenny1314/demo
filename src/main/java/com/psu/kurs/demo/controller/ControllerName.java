@@ -54,6 +54,7 @@ public class ControllerName {
 
     @Autowired
     RoleRepository roleRepository;
+
     @Autowired
     UserService userService;
 
@@ -62,6 +63,79 @@ public class ControllerName {
 
     @Autowired
     BasketRepository basketRepository;
+
+    @Autowired
+    FinalOrderRepository finalOrderRepository;
+
+
+    @GetMapping("/createOrder")
+    public String createOrder(Model model,Principal principal) {
+
+
+        List<Platforms> platformsList;
+        List<Products> productsList;
+        List<Genres> genresList;
+
+        try {
+            //для меню
+            platformsList = platformsRepository.findAll();
+            model.addAttribute("platforms", platformsList);
+
+            productsList = productsRepository.findAll();
+            model.addAttribute("productsList", productsList);
+
+            genresList = genresRepository.findAll();
+            model.addAttribute("genresList", genresList);
+
+        } catch (Exception ex) {
+
+        }
+
+        User user = userService.findByUsername(principal.getName());
+
+
+        Address address = new Address(user.getId(),"Новополоцк","Молодёжная 69","420");
+
+        model.addAttribute("address",address);
+
+
+        return "createOrder";
+    }
+
+
+    //TODO можно написать запрос sql sum
+    @GetMapping("/createOrder1")
+    public @ResponseBody
+    String createOrder1(Principal principal) {
+
+        User user = userService.findByUsername(principal.getName());
+
+        FinalOrder finalOrder = new FinalOrder();
+
+        finalOrder.setId(user.getId());
+        finalOrder.setDate("new data");
+
+        Basket basket = basketRepository.getOne(user.getId());
+
+        List<Requests> requestsList = requestsRepository.findAll();
+
+        double finalPrice = 0;
+        for (Requests value : requestsList) {
+            if (value.getBasket().getId() == basket.getId()) {
+                finalPrice += value.getPrice() * value.getNumberOfDays();
+            }
+        }
+        basket.setFinalPrice(finalPrice);
+
+        basketRepository.save(basket);
+
+        finalOrderRepository.save(finalOrder);
+
+        //выборка requests и выбор цены
+
+
+        return "userid: " + user.getId();
+    }
 
     @GetMapping("/del")
     public @ResponseBody
@@ -109,13 +183,32 @@ public class ControllerName {
     }
 
     @GetMapping("/delProdBask/{id}")
-    public String delProdBasket(@PathVariable(value = "id", required = false) String id) {
+    public String delProdBasket(@PathVariable(value = "id", required = false) String id, Principal principal) {
+
+        User user = userService.findByUsername(principal.getName());
+
 
         if (requestsRepository.existsById(Long.valueOf(id))) {
             requestsRepository.deleteById(Long.valueOf(id));
+
+            List<Requests> requestsList = requestsRepository.findAll();
+            Basket basket = basketRepository.getOne(user.getId());
+            double finalPrice = 0;
+            for (Requests value : requestsList) {
+                if (value.getBasket().getId() == basket.getId()) {
+                    finalPrice += value.getPrice() * value.getNumberOfDays();
+                }
+            }
+
+            FinalOrder finalOrder = finalOrderRepository.getOne(user.getId());
+
+            basket.setFinalPrice(finalPrice);
+            finalOrder.setFinalPrice(finalPrice);
+
+            basketRepository.save(basket);
+            finalOrderRepository.save(finalOrder);
         } else {
             logger.info("product doesn't exist" + id);
-
         }
 
         return "redirect:/basket";
@@ -215,6 +308,7 @@ public class ControllerName {
 
         Basket basket = null;
 
+        FinalOrder finalOrder = null;
 
         if (basketRepository.existsById(user.getId())) {
             basket = basketRepository.getOne(user.getId());
@@ -222,7 +316,14 @@ public class ControllerName {
             basket = new Basket();
             basket.setId(user.getId());
             basketRepository.save(basket);
+        }
 
+        if (finalOrderRepository.existsById(user.getId())) {
+            finalOrder = finalOrderRepository.getOne(user.getId());
+        } else {
+            finalOrder = new FinalOrder();
+            finalOrder.setId(user.getId());
+            finalOrderRepository.save(finalOrder);
         }
 
 
@@ -232,6 +333,7 @@ public class ControllerName {
         requests.setNumberOfDays(Integer.parseInt(numberOfDays));
         requests.setPrice(products.getOneDayPrice());
         requests.setProducts(products);
+        requests.setFinalOrder(finalOrder);
 
         requestsRepository.save(requests); //для заполнения таблицы
 
@@ -274,7 +376,11 @@ public class ControllerName {
             }
         }
         basket.setFinalPrice(finalPrice);
+        finalOrder.setFinalPrice(finalPrice);
         basketRepository.save(basket);
+
+        finalOrder.setDate(simpleDateFormat.format(new Date()));
+        finalOrderRepository.save(finalOrder);
         logger.info("currentURL: " + currentURL);
 
 //        return "redirect:/";
