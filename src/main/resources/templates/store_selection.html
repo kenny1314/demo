@@ -12,7 +12,7 @@
 
 <body>
 <div class="bodycl">
-    <h1>Create Order</h1>
+    <h1>Store select</h1>
     <div class="site">
         <div class="maincl">
 
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10" style="padding-top: 15px; text-align: center">
-                                <h3>Оформление заказа</h3>
+                                <h3>Выбор магазина</h3>
                             </div>
                             <div class="col-md-1"></div>
                         </div> <!-- /row -->
@@ -44,68 +44,67 @@
 
                         <div class="row">
 
-
-                            <form style="margin-left: 210px">
-                                <div class="form-group row" style="margin-bottom: 16px; width: 450px">
-                                    <label id="labform1" class="col-sm-4 col-form-label">Город</label>
-                                    <div class="col-sm-8" style="padding-left: 0px;">
-                                        <input type="text" class="form-control" placeholder="Город" name="city"
-                                               th:value="${address.city}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row" style="margin-bottom: 16px;">
-                                    <label id="labform1" class="col-sm-4 col-form-label">Улица</label>
-                                    <div class="col-sm-8" style="padding-left: 0px;">
-                                        <input type="text" class="form-control" placeholder="Улица" name="street"
-                                               th:value="${address.street}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row" style="margin-bottom: 16px;">
-                                    <label id="labform1" class="col-sm-4 col-form-label">Номер дома</label>
-                                    <div class="col-sm-8" style="padding-left: 0px;">
-                                        <input type="text" class="form-control" placeholder="Номер дома"
-                                               name="flat_number" th:value="${address.flatNumber}">
-                                    </div>
-                                </div>
-
-
-
-
-                                <hr style="margin-left: 140px;">
+                            <form class="col-md-12" method="POST" action="/orderIsProcessed">
 
                                 <div class="row">
-                                    <div class="col-md-5"></div>
-                                    <div class="col-md-5" style="text-align: center">
-                                        <h5 th:name="finalPrice" th:text="'Цена: '+${finalPrice}"
-                                            style="padding-top: 5px;"></h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="col-md-5"></div>
-
-                                    <div class="col-md-5" style="text-align: center">
-                                        <button class="btn btn-success" style="height: 35px;">Оформить заказ</button>
-                                    </div>
                                     <div class="col-md-2"></div>
+
+                                    <div class="col-md-3" >
+                                        <label>
+                                            <span style="padding-left: 80px;">г. Новополоцк</span>
+                                            <br><span style="padding-left: 67px;">ул. Молодёжная 69</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>
+                                            <span style="padding-left: 120px;">г. Полоцк</span>
+                                           <br> <span style="padding-left: 97px;"> ул. Стрелецкая 4</span>
+<!--                                            <br> ул. Стрелецкая 4-->
+                                        </label>
+                                    </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+
+                                    <div class="col-md-10">
+                                        <label >
+                                            <input type="radio" name="fb" value="obsh"/>
+                                            <img  src="/img/obsh.jpg" style="height: 200px; width: 260px">
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="fb" value="psu"/>
+                                            <img src="/img/psu1.jpg" style="height: 200px; width: 260px">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-4"></div>
+
+                                    <div class="col-md-4" style="padding-left: 67px;">
+                                        <button type="submit" class="btn btn-success btn-lg">Выбрать</button>
+                                        <!--                                        <button class="btn btn-success" type="submit">Выбрать</button>-->
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <!--                                    -->
+                                    <!--                                    <div class="com-md-5">ff</div>-->
+                                    <!--                                    <div class="col-md-2" style="text-align: center" >-->
+                                    <!--                                    <button class="btn btn-success" type="submit">Выбрать</button>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="com-md-5">ff</div>-->
+                                </div>
+                            </form>
                         </div>
-                        </form>
-                    </div>
 
-                </div> <!-- /Col-md-9 -->
-            </div> <!-- /Row -->
-        </div>
-    </div> <!-- /MainCl -->
 
-    <!--    <div th:replace="fragments/footerth :: footer"></div>-->
-</div>
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
 </div>
 <div th:replace="fragments/footerth :: footer"></div>
 <!-- Script bootstrap -->

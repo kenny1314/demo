@@ -68,8 +68,30 @@ public class ControllerName {
     FinalOrderRepository finalOrderRepository;
 
 
-    @GetMapping("/createOrder")
-    public String createOrder(Model model,Principal principal) {
+//    @RequestParam("ageLimitFormGame") String ageLimits,
+
+    @PostMapping("/actionDefinition")
+    public String actionDefinition(@RequestParam(name = "typeOfDelivery", required = false) String typeOfDelivery,
+                                   @RequestParam(name = "finalPrice", required = false) String finalPrice, Model model
+    ) {
+
+        //TODO сохранить цену
+
+        if (typeOfDelivery.equals("Курьер")) {
+
+            return "forward:/createOrder";
+        }
+        if (typeOfDelivery.equals("Самовывоз")) {
+            return "redirect:/storeSelection";
+        }
+
+        return "redirect:/basket";
+    }
+
+
+
+    @PostMapping("/createOrder")
+    public String createOrder(Model model, Principal principal) {
 
 
         List<Platforms> platformsList;
@@ -94,13 +116,44 @@ public class ControllerName {
         User user = userService.findByUsername(principal.getName());
 
 
-        Address address = new Address(user.getId(),"Новополоцк","Молодёжная 69","420");
+        Address address = new Address(user.getId(), "Новополоцк", "Молодёжная 69", "420");
 
-        model.addAttribute("address",address);
+        model.addAttribute("address", address);
+
+//        User user=userService.findByUsername(principal.getName());
+
+        if(user!=null){
+            Basket basket=basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
+            model.addAttribute("finalPrice",basket.getFinalPrice());
+            logger.info("finalPrice: "+basket.getFinalPrice());
+        }else{
+            model.addAttribute("finalPrice", "notPrice");
+        }
+
+
 
 
         return "createOrder";
     }
+
+
+
+
+
+    @GetMapping("/storeSelection")
+    public String storeSelection(Model model, Principal principal) {
+
+        return "store_selection";
+    }
+
+    @PostMapping("/orderIsProcessed")
+    public @ResponseBody
+    String orderIsProcessed(@RequestParam(name = "fb", required = false) String radioValue) {
+
+        return "fb: " + radioValue;
+    }
+
+
 
 
     //TODO можно написать запрос sql sum
