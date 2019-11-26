@@ -2,6 +2,7 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.*;
+import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.ReadFileToClass;
 import com.psu.kurs.demo.services.UserService;
 import org.slf4j.Logger;
@@ -67,6 +68,9 @@ public class ControllerName {
     @Autowired
     FinalOrderRepository finalOrderRepository;
 
+    @Autowired
+    MenuService menuService;
+
 
 //    @RequestParam("ageLimitFormGame") String ageLimits,
 
@@ -74,8 +78,6 @@ public class ControllerName {
     public String actionDefinition(@RequestParam(name = "typeOfDelivery", required = false) String typeOfDelivery,
                                    @RequestParam(name = "finalPrice", required = false) String finalPrice, Model model
     ) {
-
-        //TODO сохранить цену
 
         if (typeOfDelivery.equals("Курьер")) {
 
@@ -89,29 +91,29 @@ public class ControllerName {
     }
 
 
-
     @PostMapping("/createOrder")
     public String createOrder(Model model, Principal principal) {
+        model = menuService.getMenuItems(model);
 
 
-        List<Platforms> platformsList;
-        List<Products> productsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            productsList = productsRepository.findAll();
-            model.addAttribute("productsList", productsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-        } catch (Exception ex) {
-
-        }
+//        List<Platforms> platformsList;
+//        List<Products> productsList;
+//        List<Genres> genresList;
+//
+//        try {
+//            //для меню
+//            platformsList = platformsRepository.findAll();
+//            model.addAttribute("platforms", platformsList);
+//
+//            productsList = productsRepository.findAll();
+//            model.addAttribute("productsList", productsList);
+//
+//            genresList = genresRepository.findAll();
+//            model.addAttribute("genresList", genresList);
+//
+//        } catch (Exception ex) {
+//
+//        }
 
         User user = userService.findByUsername(principal.getName());
 
@@ -122,26 +124,49 @@ public class ControllerName {
 
 //        User user=userService.findByUsername(principal.getName());
 
-        if(user!=null){
-            Basket basket=basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
-            model.addAttribute("finalPrice",basket.getFinalPrice());
-            logger.info("finalPrice: "+basket.getFinalPrice());
-        }else{
+        if (user != null) {
+            Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
+            model.addAttribute("finalPrice", basket.getFinalPrice());
+            logger.info("finalPrice: " + basket.getFinalPrice());
+        } else {
             model.addAttribute("finalPrice", "notPrice");
         }
-
-
-
 
         return "createOrder";
     }
 
 
-
+//    public Model getMenuItems(Model model) {
+//
+//
+//        List<Platforms> platformsList;
+//        List<Products> productsList;
+//        List<Genres> genresList;
+//
+//        try {
+//            //для меню
+//            platformsList = platformsRepository.findAll();
+//            model.addAttribute("platforms", platformsList);
+//
+//            productsList = productsRepository.findAll();
+//            model.addAttribute("productsList", productsList);
+//
+//            genresList = genresRepository.findAll();
+//            model.addAttribute("genresList", genresList);
+//
+//        } catch (Exception ex) {
+//
+//        }
+//
+//        return model;
+//    }
 
 
     @GetMapping("/storeSelection")
     public String storeSelection(Model model, Principal principal) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
 
         return "store_selection";
     }
@@ -152,8 +177,6 @@ public class ControllerName {
 
         return "fb: " + radioValue;
     }
-
-
 
 
     //TODO можно написать запрос sql sum
@@ -272,25 +295,7 @@ public class ControllerName {
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String basket(Model model, Principal principal) {
 
-        List<Platforms> platformsList;
-        List<Products> productsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            productsList = productsRepository.findAll();
-            model.addAttribute("productsList", productsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-        } catch (Exception ex) {
-
-        }
-
+        model = menuService.getMenuItems(model); //get menu items
 
         Basket basket;
 
@@ -302,7 +307,6 @@ public class ControllerName {
             basket.setId(user.getId());
             basketRepository.save(basket);
         }
-
 
         List<Products> productsListBasket = new ArrayList<>();
 
@@ -330,24 +334,7 @@ public class ControllerName {
         logger.info("principal: " + principal.getName());
         logger.info("_______________________________________ " + numberOfDays + "______________");
 
-        List<Platforms> platformsList;
-        List<Products> productsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            productsList = productsRepository.findAll();
-            model.addAttribute("productsList", productsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
 
         Requests requests = new Requests();
@@ -451,21 +438,7 @@ public class ControllerName {
         logger.info("get registration");
 
 
-        List<Platforms> platformsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-            logger.info("registration");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "/registration";
     }
@@ -477,21 +450,7 @@ public class ControllerName {
         logger.info("post reg");
 
 
-        List<Platforms> platformsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-            logger.info("registration");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         if (userService.findByUsername(username) != null) {
             model.addAttribute("error", "Пользователь " + username + " уже зарегистрирован");
@@ -516,21 +475,7 @@ public class ControllerName {
 
     @GetMapping("/login")
     public String login(Model model) {
-        List<Platforms> platformsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-            logger.info("login");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
         return "login";
     }
 
@@ -597,22 +542,16 @@ public class ControllerName {
     @GetMapping("/addgame")
     public String addGame(Model model) {
 
-        List<Platforms> platformsList;
+        model = menuService.getMenuItems(model); //get menu items
 
         try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("addgame");
+            //для формы
 
             List<Languages> languagesList = languagesRepository.findAll();
             model.addAttribute("languagesList", languagesList);
 
             List<AgeLimits> ageLimitsList = ageLimitsRepository.findAll();
             model.addAttribute("ageLimitsList", ageLimitsList);
-
-            List<Genres> genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
 
             List<Publishers> publishersList = publishersRepository.findAll();
             model.addAttribute("publishersList", publishersList);
@@ -714,16 +653,7 @@ public class ControllerName {
 
     @GetMapping("/addGenres")
     public String addGenres(Model model) {
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("addgame");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "addGenres";
     }
@@ -963,22 +893,7 @@ public class ControllerName {
     @GetMapping("/genres")
     public String genres(Model model) {
 
-        List<Platforms> platformsList;
-        List<Genres> genresList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-            logger.info("sizeListProducts:" + genresList.size());
-            logger.info("genres");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "genres";
     }
@@ -1005,16 +920,7 @@ public class ControllerName {
     @GetMapping("/addplatform")
     public String addPlatform(Model model) {
 
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("about");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "addPlatform";
     }
@@ -1023,16 +929,7 @@ public class ControllerName {
     @GetMapping("/listplatforms")
     public String listplatforms(Model model) {
 
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("about");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "listplatforms";
     }
@@ -1040,16 +937,7 @@ public class ControllerName {
     @GetMapping("/delivery")
     public String delivery(Model model) {
 
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("about");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "delivery";
     }
@@ -1058,16 +946,7 @@ public class ControllerName {
     @GetMapping("/about")
     public String about(Model model) {
 
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("about");
-        } catch (Exception ex) {
-
-        }
+        model = menuService.getMenuItems(model); //get menu items
 
         return "about";
     }
@@ -1075,6 +954,8 @@ public class ControllerName {
 
     @GetMapping("/platform/{id}")
     public String getPlatformId(@PathVariable String id, Model model) {
+
+        model = menuService.getMenuItems(model); //get menu items
 
         logger.info("id: " + id);
 
@@ -1084,14 +965,12 @@ public class ControllerName {
             idNew = Long.valueOf(id);
         }
 
-        List<Platforms> platformsList;
         Platforms platform;
+
 
         try {
             //для данных
-            platformsList = platformsRepository.findAll();
             platform = platformsRepository.getOne(idNew);
-            model.addAttribute("platforms", platformsList);
             model.addAttribute("platform", platform);
             logger.info("platform");
         } catch (Exception ex) {
@@ -1149,30 +1028,7 @@ public class ControllerName {
     @GetMapping(value = {"/"})
     public String index(Model model) {
 
-
-        List<Platforms> platformsList;
-        List<Products> productsList;
-        List<Genres> genresList;
-
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            productsList = productsRepository.findAll();
-            model.addAttribute("productsList", productsList);
-            logger.info("sizeListProducts:" + productsList.size());
-//            logger.info("product #1: " + productsList.get(1).toString());
-
-            genresList = genresRepository.findAll();
-            model.addAttribute("genresList", genresList);
-
-            logger.info("index");
-        } catch (Exception ex) {
-
-        }
-
+        model = menuService.getMenuItems(model); //get menu items
 
         return "index";
     }
@@ -1185,12 +1041,13 @@ public class ControllerName {
 
     @GetMapping("/game/{id}")
     public String game(@PathVariable String id, Model model, HttpServletRequest request) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
         logger.info("gameID");
         logger.info("game id: " + id);
 
         Products product;
-        List<Products> productsList;
-        List<Platforms> platformsList;
 
         String str = new String();
         try {
@@ -1198,11 +1055,10 @@ public class ControllerName {
             model.addAttribute("product", product);
             logger.info("product #" + id + ": " + product.toString());
 
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-
-            http:
-//localhost:8080/
+//            platformsList = platformsRepository.findAll();
+//            model.addAttribute("platforms", platformsList);
+//
+//            http://localhost:8080/
 
             str = request.getRequestURL().toString();
 //            str = toString().split("http://localhost:8080/");
