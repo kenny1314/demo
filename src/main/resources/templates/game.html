@@ -43,7 +43,17 @@
                                 </div>
 
                                 <div class="col-md-6 " id="infodiscrip ">
-                                    <h3 th:text="${product.title}">Battletods</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h3 th:text="${product.title}">Battletods</h3>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3" style="padding-left: 24px;">
+                                            <a th:href="${'/delgame/'+product.id}">
+                                                <button class="btn btn-danger">Удалить</button>
+                                            </a>
+                                        </div>
+                                    </div>
                                     <table border="0 " id="tabinfo">
                                         <tr>
                                             <td id="col1tabinfo">Язык:</td>
@@ -96,8 +106,12 @@
                                                             <div class="container">
                                                                 <div class="row">
 
-                                                                    <div class="col-md-6" style="text-align: center"><h5 th:text="${product.oneDayPrice+' р/д'}">mmm</h5></div>
-                                                                    <div class="col-md-6" style="text-align: center"><h5 th:text="${product.fullPrice+' р/итог'}">mmm</h5></div>
+                                                                    <div class="col-md-6" style="text-align: center"><h5
+                                                                            th:text="${product.oneDayPrice+' р/д'}"
+                                                                            id="pric">mmm</h5></div>
+                                                                    <div class="col-md-6" style="text-align: center"><h5
+                                                                            th:text="${product.fullPrice+' р/итог'}"
+                                                                            id="finPri">mmm</h5></div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-6"
@@ -131,6 +145,20 @@
                                                                                    max="10" style="text-align: center;"
                                                                                    th:alt="${product.oneDayPrice}"
                                                                                    th:title="${product.id}">
+
+                                                                            <script>
+                                                                                function incr(e) {
+                                                                                    var vi = document.getElementById('finPri');
+                                                                                    var temp = e.value * e.alt;
+                                                                                    // alert(temp);
+                                                                                    vi.innerText = temp + 'р/итог';
+                                                                                }
+
+                                                                                function neincr(e) {
+                                                                                    alert(e)
+                                                                                }
+
+                                                                            </script>
                                                                             <span class="input-group-btn">
 
                                     <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"

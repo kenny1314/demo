@@ -3,6 +3,7 @@ package com.psu.kurs.demo.controller;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.MenuService;
+import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.ReadFileToClass;
 import com.psu.kurs.demo.services.UserService;
 import org.slf4j.Logger;
@@ -30,7 +31,6 @@ import java.util.*;
 public class ControllerName {
 
     private static Logger logger = LoggerFactory.getLogger(ControllerName.class);
-
 
     @Autowired
     ProductsRepository productsRepository;
@@ -71,9 +71,10 @@ public class ControllerName {
     @Autowired
     MenuService menuService;
 
+    @Autowired
+    OtherService otherService;
 
-//    @RequestParam("ageLimitFormGame") String ageLimits,
-
+    //registration order
     @PostMapping("/actionDefinition")
     public String actionDefinition(@RequestParam(name = "typeOfDelivery", required = false) String typeOfDelivery,
                                    @RequestParam(name = "finalPrice", required = false) String finalPrice, Model model
@@ -90,39 +91,16 @@ public class ControllerName {
         return "redirect:/basket";
     }
 
-
+    //registration order
     @PostMapping("/createOrder")
     public String createOrder(Model model, Principal principal) {
         model = menuService.getMenuItems(model);
 
-
-//        List<Platforms> platformsList;
-//        List<Products> productsList;
-//        List<Genres> genresList;
-//
-//        try {
-//            //для меню
-//            platformsList = platformsRepository.findAll();
-//            model.addAttribute("platforms", platformsList);
-//
-//            productsList = productsRepository.findAll();
-//            model.addAttribute("productsList", productsList);
-//
-//            genresList = genresRepository.findAll();
-//            model.addAttribute("genresList", genresList);
-//
-//        } catch (Exception ex) {
-//
-//        }
-
         User user = userService.findByUsername(principal.getName());
-
 
         Address address = new Address(user.getId(), "Новополоцк", "Молодёжная 69", "420");
 
         model.addAttribute("address", address);
-
-//        User user=userService.findByUsername(principal.getName());
 
         if (user != null) {
             Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
@@ -134,34 +112,8 @@ public class ControllerName {
 
         return "createOrder";
     }
-
-
-//    public Model getMenuItems(Model model) {
-//
-//
-//        List<Platforms> platformsList;
-//        List<Products> productsList;
-//        List<Genres> genresList;
-//
-//        try {
-//            //для меню
-//            platformsList = platformsRepository.findAll();
-//            model.addAttribute("platforms", platformsList);
-//
-//            productsList = productsRepository.findAll();
-//            model.addAttribute("productsList", productsList);
-//
-//            genresList = genresRepository.findAll();
-//            model.addAttribute("genresList", genresList);
-//
-//        } catch (Exception ex) {
-//
-//        }
-//
-//        return model;
-//    }
-
-
+    //registration order
+    //выбор магазина
     @GetMapping("/storeSelection")
     public String storeSelection(Model model, Principal principal) {
 
@@ -171,6 +123,8 @@ public class ControllerName {
         return "store_selection";
     }
 
+    //registration order
+    //вывод значения с радиокнопки
     @PostMapping("/orderIsProcessed")
     public @ResponseBody
     String orderIsProcessed(@RequestParam(name = "fb", required = false) String radioValue) {
@@ -179,6 +133,7 @@ public class ControllerName {
     }
 
 
+    //хз что делает
     //TODO можно написать запрос sql sum
     @GetMapping("/createOrder1")
     public @ResponseBody
@@ -213,56 +168,13 @@ public class ControllerName {
         return "userid: " + user.getId();
     }
 
-    @GetMapping("/del")
-    public @ResponseBody
-    String delPr() {
-
-        productsRepository.deleteById(4L);
-        return "mmm";
-    }
 
 
-    //TODO возможно сюда добавить тригер
-    @GetMapping("/delplatform/{id}")
-    public String delPlatformId(@PathVariable String id, Model model) {
-
-
-        List<Products> productsList = productsRepository.findAll();
-        for (Products prod : productsList) {
-            logger.info("id plaf:" + prod.getPlatforms().getId());
-            logger.info("id get:" + Long.valueOf(id));
-            if (prod.getPlatforms().getId().equals(Long.valueOf(id))) {
-                logger.info("Такая платформа ессть в продуктах");
-
-                prod.setIdd(1L);
-                prod.setPlatforms(platformsRepository.getOne(1L));
-                productsRepository.save(prod);
-            }
-        }
-
-        if (platformsRepository.existsById(Long.valueOf(id))) {
-//            Platforms platforms = platformsRepository.getOne(Long.valueOf(id));
-//            platforms.setProductsList(productsRepository.findAll());
-//            platformsRepository.save(platforms);
-            platformsRepository.deleteById(Long.valueOf(id));
-        }
-
-
-        return "redirect:/listplatforms";
-    }
-
-
-    @GetMapping("/testinput")
-    public String testinput() {
-
-        return "testinput";
-    }
-
+    //registration order
     @GetMapping("/delProdBask/{id}")
     public String delProdBasket(@PathVariable(value = "id", required = false) String id, Principal principal) {
 
         User user = userService.findByUsername(principal.getName());
-
 
         if (requestsRepository.existsById(Long.valueOf(id))) {
             requestsRepository.deleteById(Long.valueOf(id));
@@ -290,10 +202,10 @@ public class ControllerName {
         return "redirect:/basket";
     }
 
-
+    //registration order
     @GetMapping("/basket")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
-    public String basket(Model model, Principal principal) {
+    public String basket(Model model, Principal principal, HttpServletRequest request) {
 
         model = menuService.getMenuItems(model); //get menu items
 
@@ -317,25 +229,25 @@ public class ControllerName {
 
             model.addAttribute("requestsList", basket.getRequestsList());
             model.addAttribute("productsListBasket", productsListBasket);
+
         }
 
-
+        model.addAttribute("currentURL", otherService.getCurrentUrl(request));
         model.addAttribute("finalPrice", basket.getFinalPrice());
 
         return "basket";
     }
 
-
+    //registration order
+    //сохранить в корзину
     @PostMapping("/testDB/{id}")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
-//    public String testDB(@PathVariable("id") String id, @RequestParam("currentURL") String currentURL, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
     public String testDB(@PathVariable("id") String id, @RequestParam(name = "currentURL", required = false) String currentURL, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
 
         logger.info("principal: " + principal.getName());
         logger.info("_______________________________________ " + numberOfDays + "______________");
 
         model = menuService.getMenuItems(model); //get menu items
-
 
         Requests requests = new Requests();
 
@@ -366,9 +278,7 @@ public class ControllerName {
             finalOrderRepository.save(finalOrder);
         }
 
-
         requests.setBasket(basket);
-
 
         requests.setNumberOfDays(Integer.parseInt(numberOfDays));
         requests.setPrice(products.getOneDayPrice());
@@ -383,7 +293,6 @@ public class ControllerName {
 
         if (requestsRepository.findAll().size() > 0) {
             for (int i = 0; i < requestsRepository.findAll().size(); i++) {
-//                if ((requestsList.get(i).getIdBucket() == requests.getIdBucket()) &&
                 if ((requestsList.get(i).getBasket().getId() == requests.getBasket().getId()) &&
                         (requestsList.get(i).getProducts().getId() == requests.getProducts().getId())) {
 
@@ -395,7 +304,6 @@ public class ControllerName {
 
                     requestsRepository.deleteById(oldID);
                     logger.info("drop the mic: " + oldID);
-//                    requests.setId(oldID);
                     requestsRepository.save(requests);
                     logger.info("add to db");
                     trAdd = true;
@@ -423,7 +331,6 @@ public class ControllerName {
         finalOrderRepository.save(finalOrder);
         logger.info("currentURL: " + currentURL);
 
-//        return "redirect:/";
         if (currentURL == null) {
             return "redirect:/";
         } else {
@@ -433,648 +340,104 @@ public class ControllerName {
     }
 
 
-    @GetMapping("/registration")
-    public String reg(Model model) {
-        logger.info("get registration");
 
 
-        model = menuService.getMenuItems(model); //get menu items
 
-        return "/registration";
-    }
 
-    @PostMapping("/registration")
-    public String addUser(@RequestParam("username") String username,
-                          @RequestParam("password") String password,
-                          Model model) {
-        logger.info("post reg");
 
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        if (userService.findByUsername(username) != null) {
-            model.addAttribute("error", "Пользователь " + username + " уже зарегистрирован");
-            return "/registration";
-        }
-        if (!(username.matches("^[a-zA-Z0-9]+$"))) {
-            model.addAttribute("error", "Имя пользователя может содержать только латиницу и цифры");
-            return "/registration";
-        }
-        User user = new User(1, username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
-        userService.save(user);
-        model.addAttribute("error", "Всё хорошо");
-        return "redirect:/";
-    }
-
-    @GetMapping(value = {"/inde"})
-    public @ResponseBody
-    String inx(Model model) {
-        logger.info("Вы зарегались, наверно");
-        return "Вы успешно зарегистрировались";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        model = menuService.getMenuItems(model); //get menu items
-        return "login";
-    }
-
-    @GetMapping("/403")
-    public String error403() {
-        return "/error/403";
-    }
-
-
-    @GetMapping("/testselect")
-    public String testSelect(Model model) {
-
-
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            List<String> stringList = new ArrayList<>();
-            stringList.add("igor");
-            stringList.add("gruntov");
-            stringList.add("sergeevich");
-            model.addAttribute("liststr", stringList);
-
-            List<Languages> languagesList = languagesRepository.findAll();
-            model.addAttribute("listlang", languagesList);
-
-            logger.info("addgame");
-        } catch (Exception ex) {
-
-        }
-
-        return "testSelectForm";
-    }
-
-    @PostMapping("/result")
-    public @ResponseBody
-    String getListSelect(@RequestParam("optionsLIstId") String selectedOption) {
-
-        return " Selected: " + selectedOption;
-    }
-
-
-    @GetMapping("/pg")
-    public String pg() {
-
-        Products products = productsRepository.getOne(1L);
-        Genres genres = products.getGenres();
-        logger.info("pg: " + genres.toString());
-
-
-        return "dialogs";
-    }
-
-
-    @GetMapping("/uppage")
-    public String upPage() {
-
-        return "upload";
-    }
-
-
-    @GetMapping("/addgame")
-    public String addGame(Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        try {
-            //для формы
-
-            List<Languages> languagesList = languagesRepository.findAll();
-            model.addAttribute("languagesList", languagesList);
-
-            List<AgeLimits> ageLimitsList = ageLimitsRepository.findAll();
-            model.addAttribute("ageLimitsList", ageLimitsList);
-
-            List<Publishers> publishersList = publishersRepository.findAll();
-            model.addAttribute("publishersList", publishersList);
-
-        } catch (Exception ex) {
-
-        }
-        return "addGame";
-    }
-
-    @PostMapping("/uploadGame")
-    public @ResponseBody
-    String uploadGame(@RequestParam("title") String title,
-                      @RequestParam("langFormGame") String language,
-                      @RequestParam("platformFormGame") String platform,
-                      @RequestParam("yearOfIssue") String yearOfIssue,
-                      @RequestParam("ageLimitFormGame") String ageLimits,
-                      @RequestParam("genreFormGame") String genre,
-                      @RequestParam("publisherFormGame") String publisher,
-                      @RequestParam("quantity") String quantity,
-                      @RequestParam("oneDayPrice") String oneDayPrice,
-                      @RequestParam("fullPrice") String fullPrice,
-                      @RequestParam("description") String description,
-                      @RequestParam("file") MultipartFile file) {
-
-
-        if (!file.isEmpty()) {
-            try {
-
-                //получение последнего id из списка платформ
-                List<Products> productsList = productsRepository.findAll();
-                int siz = productsList.size();
-                List<Long> listSize = new ArrayList<>();
-
-                Long actualCount = -1L;
-
-                logger.info("size: " + siz);
-                if (siz > 0) {
-                    for (Products prod : productsList) {
-                        listSize.add(prod.getId());
-                    }
-
-                    actualCount = Collections.max(listSize);
-                    logger.info("___max value in list: " + actualCount);
-                    actualCount++;
-                    logger.info("___next id in these tables: " + actualCount);
-                } else {
-                    actualCount = 0L;
-                }
-
-
-                Products product = new Products();
-                product.setId(actualCount);
-                product.setTitle(title);
-                product.setLanguages(languagesRepository.getOne(Long.valueOf(language)));
-                product.setPlatforms(platformsRepository.getOne(Long.valueOf(platform)));
-                product.setYearOfIssue(Integer.parseInt(yearOfIssue));
-                product.setAgeLimits(ageLimitsRepository.getOne(Long.valueOf(ageLimits)));
-                product.setGenres(genresRepository.getOne(Long.valueOf(genre)));
-                product.setPublishers(publishersRepository.getOne(Long.valueOf(publisher)));
-                product.setQuantity(Integer.parseInt(quantity));
-                product.setOneDayPrice(Double.parseDouble(oneDayPrice));
-                product.setFullPrice(Double.parseDouble(fullPrice));
-                product.setDescription(description);
-
-                logger.info(product.toString());
-
-
-                Images images = getImagesClass(file, actualCount);
-                //TODO imageP
-                ImagesP imagesP = new ImagesP(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
-
-                product.setImagesP(imagesP);
-
-                productsRepository.save(product);
-
-                logger.info("product.toString(): " + product.toString());
-
-                return "form:\n" + "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
-                        " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
-                        " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
-                        " description: " + description +
-                        "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
-            }
-        } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
-        }
-//
-//
-//        return "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
-//                " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
-//                " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
-//                " description: " + description;
-    }
-
-
-    @GetMapping("/addGenres")
-    public String addGenres(Model model) {
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "addGenres";
-    }
-
-
-    public Images getImagesClass(MultipartFile file, Long actualCount) throws IOException {
-        byte[] bytes = file.getBytes();
-
-        File convFile = new File(file.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-
-        BufferedImage bufferedImage = ImageIO.read(convFile);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
-        byte[] data = bos.toByteArray();
-        logger.info("string genres" + data.toString());
-
-        String encodedString = Base64.getEncoder().encodeToString(data);
-        logger.info("str: " + encodedString);
-
-        Images image = new Images(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
-        convFile.delete();
-        return image;
-    }
-
-
-    @RequestMapping(value = "/uploadGenres", method = RequestMethod.POST)
-    public @ResponseBody
-    String formUploadGenres(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
-        if (!file.isEmpty()) {
-            try {
-
-                //получение последнего id из списка платформ
-                List<Genres> genresList = genresRepository.findAll();
-                int siz = genresList.size();
-                List<Long> listSize = new ArrayList<>();
-
-                Long actualCount = -1L;
-
-                logger.info("size: " + siz);
-                if (siz > 0) {
-                    for (Genres gr : genresList) {
-                        listSize.add(gr.getId());
-                    }
-
-                    actualCount = Collections.max(listSize);
-                    logger.info("___max value in list: " + actualCount);
-                    actualCount++;
-                    logger.info("___next id in these tables: " + actualCount);
-                } else {
-                    actualCount = 0L;
-                }
-
-                Images images = getImagesClass(file, actualCount);
-                ImagesG imagesG = new ImagesG(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
-
-                Genres genres = new Genres(actualCount, name, imagesG);
-
-                genresRepository.save(genres);
-
-                logger.info("genres.toString(): " + genres.toString());
-
-
-                return "form:\n" +
-                        "   " + name +
-                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
-            }
-        } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
-        }
-    }
-
-
-    @RequestMapping(value = "/upload2", method = RequestMethod.POST)
-    public @ResponseBody
-    String formUpload(@RequestParam("file") MultipartFile file,
-                      @RequestParam("name") String name,
-                      @RequestParam("manufacturer") String manufacturer,
-                      @RequestParam("relaseDate") String relaseDate,
-                      @RequestParam("generation") String generation,
-                      @RequestParam("piecesSold") String piecesSold,
-                      @RequestParam("cpu") String cpu,
-                      @RequestParam("description") String description,
-                      @RequestParam("story") String story
-
-    ) {
-        if (!file.isEmpty()) {
-            try {
-
-                //получение последнего id из списка платформ
-                List<Platforms> platformsList = platformsRepository.findAll();
-                int siz = platformsList.size();
-                List<Long> listSize = new ArrayList<>();
-
-                Long actualCount = -1L;
-
-                logger.info("size: " + siz);
-                if (siz > 0) {
-                    for (Platforms pl : platformsList) {
-                        listSize.add(pl.getId());
-                    }
-
-                    actualCount = Collections.max(listSize);
-                    logger.info("___max value in list: " + actualCount);
-                    actualCount++;
-                    logger.info("___next id in these tables: " + actualCount);
-                } else {
-                    actualCount = 0L;
-                }
-
-                Images images = getImagesClass(file, actualCount);
-                ImagesT imagesT = new ImagesT(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
-
-                Platforms platform = new Platforms(actualCount, name, manufacturer, generation, relaseDate, piecesSold, cpu, description, story, imagesT);
-
-                platformsRepository.save(platform);
-
-                logger.info("platform.toString(): " + platform.toString());
-
-                return "form:\n" +
-                        "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
-                        + description + "    " + story +
-                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
-            }
-        } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
-        }
-    }
-
-
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody
-    String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-
-//                File file = new File("input2.jpg");
-
-                File convFile = new File(file.getOriginalFilename());
-                FileOutputStream fos = new FileOutputStream(convFile);
-                fos.write(file.getBytes());
-                fos.close();
-
-                BufferedImage bufferedImage = ImageIO.read(convFile);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
-                byte[] data = bos.toByteArray();
-                logger.info("string" + data.toString());
-
-                String encodedString = Base64.getEncoder().encodeToString(data);
-                logger.info("str: " + encodedString);
-
-                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
-
-                logger.info("imagesT: " + imagesT.toString());
-
-                imagesTRepository.save(imagesT);
-
-
-                return "Вы удачно загрузили " + convFile.getName() + " _____ " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
-            } catch (Exception e) {
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
-            }
-        } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
-        }
-    }
-
-
-//    @PostMapping("/upload")
-//    public String uploadFile(@RequestParam("file") MultipartFile file ) {
-//
-//
-////        if (file.exists()) {
-////            logger.info("file is empty");
-////        }
-//
-//        try {
-//            logger.info(file.getName());
-//
-//
-////            File file = new File("input2.jpg");
-//
-//
-//            byte[] bytes = file.getBytes();
-//            BufferedOutputStream stream =
-//                    new BufferedOutputStream(new FileOutputStream(new File(file.getName() + "-uploaded")));
-//            stream.write(bytes);
-//            stream.close();
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
+//    @GetMapping("/getplatforms")
+//    public String getPlatforms(Model model) throws IOException {
+////
+////        Platforms platforms=new Platforms();
+//////
+////        platforms.setId(2L);
+////        platforms.setName("Gruntik master system");
+////        platforms.setCpu("gruntikcpu");
+////        platformsRepository.save(platforms);
+////
+//        Long counter = 6L;
+//        List<Platforms> platformsList = ReadFileToClass.getListFromFile();
+//        for (Platforms pl : platformsList) {
+//            pl.setId(1L + counter++);
 //        }
+//        platformsRepository.saveAll(platformsList);
 //
-//
-//        return "dialogs";
+//        return "getplatforms";
 //    }
 
 
-    @GetMapping("/getimg")
-    public String getImg(Model model) {
-
-        return "imgpage";
-    }
 
 
-    @GetMapping("/getplatforms")
-    public String getPlatforms(Model model) throws IOException {
+//    //??
+//    @GetMapping("/vot")
+//    public String affbout(Model model) {
 //
-//        Platforms platforms=new Platforms();
-////
-//        platforms.setId(2L);
-//        platforms.setName("Gruntik master system");
-//        platforms.setCpu("gruntikcpu");
-//        platformsRepository.save(platforms);
+//        List<Platforms> platformsList;
 //
-        Long counter = 6L;
-        List<Platforms> platformsList = ReadFileToClass.getListFromFile();
-        for (Platforms pl : platformsList) {
-            pl.setId(1L + counter++);
-        }
-        platformsRepository.saveAll(platformsList);
-
-        return "getplatforms";
-    }
-
-
-    @GetMapping("/genres")
-    public String genres(Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "genres";
-    }
+//        try {
+//            //для меню
+//            platformsList = platformsRepository.findAll();
+//            model.addAttribute("platforms", platformsList);
+//            logger.info("about");
+//        } catch (Exception ex) {
+//
+//        }
+//
+//        return "about";
+//    }
 
 
-    @GetMapping("/vot")
-    public String affbout(Model model) {
-
-        List<Platforms> platformsList;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            model.addAttribute("platforms", platformsList);
-            logger.info("about");
-        } catch (Exception ex) {
-
-        }
-
-        return "about";
-    }
-
-    //addplatform
-    @GetMapping("/addplatform")
-    public String addPlatform(Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "addPlatform";
-    }
 
 
-    @GetMapping("/listplatforms")
-    public String listplatforms(Model model) {
+//    //??
+//    @GetMapping("/platform")
+//    public String platform(Model model) {
+//
+//        List<Platforms> platformsList;
+//        Platforms platform;
+//
+//        try {
+//            //для меню
+//            platformsList = platformsRepository.findAll();
+//            platform = platformsRepository.getOne(1L);
+//            model.addAttribute("platforms", platformsList);
+//            model.addAttribute("platform", platform);
+//            logger.info("platform");
+//        } catch (Exception ex) {
+//
+//        }
+//
+//        return "platform";
+//    }
+//
+//    @GetMapping("/dialogs")
+//    public String dialog(Model model) {
+//        return "dialogs";
+//    }
 
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "listplatforms";
-    }
-
-    @GetMapping("/delivery")
-    public String delivery(Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "delivery";
-    }
-
-
-    @GetMapping("/about")
-    public String about(Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "about";
-    }
-
-
-    @GetMapping("/platform/{id}")
-    public String getPlatformId(@PathVariable String id, Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        logger.info("id: " + id);
-
-        Long idNew = 1L;
-
-        if (id != null) {
-            idNew = Long.valueOf(id);
-        }
-
-        Platforms platform;
-
-
-        try {
-            //для данных
-            platform = platformsRepository.getOne(idNew);
-            model.addAttribute("platform", platform);
-            logger.info("platform");
-        } catch (Exception ex) {
-
-        }
-
-        return "platform";
-    }
-
-
-    @GetMapping("/platform")
-    public String platform(Model model) {
-
-        List<Platforms> platformsList;
-        Platforms platform;
-
-        try {
-            //для меню
-            platformsList = platformsRepository.findAll();
-            platform = platformsRepository.getOne(1L);
-            model.addAttribute("platforms", platformsList);
-            model.addAttribute("platform", platform);
-            logger.info("platform");
-        } catch (Exception ex) {
-
-        }
-
-        return "platform";
-    }
-
-    @GetMapping("/dialogs")
-    public String dialog(Model model) {
-        return "dialogs";
-    }
-
-    @GetMapping("/page")
-    public String page(Model model) {
-
-        List<Products> productsList;
-
-        try {
-            productsList = productsRepository.findAll();
-            model.addAttribute("productsList", productsList);
-            logger.info("sizeListProducts:" + productsList.size());
-            logger.info("product #1: " + productsList.get(1).toString());
-            logger.info("page");
-        } catch (Exception ex) {
-
-        }
-
-        return "page2";
-    }
-
-
-    @GetMapping(value = {"/"})
-    public String index(Model model) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        return "index";
-    }
+//    @GetMapping("/page")
+//    public String page(Model model) {
+//
+//        List<Products> productsList;
+//
+//        try {
+//            productsList = productsRepository.findAll();
+//            model.addAttribute("productsList", productsList);
+//            logger.info("sizeListProducts:" + productsList.size());
+//            logger.info("product #1: " + productsList.get(1).toString());
+//            logger.info("page");
+//        } catch (Exception ex) {
+//
+//        }
+//
+//        return "page2";
+//    }
 
 
 //    @GetMapping("/game")
 //    public String game(Model model) {
 //        return "game";
 //    }
-
-    @GetMapping("/game/{id}")
-    public String game(@PathVariable String id, Model model, HttpServletRequest request) {
-
-        model = menuService.getMenuItems(model); //get menu items
-
-        logger.info("gameID");
-        logger.info("game id: " + id);
-
-        Products product;
-
-        String str = new String();
-        try {
-            product = productsRepository.findById(Long.parseLong(id)).get();
-            model.addAttribute("product", product);
-            logger.info("product #" + id + ": " + product.toString());
-
-//            platformsList = platformsRepository.findAll();
-//            model.addAttribute("platforms", platformsList);
-//
-//            http://localhost:8080/
-
-            str = request.getRequestURL().toString();
-//            str = toString().split("http://localhost:8080/");
-            //22;
-
-//            model.addAttribute("currentURL","request.getRequestURL().toString()");
-            model.addAttribute("currentURL", str.substring(22));
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-
-        }
-
-
-        return "game";
-    }
 
 
 }

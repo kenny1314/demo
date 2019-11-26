@@ -1,5 +1,7 @@
 package com.psu.kurs.demo.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,9 +13,12 @@ public class Products {
     @Id
     @Column(name = "id")
     private Long id;
+
     @Column(name = "idd")
     private Long idd;
     private String title;
+
+    @Type(type = "text")
     private String description;
     private int yearOfIssue;
     private Double oneDayPrice;

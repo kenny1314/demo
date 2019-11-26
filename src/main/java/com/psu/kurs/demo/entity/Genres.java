@@ -10,9 +10,9 @@ public class Genres {
     @Column(name = "id")
     private Long id;
     private String name;
-
+//мб тут
     @OneToMany(targetEntity = Products.class, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idd")
     private List<Products> productsList;
 
     @OneToOne(cascade = CascadeType.ALL)
