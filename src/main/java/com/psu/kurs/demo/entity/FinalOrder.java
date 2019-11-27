@@ -17,6 +17,10 @@ public class FinalOrder {
     private double finalPrice;
     private String date;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
+    private Delivery delivery;
+
     public FinalOrder() {
     }
 
@@ -52,9 +56,17 @@ public class FinalOrder {
         this.date = date;
     }
 
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
     @Override
     public String toString() {
-        return "Basket{" +
+        return "FinalOrder{" +
                 "id=" + id +
 //                ", requestsList=" + requestsList +
                 ", finalPrice=" + finalPrice +
