@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -208,11 +209,12 @@ public class CreateOrderController {
     }
 
     //оформление заказа
-    @PostMapping("/completeСheckout")
-    public @ResponseBody String completeCheckout(Principal principal){
+    @PostMapping("/completeСheckout1")
+    public @ResponseBody
+    String completeCheckout1(Principal principal) {
         //тип доставки
         //тут поля
-        FinalOrder finalOrder=finalOrderRepository.getOne(userService.findByUsername(principal.getName()).getId());
+        FinalOrder finalOrder = finalOrderRepository.getOne(userService.findByUsername(principal.getName()).getId());
 
         Long idL = 100L;
 
@@ -241,7 +243,6 @@ public class CreateOrderController {
 
         return "vot tak vot";
     }
-
 
 
     //registration order
@@ -353,14 +354,18 @@ public class CreateOrderController {
 
         List<Products> productsListBasket = new ArrayList<>();
 
-        if (basket.getRequestsList().size() > 0) {
-            for (Requests req : basket.getRequestsList()) {
-                productsListBasket.add(req.getProducts());
+        if (basket.getRequestsList() != null) {
+            if (basket.getRequestsList().size() > 0) {
+                for (Requests req : basket.getRequestsList()) {
+                    productsListBasket.add(req.getProducts());
+                }
+
+                model.addAttribute("requestsList", basket.getRequestsList());
+                model.addAttribute("productsListBasket", productsListBasket);
+
             }
-
-            model.addAttribute("requestsList", basket.getRequestsList());
-            model.addAttribute("productsListBasket", productsListBasket);
-
+        } else {
+            logger.info("not req");
         }
 
         model.addAttribute("currentURL", otherService.getCurrentUrl(request));
@@ -369,11 +374,201 @@ public class CreateOrderController {
         return "basket";
     }
 
+    //оформление заказа
+//    @Transactional
+    @PostMapping("/completeСheckout")
+    public @ResponseBody
+    String completeCheckout(@RequestParam(name = "city", required = false) String city,
+                            @RequestParam(name = "street", required = false) String street,
+                            @RequestParam(name = "flat_number", required = false) String flat_number,
+                            Principal principal) {
+
+        Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
+
+        List<Requests> requestsList = basket.getRequestsList();
+
+        Long inxIns = 1L;
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+        if (finalOrderList.size() > 0) {
+            inxIns = finalOrderList.get(finalOrderList.size() - 1).getId() + 1;
+        }
+
+        FinalOrder finalOrder = new FinalOrder();
+        finalOrder.setId(inxIns);
+        finalOrder.setDate("data ochka");
+        finalOrder.setFinalPrice(basket.getFinalPrice());
+        finalOrderRepository.save(finalOrder);
+
+        for (Requests rq : requestsList) {
+            rq.setFinalOrder(finalOrder);
+            rq.setBasket(null);
+        }
+        requestsRepository.saveAll(requestsList);
+        basket.setRequestsList(null); //бесполезно
+        basketRepository.deleteById(basket.getId());
+
+
+        //тип доставки
+        //тут поля
+//        FinalOrder finalOrder = finalOrderRepository.getOne(userService.findByUsername(principal.getName()).getId());
+
+        //возможно вставить получение последнего id
+//        Long idL = 100L;
+
+        List<AddressD> addressDList = addressDRepository.findAll();
+        Long idAd = 1L;
+        if (addressDList.size() > 0) {
+            idAd = addressDList.get(addressDList.size() - 1).getId() + 1;
+        }
+
+        AddressD addressD = new AddressD();
+        addressD.setId(idAd);
+        addressD.setCity(city);
+        addressD.setStreet(street);
+        addressD.setFlatNumber(flat_number);
+        addressDRepository.save(addressD);
+
+        //найти последнее в списке с id пользователя
+
+        List<Delivery> deliveryList = deliveryRepository.findAll();
+        Long idL = 1L;
+        if (deliveryList.size() > 0) {
+            idL = deliveryList.get(deliveryList.size() - 1).getId() + 1;
+        }
+
+        //возможно вставить получение последнего id
+        Delivery delivery = new Delivery();
+        delivery.setId(idL); //нужно автомтически
+        delivery.setAddressD(addressDRepository.getOne(idAd));
+        delivery.setDate("date");
+        delivery.setTypeOfDelivery(typeOfDeliveryRepository.getOne(2L));
+
+
+        deliveryRepository.save(delivery);
+
+        finalOrder.setDelivery(delivery);
+
+        finalOrderRepository.save(finalOrder);
+
+
+        return "vot tak vot " + city + " " + street + " " + flat_number;
+    }
+
+    @GetMapping("/tesFin")
+    public @ResponseBody
+    String tesFin() {
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+        logger.info(finalOrderList.get(finalOrderList.size() - 1).toString());
+        return finalOrderList.get(finalOrderList.size() - 1).toString();
+    }
+
     //registration order
     //сохранить в корзину
     @PostMapping("/testDB/{id}")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String testDB(@PathVariable("id") String id, @RequestParam(name = "currentURL", required = false) String currentURL, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
+
+        logger.info("principal: " + principal.getName());
+        logger.info("_______________________________________ " + numberOfDays + "______________");
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        Requests requests = new Requests();
+
+        Products products = productsRepository.getOne(Long.valueOf(id));
+
+        Date date = new Date();
+        User user = userService.findByUsername(principal.getName());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
+        requests.setDate(simpleDateFormat.format(new Date()));
+
+        Basket basket = null;
+
+//        FinalOrder finalOrder = null;
+
+        if (basketRepository.existsById(user.getId())) {
+            basket = basketRepository.getOne(user.getId());
+        } else {
+            basket = new Basket();
+            basket.setId(user.getId());
+            basketRepository.save(basket);
+        }
+
+//        if (finalOrderRepository.existsById(user.getId())) {
+//            finalOrder = finalOrderRepository.getOne(user.getId());
+//        } else {
+//            finalOrder = new FinalOrder();
+//            finalOrder.setId(user.getId());
+//            finalOrderRepository.save(finalOrder);
+//        }
+
+        requests.setBasket(basket);
+
+        requests.setNumberOfDays(Integer.parseInt(numberOfDays));
+        requests.setPrice(products.getOneDayPrice());
+        requests.setProducts(products);
+//        requests.setFinalOrder(finalOrder);
+
+        requestsRepository.save(requests); //для заполнения таблицы
+
+        boolean trAdd = false;
+
+        List<Requests> requestsList = requestsRepository.findAll();
+
+        if (requestsRepository.findAll().size() > 0) {
+            for (int i = 0; i < requestsRepository.findAll().size(); i++) {
+                if ((requestsList.get(i).getBasket() != null) && (requestsList.get(i).getBasket().getId() == requests.getBasket().getId()) &&
+                        (requestsList.get(i).getProducts().getId() == requests.getProducts().getId())) {
+
+                    Long oldID = requestsList.get(i).getId();
+                    logger.info("id old: " + oldID);
+                    logger.info("((((Такая корзина и продукт уже есть уже есть");
+
+                    basketRepository.save(basket);
+
+                    requestsRepository.deleteById(oldID);
+                    logger.info("drop the mic: " + oldID);
+                    requestsRepository.save(requests);
+                    logger.info("add to db");
+                    trAdd = true;
+                    break;
+                }
+            }
+        }
+        if (!trAdd) {
+            logger.info("tradd: " + trAdd);
+            basketRepository.save(basket);
+            requestsRepository.save(requests);
+        }
+
+        double finalPrice = 0;
+        for (Requests value : requestsList) {
+            if ((value.getBasket() != null) && (value.getBasket().getId() == basket.getId())) {
+                finalPrice += value.getPrice() * value.getNumberOfDays();
+            }
+        }
+        basket.setFinalPrice(finalPrice);
+//        finalOrder.setFinalPrice(finalPrice);
+        basketRepository.save(basket);
+
+//        finalOrder.setDate(simpleDateFormat.format(new Date()));
+//        finalOrderRepository.save(finalOrder);
+        logger.info("currentURL: " + currentURL);
+
+        if (currentURL == null) {
+            return "redirect:/";
+        } else {
+            return "redirect:/" + currentURL;
+        }
+
+    }
+
+
+    //registration order
+    //сохранить в корзину
+    @PostMapping("/testDB1/{id}")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String testDB1(@PathVariable("id") String id, @RequestParam(name = "currentURL", required = false) String currentURL, @RequestParam("inputplus") String numberOfDays, Model model, Principal principal) {
 
         logger.info("principal: " + principal.getName());
         logger.info("_______________________________________ " + numberOfDays + "______________");
