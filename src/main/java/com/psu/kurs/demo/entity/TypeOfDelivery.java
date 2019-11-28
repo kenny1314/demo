@@ -38,4 +38,13 @@ public class TypeOfDelivery {
     public void setDeliveryList(List<Delivery> deliveryList) {
         this.deliveryList = deliveryList;
     }
+
+    @Override
+    public String toString() {
+        return "TypeOfDelivery{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", deliveryList=" + deliveryList +
+                '}';
+    }
 }

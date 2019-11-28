@@ -75,26 +75,27 @@
                                                     <!--                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>-->
                                                     <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
 
-<!--                                                    <p class="card-text" th:text="${info.description}"></p>-->
-<!--                                                    ${#strings.toString(obj)}                           // так же array*, list* and set*-->
+                                                    <!--                                                    <p class="card-text" th:text="${info.description}"></p>-->
+                                                    <!--                                                    ${#strings.toString(obj)}                           // так же array*, list* and set*-->
 
-<!--                                                    <p class="card-text" th:text="${#strings.toString(${info})}"></p>-->
-<!--                                                    <block th:with = "test=${info.description}">-->
-
-
-<!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.substring(test,0,5)}"></p>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.length(test)}"></p>&ndash;&gt;-->
-<!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
-<!--&lt;!&ndash;                                                    <p class="card-text" th:text="${test}"></p>&ndash;&gt;-->
-<!--                                                    </block>-->
-<!--                                                    <p class="card-text " th:text="${#strings.substring(info.description,0,160)}"-->
+                                                    <!--                                                    <p class="card-text" th:text="${#strings.toString(${info})}"></p>-->
+                                                    <!--                                                    <block th:with = "test=${info.description}">-->
 
 
-<!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
-<!--                                                    -->
-<!--                                                    <p th:text="${strings.concat('ig','orr')}"></p>-->
+                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.substring(test,0,5)}"></p>&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.length(test)}"></p>&ndash;&gt;-->
+                                                    <!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
+                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${test}"></p>&ndash;&gt;-->
+                                                    <!--                                                    </block>-->
+                                                    <!--                                                    <p class="card-text " th:text="${#strings.substring(info.description,0,160)}"-->
 
-                                                    <p class="card-text" th:text="${#strings.length(info.description)>160}? ${#strings.substring(info.description,0,160)}+'...' :'gruntov'"
+
+                                                    <!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
+                                                    <!--                                                    -->
+                                                    <!--                                                    <p th:text="${strings.concat('ig','orr')}"></p>-->
+
+                                                    <p class="card-text"
+                                                       th:text="${#strings.length(info.description)>160}? ${#strings.substring(info.description,0,160)}+'...' :'gruntov'"
                                                        style="width: 247px;height: 123px; margin-bottom: 10px;">
                                                         Игры серии выполнены в
                                                         жанре «избей их всех». Сюжеты игр развиваются вокруг
@@ -109,8 +110,9 @@
                                                         <div class="col-md-7"
                                                              style="text-align: center;padding-left: 42px;"><b
                                                                 th:text="${info.oneDayPrice+' р/день'}">100р</b></div>
-                                                        <div class="col-md-5" >
-                                                            <b th:id="${info.id}"></b>
+                                                        <div class="col-md-5">
+                                                            <b th:id="${info.id}"
+                                                               th:text="${info.oneDayPrice*3+'р'}"></b>
                                                         </div>
                                                     </div>
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
@@ -126,22 +128,31 @@
                                             style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 35.994048px;">
                                     -</button>
                                                             </span>
-                                                                    <input type="hidden" th:id="${'custId['+info.id+']'}" name="custId"
+                                                                    <input type="hidden"
+                                                                           th:id="${'custId['+info.id+']'}"
+                                                                           name="custId"
                                                                            th:value="${info.oneDayPrice}">
-<!--                                                                    <input   onchange="incr(this)" type="text"-->
-                                                                    <input   onchange="incr(this)" type="text"
+                                                                    <!--                                                                    <input   onchange="incr(this)" type="text"-->
+                                                                    <input onchange="incr(this)" type="text"
                                                                            th:id="${'quant['+info.id+']'}"
                                                                            th:name="inputplus"
                                                                            class="form-control input-number" value="3"
                                                                            min="1"
-                                                                           max="10" style="text-align: center;" th:alt="${info.oneDayPrice}" th:title="${info.id}">
+                                                                           max="10" style="text-align: center;"
+                                                                           th:alt="${info.oneDayPrice}"
+                                                                           th:title="${info.id}">
 
                                                                     <script>
                                                                         function incr(e) {
                                                                             var temp = e.value * e.alt;
-                                                                            // alert(temp);
-                                                                            document.getElementById(e.title).innerText=temp+'р';
+
+                                                                            if ((temp + "").indexOf(".") > 0) {
+                                                                                document.getElementById(e.title).innerText = temp + 'р';
+                                                                            } else {
+                                                                                document.getElementById(e.title).innerText = temp + '.0р';
+                                                                            }
                                                                         }
+
                                                                         function neincr(e) {
                                                                             alert(e)
                                                                         }

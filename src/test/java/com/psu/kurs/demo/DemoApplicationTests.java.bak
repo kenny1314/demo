@@ -1,16 +1,42 @@
 package com.psu.kurs.demo;
 
+import com.psu.kurs.demo.dao.TypeOfDeliveryRepository;
+import com.psu.kurs.demo.entity.TypeOfDelivery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.annotations.Proxy;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assert.*;
+
 @RunWith(SpringRunner.class)
+@Proxy(lazy = false)
 @SpringBootTest
 public class DemoApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+    @Autowired
+    TypeOfDeliveryRepository typeOfDeliveryRepository;
+
+
+    @Test
+    public void contextLoads() {
+
+//		SessionFactory sf = (SessionFactory)getServletContext().getAttribute("my.session.factory");
+
+
+
+//		Session session= sessionFactory.getSessionFactory().openSession();
+
+//        assertNotEquals("mess", );
+    }
 
 }

@@ -1,7 +1,45 @@
 package com.psu.kurs.demo.entity;
 
+import com.psu.kurs.demo.CityNameDTO;
+
 import javax.persistence.*;
 
+//@org.hibernate.annotations.NamedNativeQueries({
+//        @org.hibernate.annotations.NamedNativeQuery(
+//                name = "findCityById",
+//                query = "select id,city from cursovaya.addressd",
+//                resultSetMapping = "city_name_dto"
+//        )
+//})
+//
+//@SqlResultSetMapping(
+//        name = "city_name_dto",
+//        classes = @ConstructorResult(
+//                targetClass = CityNameDTO.class,
+//                columns = {
+//                        @ColumnResult(name = "id"),
+//                        @ColumnResult(name = "city")
+//                }
+//        )
+//)
+@org.hibernate.annotations.NamedNativeQueries({
+        @org.hibernate.annotations.NamedNativeQuery(
+                name = "findCityById",
+                query = "select id,city from cursovaya.addressd where id=:id",
+                resultSetMapping = "city_name_dto"
+        )
+})
+
+@SqlResultSetMapping(
+        name = "city_name_dto",
+        classes = @ConstructorResult(
+                targetClass = CityNameDTO.class,
+                columns = {
+                        @ColumnResult(name = "id"),
+                        @ColumnResult(name = "city")
+                }
+        )
+)
 @Entity
 @Table(name = "addressd", schema = "cursovaya", catalog = "kurss")
 public class AddressD {

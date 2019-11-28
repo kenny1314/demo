@@ -56,126 +56,140 @@
                                 <h5>Действие</h5>
                             </div>
                         </div>
+                        <!--                        <h1 th:if="${#lists.size(requestsList)>=1}" th:text="${#lists.size(requestsList)}">xmmm</h1>-->
                         <hr>
+                        <!--                        <h1 th:if="${#lists.size(requestsList)>=1}" th:text="${#lists.size(requestsList)}">xmmm</h1>-->
 
-                        <th:block th:each="i : ${#numbers.sequence( 0, #lists.size(requestsList)-1)}">
-                            <!--                        <div class="row" th:each="product: ${productsListBasket}">-->
+                        <!--                        <h1 th:if="${reL}" th:text="${reL}"></h1>-->
+                        <!--                        <h1 th:if="${reL==null}" th:text="mm"></h1>-->
+                        <!--&lt;!&ndash;                        <th:block th:if="${#lists.size(requestsList)>=1}">&ndash;&gt;-->
+
+                        <th:block th:if="${requestsList==null}">
                             <div class="row">
-
-                                <!--                            <th:block  th:each="request :${requestsList}">-->
-                                <div class="col-md-3">
-                                    <a th:href="@{'/game/' +${productsListBasket[i].id}}">
-                                        <img th:src="@{'/getimgp/' + ${productsListBasket[i].id}}"
-                                             style="width: 200px; height: 112px">
-                                    </a>
-
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                    <h3>В корзине нет товаров</h3>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-1"></div>
+                            </div> <!-- /row -->
+                        </th:block>
+
+                        <th:block th:if="${requestsList!=null}">
+                            <th:block th:each="i : ${#numbers.sequence( 0, #lists.size(requestsList)-1)}">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a th:href="@{'/game/' +${productsListBasket[i].id}}">
+                                            <img th:src="@{'/getimgp/' + ${productsListBasket[i].id}}"
+                                                 style="width: 200px; height: 112px">
+                                        </a>
+
+                                    </div>
+                                    <div class="col-md-3">
                                     <span th:text="'Код: '+${productsListBasket[i].id}"
                                           style="color: #888888; font-size: smaller" th:id="idProd"></span>
-                                    <a th:href="@{'/game/' +${productsListBasket[i].id}}" style="color: #0aa285">
-                                        <!--                                    <a th:href="@{'/game/' +${productsListBasket[i].id}}" style="color: black">-->
-                                        <p th:text="${productsListBasket[i].title}"></p>
-                                    </a>
-                                </div>
-                                <form class="col-md-6" method="post"
-                                      th:action="@{'/testDB/'+${productsListBasket[i].id}}">
-                                    <div class="row">
-                                        <div class="col-md-4" style="text-align: center">
-                                            <!--                                    <p th:text="${requestsList[i].numberOfDays}"></p>-->
-
-                                            <div class="input-group"><span class="input-group-btn">
+                                        <a th:href="@{'/game/' +${productsListBasket[i].id}}" style="color: #0aa285">
+                                            <p th:text="${productsListBasket[i].title}"></p>
+                                        </a>
+                                    </div>
+                                    <form class="col-md-6" method="post"
+                                          th:action="@{'/testDB/'+${productsListBasket[i].id}}">
+                                        <div class="row">
+                                            <div class="col-md-4" style="text-align: center">
+                                                <div class="input-group"><span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number"
                                             data-type="minus" th:id="${'quant['+requestsList[i].id+']'}"
                                             style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 36.994048px;">
                                     -</button></span>
 
-                                                <input type="hidden"
-                                                       name="currentURL"
-                                                       th:value="${currentURL}">
+                                                    <input type="hidden"
+                                                           name="currentURL"
+                                                           th:value="${currentURL}">
 
-                                                <input type="text" onchange="incr(this)"
-                                                       th:id="${'quant['+requestsList[i].id+']'}"
-                                                       th:name="inputplus"
-                                                       class="form-control input-number"
-                                                       th:value="${requestsList[i].numberOfDays}"
-                                                       min="1"
-                                                       max="10" style="text-align: center;"
-                                                       th:alt="${productsListBasket[i].oneDayPrice}"
-                                                       th:title="${productsListBasket[i].id}">
+                                                    <input type="text" onchange="incr(this)"
+                                                           th:id="${'quant['+requestsList[i].id+']'}"
+                                                           th:name="inputplus"
+                                                           class="form-control input-number"
+                                                           th:value="${requestsList[i].numberOfDays}"
+                                                           min="1"
+                                                           max="10" style="text-align: center;"
+                                                           th:alt="${productsListBasket[i].oneDayPrice}"
+                                                           th:title="${productsListBasket[i].id}">
 
-                                                <script>
-                                                    function incr(e) {
-                                                        var temp = e.value * e.alt;
-                                                        // alert(temp);
-                                                        document.getElementById(e.title).innerText = temp + 'р';
-                                                    }
+                                                    <script>
+                                                        function incr(e) {
+                                                            var temp = e.value * e.alt;
+                                                            document.getElementById(e.title).innerText = temp + 'р';
+                                                        }
 
-                                                    function neincr(e) {
-                                                        alert(e)
-                                                    }
+                                                        function neincr(e) {
+                                                            alert(e)
+                                                        }
 
-                                                </script>
-                                                <span class="input-group-btn">
+                                                    </script>
+                                                    <span class="input-group-btn">
                                     <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
                                             th:id="${'quant['+requestsList[i].id+']'}"
                                             style="border-top-left-radius: 0px;border-bottom-left-radius: 0px; height: 36.994048px;">+</button></span>
-                                            </div> <!-- div bot-->
+                                                </div> <!-- div bot-->
 
-                                        </div>
-
-                                        <div class="col-md-4" style="text-align: center">
-                                            <p th:text="${productsListBasket[i].oneDayPrice}"></p>
-                                            <p th:id="${productsListBasket[i].id}">всего</p>
-                                        </div>
-                                        <div class="col-md-4" style="padding-left: 22px;">
-
-                                            <div class="row" style="margin-bottom: 5px;">
-                                                <a th:text="Удолить"
-                                                   th:href="@{'/delProdBask/' +${requestsList[i].id}}"></a>
-                                            </div>
-                                            <div class="row"></div>
-                                            <div class="row">
-                                                <button class="btn btn-success" type="submit">Сохранить</button>
                                             </div>
 
+                                            <div class="col-md-4" style="text-align: center">
+                                                <p th:text="${productsListBasket[i].oneDayPrice}"></p>
+                                                <p th:id="${productsListBasket[i].id}"
+                                                   th:text="${productsListBasket[i].oneDayPrice*requestsList[i].numberOfDays}+'р'">
+                                                    всего</p>
+                                            </div>
+                                            <div class="col-md-4" style="padding-left: 22px;">
+
+                                                <div class="row" style="margin-bottom: 5px;">
+                                                    <a th:text="Удолить"
+                                                       th:href="@{'/delProdBask/' +${requestsList[i].id}}"></a>
+                                                </div>
+                                                <div class="row"></div>
+                                                <div class="row">
+                                                    <button class="btn btn-success" type="submit">Сохранить</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                                <hr th:id="bID">
+
+                            </th:block>
+
+
+                            <form class="col-md-12" method="POST" action="/actionDefinition">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label id="labform1" class="col-sm-6 col-form-label">Тип доставки</label>
+                                            <div class="col-sm-6" style="padding-left: 0px;">
+                                                <select class="form-control form-control-sm" id="optionsList"
+                                                        name="typeOfDelivery"
+                                                        style="height: 35px;">
+                                                    <option value="Самовывоз">Самовывоз</option>
+                                                    <option value="Курьер">Курьер</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success" style="height: 35px;">Оформить заказ</button>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3">
+                                        <h5 th:name="finalPrice" th:text="'Цена: '+${finalPrice}"
+                                            style="padding-top: 5px;"></h5>
+                                    </div>
 
-
-                            </div>
-                            <hr th:id="bID">
-
+                                </div>
+                            </form>
                         </th:block>
-
-                        <form class="col-md-12" method="POST" action="/actionDefinition">
-                            <div class="row">
-
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label id="labform1" class="col-sm-6 col-form-label">Тип доставки</label>
-                                        <div class="col-sm-6" style="padding-left: 0px;">
-                                            <select class="form-control form-control-sm" id="optionsList"
-                                                    name="typeOfDelivery"
-                                                    style="height: 35px;">
-                                                <option value="Самовывоз">Самовывоз</option>
-                                                <option value="Курьер">Курьер</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="btn btn-success" style="height: 35px;">Оформить заказ</button>
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-3">
-                                    <h5 th:name="finalPrice" th:text="'Цена: '+${finalPrice}"
-                                        style="padding-top: 5px;"></h5>
-                                </div>
-
-                            </div>
-                        </form>
 
                     </div> <!-- /Col-md-9 -->
                 </div> <!-- /Row -->

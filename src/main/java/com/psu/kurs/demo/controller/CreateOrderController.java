@@ -1,25 +1,33 @@
 package com.psu.kurs.demo.controller;
 
+//import com.psu.kurs.demo.CityNameDTO;
+
+import com.psu.kurs.demo.CityNameDTO;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
+import org.hibernate.Session;
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @Controller
 public class CreateOrderController {
@@ -334,10 +342,118 @@ public class CreateOrderController {
         return "redirect:/basket";
     }
 
+//    public class CityNameDTO {
+//
+//        public CityNameDTO() {
+//        }
+//
+//        public CityNameDTO(String city) {
+//            this.city = city;
+//        }
+//
+//
+//        private String city;
+//
+//        public String getCity() {
+//            return city;
+//        }
+//
+//        public void setCity(String city) {
+//            this.city = city;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "CityNameDTO{" +
+//                    "city='" + city + '\'' +
+//                    '}';
+//        }
+//    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
     //registration order
     @GetMapping("/basket")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String basket(Model model, Principal principal, HttpServletRequest request) {
+
+        Session session = null;
+        if (entityManager == null
+                || (session = entityManager.unwrap(Session.class)) == null) {
+
+            throw new NullPointerException();
+        }
+
+//        System.out.println("No persons: " +
+//                session.createSQLQuery("select count(number_of_days) as c from cursovaya.requests")
+//                        .addScalar("c", IntegerType.INSTANCE)
+//                        .uniqueResult());
+
+//        List<Object[]> listReq=session.createSQLQuery("select rq.id,rq.number_of_days from cursovaya.requests as rq").list();
+//        List<Object[]> listPlatformm = session.createSQLQuery("select pl.id,pl.name from cursovaya.platforms as pl").list();
+
+//        System.out.println("size qer: "+listReq.size());
+//        System.out.println("size qer: " + listPlatformm.size());
+//
+//
+//        for (Object[] p : listPlatformm) {
+//            System.out.println("id: " + p[0] + " name: " + p[1]);
+//        }
+//
+//        List<Platforms> platformsList11 = session.createSQLQuery("select p.* from cursovaya.platforms as p")
+//                .addEntity(Platforms.class)
+//                .list();
+//
+//        for (Platforms pl : platformsList11) {
+//            System.out.println("cpu: " + pl.getCpu());
+//        }
+
+//        List<Object[]> obj = session.createSQLQuery("select addr.city,addr.flat_number from cursovaya.delivery as deliv" +
+//                " join cursovaya.addressd as addr on deliv.addressd_id = addr.id and deliv.id=4").list();
+        List<Object[]> obj = session.createSQLQuery("select addr.city,addr.flat_number from cursovaya.delivery as deliv" +
+                " join cursovaya.addressd as addr on deliv.addressd_id = addr.id and deliv.id=:id").setInteger("id", 3).
+                list();
+
+
+        System.out.println("siz: " + obj.size());
+
+        for (Object[] p : obj) {
+            System.out.println("city: " + p[0] + " flatNumber: " + p[1]);
+        }
+
+
+//        @AllArgsConstructor
+//        @NoArgsConstructor
+
+//TODO
+        CityNameDTO cityNameDTO = new CityNameDTO();
+        cityNameDTO.city = "cit";
+        System.out.println(cityNameDTO.toString());
+
+//        session.createSQLQuery("select adr.id,adr.city from cursovaya.addressd as adr")
+//                .setResultTransformer(Transformers.aliasToBean(CityNameDTO.class))
+//                .list()
+//                .forEach(System.out::println);
+
+
+        session.getNamedQuery("findCityById").setParameter("id", 2).list().forEach(System.out::println);
+
+
+//
+//        List<Object[]> listOBj= session.createSQLQuery("select adr.id,adr.city from cursovaya.addressd as adr").list();
+//
+//
+//        for (Object[] p : listOBj) {
+//            System.out.println("id: " + p[0].getClass() + " city: " + p[1]);
+//        }
+
+
+//                .forEach(System.out::println);
+
+
+//        session.createQuery("FROM user");
+
 
         model = menuService.getMenuItems(model); //get menu items
 
@@ -365,8 +481,10 @@ public class CreateOrderController {
 
             }
         } else {
+            model.addAttribute("requestsList", null);
             logger.info("not req");
         }
+//        model.addAttribute("reL",22);
 
         model.addAttribute("currentURL", otherService.getCurrentUrl(request));
         model.addAttribute("finalPrice", basket.getFinalPrice());
@@ -524,11 +642,16 @@ public class CreateOrderController {
                     logger.info("id old: " + oldID);
                     logger.info("((((Такая корзина и продукт уже есть уже есть");
 
+//                    basket.setFinalPrice(basket.getFinalPrice()-requestsRepository.getOne(oldID).getPrice());
                     basketRepository.save(basket);
 
-                    requestsRepository.deleteById(oldID);
-                    logger.info("drop the mic: " + oldID);
+                    requestsRepository.delete(requestsRepository.getOne(oldID));
+//                    requestsRepository.deleteById(oldID);
+//                    logger.info("drop the mic: " + oldID);
                     requestsRepository.save(requests);
+//                    requestsRepository.saveAndFlush(requests);
+//                    requestsRepository.deleteAllInBatch();
+
                     logger.info("add to db");
                     trAdd = true;
                     break;
@@ -541,12 +664,17 @@ public class CreateOrderController {
             requestsRepository.save(requests);
         }
 
+        requestsList = requestsRepository.findAll();
+        int counter = 0;
         double finalPrice = 0;
         for (Requests value : requestsList) {
+            //чёт тут
             if ((value.getBasket() != null) && (value.getBasket().getId() == basket.getId())) {
                 finalPrice += value.getPrice() * value.getNumberOfDays();
+                counter++;
             }
         }
+        logger.info("counter: " + counter);
         basket.setFinalPrice(finalPrice);
 //        finalOrder.setFinalPrice(finalPrice);
         basketRepository.save(basket);
@@ -666,3 +794,4 @@ public class CreateOrderController {
     }
 
 }
+

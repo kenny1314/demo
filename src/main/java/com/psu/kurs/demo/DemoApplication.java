@@ -1,11 +1,17 @@
 package com.psu.kurs.demo;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
+
+import javax.persistence.EntityManagerFactory;
 
 @Configuration
 @SpringBootApplication
@@ -16,5 +22,7 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
         logger.info("hello igor");
     }
+
+
 
 }
