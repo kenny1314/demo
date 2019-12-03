@@ -1,24 +1,26 @@
 package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
+import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.entity.Products;
 import com.psu.kurs.demo.entity.User;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -60,6 +62,12 @@ public class MainController {
 
     @Autowired
     FinalOrderRepository finalOrderRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     MenuService menuService;
@@ -168,6 +176,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String login(Model model) {
+
         model = menuService.getMenuItems(model); //get menu items
         return "login";
     }
@@ -181,10 +190,23 @@ public class MainController {
         return "/registration";
     }
 
+    @GetMapping("/delusr")
+    public @ResponseBody
+    String delUsr() {
+        userService.deleteUserWithRole(4L);
+        return "test del usr";
+    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
     //обработка регистрации
     @PostMapping("/registration")
     public String addUser(@RequestParam("username") String username,
                           @RequestParam("password") String password,
+                          @RequestParam("city") String city,
+                          @RequestParam("street") String street,
+                          @RequestParam("flatNumber") String flatNumber,
                           Model model) {
         logger.info("post reg");
 
@@ -200,7 +222,18 @@ public class MainController {
             return "/registration";
         }
         User user = new User(1, username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
+
+        Address address = new Address();
+
+        address.setCity(city);
+        address.setStreet(street);
+        address.setFlatNumber(flatNumber);
+        addressRepository.save(address);
+
+        user.setAddress(address);
         userService.save(user);
+
+
         model.addAttribute("error", "Всё хорошо");
         return "redirect:/";
     }

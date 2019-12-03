@@ -201,7 +201,8 @@ public class CreateOrderController {
 
         User user = userService.findByUsername(principal.getName());
 
-        Address address = new Address(user.getId(), "Новополоцк", "Молодёжная 69", "420");
+        Address address = new Address(user.getId(), user.getAddress().getCity(), user.getAddress().getStreet(), user.getAddress().getFlatNumber());
+//        Address address = new Address(user.getId(), "Новополоцк", "Молодёжная 69", "420");
 
         model.addAttribute("address", address);
 
@@ -495,11 +496,12 @@ public class CreateOrderController {
     //оформление заказа
 //    @Transactional
     @PostMapping("/completeСheckout")
-    public @ResponseBody
-    String completeCheckout(@RequestParam(name = "city", required = false) String city,
-                            @RequestParam(name = "street", required = false) String street,
-                            @RequestParam(name = "flat_number", required = false) String flat_number,
-                            Principal principal) {
+    public String completeCheckout(@RequestParam(name = "city", required = false) String city,
+                                   @RequestParam(name = "street", required = false) String street,
+                                   @RequestParam(name = "flat_number", required = false) String flat_number,
+                                   Principal principal,Model model) {
+
+        model = menuService.getMenuItems(model); //get menu items
 
         Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
 
@@ -511,10 +513,12 @@ public class CreateOrderController {
             inxIns = finalOrderList.get(finalOrderList.size() - 1).getId() + 1;
         }
 
+
         FinalOrder finalOrder = new FinalOrder();
         finalOrder.setId(inxIns);
         finalOrder.setDate("data ochka");
         finalOrder.setFinalPrice(basket.getFinalPrice());
+        finalOrder.setUser(userService.findByUsername(principal.getName()));
         finalOrderRepository.save(finalOrder);
 
         for (Requests rq : requestsList) {
@@ -569,8 +573,13 @@ public class CreateOrderController {
         finalOrderRepository.save(finalOrder);
 
 
-        return "vot tak vot " + city + " " + street + " " + flat_number;
+//        return "vot tak vot " + city + " " + street + " " + flat_number;
+
+        return "orderComplete";
     }
+
+
+
 
     @GetMapping("/tesFin")
     public @ResponseBody

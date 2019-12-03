@@ -1,0 +1,136 @@
+package com.psu.kurs.demo.controller;
+
+import com.psu.kurs.demo.CityNameDTO;
+import com.psu.kurs.demo.dao.*;
+import com.psu.kurs.demo.entity.*;
+import com.psu.kurs.demo.services.MenuService;
+import com.psu.kurs.demo.services.OtherService;
+import com.psu.kurs.demo.services.UserService;
+import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.annotation.security.RolesAllowed;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class AccountController {
+
+    private static Logger logger = LoggerFactory.getLogger(MainController.class);
+
+    @Autowired
+    ProductsRepository productsRepository;
+
+    @Autowired
+    PlatformsRepository platformsRepository;
+
+    @Autowired
+    GenresRepository genresRepository;
+
+    @Autowired
+    LanguagesRepository languagesRepository;
+
+    @Autowired
+    AgeLimitsRepository ageLimitsRepository;
+
+    @Autowired
+    PublishersRepository publishersRepository;
+
+    @Autowired
+    ImagesTRepository imagesTRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RequestsRepository requestsRepository;
+
+    @Autowired
+    BasketRepository basketRepository;
+
+    @Autowired
+    FinalOrderRepository finalOrderRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    MenuService menuService;
+
+    @Autowired
+    OtherService otherService;
+
+    //registration order
+    @GetMapping("/accountAdmin")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String accountAdmin(Model model, Principal principal, HttpServletRequest request) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        model.addAttribute("listFinalOrder", finalOrderRepository.findAll());
+
+        return "accountAdmin";
+    }
+
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
+    @GetMapping("/accountUser")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String accountUser(Model model, Principal principal, HttpServletRequest request) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        List<FinalOrder> newListFinalOrder = new ArrayList<>();
+
+        for (FinalOrder fin : finalOrderRepository.findAll()) {
+            if (fin.getUser().getId() == userService.findByUsername(principal.getName()).getId()) {
+                newListFinalOrder.add(fin);
+            }
+        }
+
+        model.addAttribute("listFinalOrder", newListFinalOrder);
+
+        return "accountUser";
+    }
+
+    @GetMapping("/infoUser")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String infoUser(Model model, Principal principal, HttpServletRequest request) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        List<FinalOrder> newListFinalOrder = new ArrayList<>();
+
+        for (FinalOrder fin : finalOrderRepository.findAll()) {
+            if (fin.getUser().getId() == userService.findByUsername(principal.getName()).getId()) {
+                newListFinalOrder.add(fin);
+            }
+        }
+
+        System.out.println(addressRepository.findAll().size());
+
+
+        model.addAttribute("address",addressRepository.getOne(userService.findByUsername(principal.getName()).getAddress().getId()));
+        model.addAttribute("usr",userService.findByUsername(principal.getName()));
+        model.addAttribute("listFinalOrder", newListFinalOrder); //
+
+        return "infoUser";
+    }
+
+}

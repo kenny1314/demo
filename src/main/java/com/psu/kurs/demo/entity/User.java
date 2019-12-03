@@ -21,6 +21,23 @@ public class User extends AbstractEntity {
     @Column
     private String password;
 
+
+    private String count_reqests;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<FinalOrder> finalOrderList;
+
+    //TODO для адреса
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id", referencedColumnName = "id")
+//    private Address address;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     public User() {
     }
 
@@ -53,5 +70,30 @@ public class User extends AbstractEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCount_reqests() {
+        return count_reqests;
+    }
+
+    public void setCount_reqests(String count_reqests) {
+        this.count_reqests = count_reqests;
+    }
+
+    public List<FinalOrder> getFinalOrderList() {
+        return finalOrderList;
+    }
+
+    public void setFinalOrderList(List<FinalOrder> finalOrderList) {
+        this.finalOrderList = finalOrderList;
+    }
+
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

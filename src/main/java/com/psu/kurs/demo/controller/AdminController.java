@@ -137,18 +137,19 @@ public class AdminController {
     @GetMapping("/delplatform/{id}")
     public String delPlatformId(@PathVariable String id, Model model) {
 
-        List<Products> productsList = productsRepository.findAll();
-        for (Products prod : productsList) {
-            logger.info("id plaf:" + prod.getPlatforms().getId());
-            logger.info("id get:" + Long.valueOf(id));
-            if (prod.getPlatforms().getId().equals(Long.valueOf(id))) {
-                logger.info("Такая платформа ессть в продуктах");
-
-                prod.setIdd(1L);
-                prod.setPlatforms(platformsRepository.getOne(1L));
-                productsRepository.save(prod);
-            }
-        }
+        //TODO должен работать триггер
+//        List<Products> productsList = productsRepository.findAll();
+//        for (Products prod : productsList) {
+//            logger.info("id plaf:" + prod.getPlatforms().getId());
+//            logger.info("id get:" + Long.valueOf(id));
+//            if (prod.getPlatforms().getId().equals(Long.valueOf(id))) {
+//                logger.info("Такая платформа ессть в продуктах");
+//
+//                prod.setIdd(1L);
+//                prod.setPlatforms(platformsRepository.getOne(1L));
+//                productsRepository.save(prod);
+//            }
+//        }
 
         if (platformsRepository.existsById(Long.valueOf(id))) {
             platformsRepository.deleteById(Long.valueOf(id));

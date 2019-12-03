@@ -7,11 +7,17 @@ import java.util.List;
 @Table(name = "address", schema = "cursovaya", catalog = "kurss")
 public class Address {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     private String city;
     private String street;
     private String flatNumber;
+
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private List<User> userList;
+
 
     public Address() {
     }
@@ -53,5 +59,13 @@ public class Address {
 
     public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

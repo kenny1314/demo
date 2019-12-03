@@ -14,6 +14,11 @@ public class FinalOrder {
     @JoinColumn(name = "final_order_id")
     private List<Requests> requestsList;
 
+    //TODO для пользователя
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private double finalPrice;
     private String date;
 
@@ -38,6 +43,14 @@ public class FinalOrder {
 
     public void setRequestsList(List<Requests> requestsList) {
         this.requestsList = requestsList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getFinalPrice() {
