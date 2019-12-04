@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,6 +83,46 @@ public class MainController {
 
         return "index";
     }
+
+    @GetMapping(value = {"/getGameByPlatform/{id}"})
+    public String getGameByPlatform(Model model, @PathVariable String id) {
+
+        List<Products> newListProduct = new ArrayList<>();
+        List<Products> productsList = productsRepository.findAll();
+
+        for (Products prod : productsList) {
+            System.out.println("idP:"+prod.getPlatforms().getId());
+            if (prod.getPlatforms().getId()==Long.valueOf(id)) {
+                newListProduct.add(prod);
+            }
+        }
+
+        model = menuService.getMenuItems(model); //get menu items
+        model.addAttribute("newListProduct", newListProduct);
+        System.out.println("size prod:"+newListProduct.size());
+
+        return "getGameByPlatform";
+    }
+    @GetMapping(value = {"/getGameByGenre/{id}"})
+    public String getGameByGenre(Model model, @PathVariable String id) {
+
+        List<Products> newListProduct = new ArrayList<>();
+        List<Products> productsList = productsRepository.findAll();
+
+        for (Products prod : productsList) {
+//            System.out.println("idP:"+prod.getPlatforms().getId());
+            if (prod.getGenres().getId()==Long.valueOf(id)) {
+                newListProduct.add(prod);
+            }
+        }
+
+        model = menuService.getMenuItems(model); //get menu items
+        model.addAttribute("newListProduct", newListProduct);
+        System.out.println("size prod:"+newListProduct.size());
+
+        return "getGameByGenre";
+    }
+
 
     @GetMapping("/game/{id}")
     public String game(@PathVariable String id, Model model, HttpServletRequest request) {

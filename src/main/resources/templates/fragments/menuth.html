@@ -73,7 +73,11 @@
         <ul class="navbar-nav mr-auto">
             <li><a href="/infoUser" class="list-group-item list-group-item-action">Информация</a></li>
             <li><a href="/accountUser" class="list-group-item list-group-item-action">Заказы</a></li>
-            <li><a  class="list-group-item list-group-item-action">Настройки</a></li>
+            <li>
+                <a th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}"
+                   class="list-group-item list-group-item-action" href="/accountAdmin">Все заказы</a>
+            </li>
+            <li><a class="list-group-item list-group-item-action">Настройки</a></li>
         </ul>
     </div>
 </nav>

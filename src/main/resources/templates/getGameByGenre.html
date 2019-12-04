@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>getGameByGenre</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <!--    <h1>hello</h1>-->
+    <div class="site">
+        <div class="maincl">
+
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+
+
+                    </div>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+                        <!-- Carousel -->
+<!--                        #lists.size(requestsList)-1-->
+                        <th:block th:if="${ #lists.size(newListProduct)==0}">
+<!--                            <h2>Игр с таким жанром нет</h2>-->
+
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                    <h3>Игр с таким жанром нет</h3>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </th:block>
+
+                        <br>
+                        <!-- Container with card -->
+                        <div class="container" style="padding-left: 0px;">
+                            <th:block
+                                    th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(newListProduct, 3)}">
+                                <div class="row " th:each="partition: ${partitions}">
+                                    <div class="col-md-4" th:each="info : ${partition}">
+                                        <div class="card" style="width: 18rem; margin-bottom: 20px;" id="card1id">
+                                            <a th:href="@{'/game/' +${info.id}}" class="btn btn-primary"
+                                               style="padding: 0px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px;border-bottom-width: 0px;">
+                                                <img th:src="@{'/getimgp/' + ${info.id}}"
+                                                     style="height: 160px; width: 286px">
+                                            </a>
+                                            <!--                                        <img src="img/card1.jpg " class="card-img-top">-->
+                                            <div class="card-body">
+                                                <form method="post" th:action="@{'/testDB/'+${info.id}}">
+                                                    <!--                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>-->
+                                                    <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
+
+                                                    <!--                                                    <p class="card-text" th:text="${info.description}"></p>-->
+                                                    <!--                                                    ${#strings.toString(obj)}                           // так же array*, list* and set*-->
+
+                                                    <!--                                                    <p class="card-text" th:text="${#strings.toString(${info})}"></p>-->
+                                                    <!--                                                    <block th:with = "test=${info.description}">-->
+
+
+                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.substring(test,0,5)}"></p>&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.length(test)}"></p>&ndash;&gt;-->
+                                                    <!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
+                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${test}"></p>&ndash;&gt;-->
+                                                    <!--                                                    </block>-->
+                                                    <!--                                                    <p class="card-text " th:text="${#strings.substring(info.description,0,160)}"-->
+
+
+                                                    <!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
+                                                    <!--                                                    -->
+                                                    <!--                                                    <p th:text="${strings.concat('ig','orr')}"></p>-->
+
+                                                    <p class="card-text"
+                                                       th:text="${#strings.length(info.description)>160}? ${#strings.substring(info.description,0,160)}+'...' :'gruntov'"
+                                                       style="width: 247px;height: 123px; margin-bottom: 10px;">
+                                                        Игры серии выполнены в
+                                                        жанре «избей их всех». Сюжеты игр развиваются вокруг
+                                                        противостояния
+                                                        боевых жаб и Тёмной Королевы, главного отрицательного героя игр
+                                                        серии.</p>
+                                                    <hr style="margin-top: 5px;margin-bottom: 5px;">
+                                                    <div class="row">
+                                                        <!--                                                    <div class="col-md-2"></div>-->
+                                                        <!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
+
+                                                        <div class="col-md-7"
+                                                             style="text-align: center;padding-left: 42px;"><b
+                                                                th:text="${info.oneDayPrice+' р/день'}">100р</b></div>
+                                                        <div class="col-md-5">
+                                                            <b th:id="${info.id}"
+                                                               th:text="${info.oneDayPrice*3+'р'}"></b>
+                                                        </div>
+                                                    </div>
+                                                    <hr style="margin-top: 5px;margin-bottom: 5px;">
+
+                                                    <div class="container">
+
+                                                        <div class="row" style="padding-left: 10px;">
+                                                            <div class="col-md-6"
+                                                                 style="padding-left: 4px;padding-right: 4px;">
+                                                                <div class="input-group"><span class="input-group-btn">
+                                    <button type="button btn-number" class="btn btn-success btn-number"
+                                            data-type="minus" th:id="${'quant['+info.id+']'}"
+                                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;height: 35.994048px;">
+                                    -</button>
+                                                            </span>
+                                                                    <input type="hidden"
+                                                                           th:id="${'custId['+info.id+']'}"
+                                                                           name="custId"
+                                                                           th:value="${info.oneDayPrice}">
+                                                                    <!--                                                                    <input   onchange="incr(this)" type="text"-->
+                                                                    <input onchange="incr(this)" type="text"
+                                                                           th:id="${'quant['+info.id+']'}"
+                                                                           th:name="inputplus"
+                                                                           class="form-control input-number" value="3"
+                                                                           min="1"
+                                                                           max="10" style="text-align: center;"
+                                                                           th:alt="${info.oneDayPrice}"
+                                                                           th:title="${info.id}">
+
+                                                                    <script>
+                                                                        function incr(e) {
+                                                                            var temp = e.value * e.alt;
+
+                                                                            if ((temp + "").indexOf(".") > 0) {
+                                                                                document.getElementById(e.title).innerText = temp + 'р';
+                                                                            } else {
+                                                                                document.getElementById(e.title).innerText = temp + '.0р';
+                                                                            }
+                                                                        }
+
+                                                                        function neincr(e) {
+                                                                            alert(e)
+                                                                        }
+
+                                                                    </script>
+                                                                    <span class="input-group-btn">
+
+
+                                    <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
+                                            th:id="${'quant['+info.id+']'}"
+                                            style="border-top-left-radius: 0px;border-bottom-left-radius: 0px; height: 35.994048px;">+</button></span>
+                                                                </div> <!-- div bot-->
+                                                            </div>
+                                                            <div class="col-md-6"
+                                                                 style="padding-left: 8px;padding-right: 0px;">
+                                                                <button th:href="@{'/testDB/'+${info.id}}"
+                                                                        class="btn btn-primary" type="submit"
+                                                                >В корзину
+                                                                </button>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- button-->
+                                                </form> <!-- form -->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div> <!-- /Container with card -->
+
+
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+
+<script>
+
+    //plugin bootstrap minus and plus
+    //http://jsfiddle.net/laelitenetwork/puJ6G/
+    $('.btn-number').click(function (e) {
+        e.preventDefault();
+
+        fieldName = $(this).attr('id');
+        type = $(this).attr('data-type');
+        var input = $("input[id='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
+
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('min')) {
+                    $(this).attr('disabled', true);
+                }
+
+            } else if (type == 'plus') {
+
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('max')) {
+                    $(this).attr('disabled', true);
+                }
+
+            }
+        } else {
+            input.val(0);
+        }
+    });
+    $('.input-number').focusin(function () {
+        $(this).data('oldValue', $(this).val());
+    });
+    $('.input-number').change(function () {
+
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
+        valueCurrent = parseInt($(this).val());
+
+        // var name = $(this).attr('name');
+        // alert('name '+name);
+        fieldName = $(this).attr('id');
+        // alert('field_name '+fieldName);
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][id='" + fieldName + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the minimum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][id='" + fieldName + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the maximum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+
+
+    });
+    $(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+
+</html>

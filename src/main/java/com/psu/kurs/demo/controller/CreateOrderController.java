@@ -265,13 +265,77 @@ public class CreateOrderController {
         return "store_selection";
     }
 
+    //TODO добавить
+    //выбрать кнопку и добавить нужный адрес
     //registration order
     //вывод значения с радиокнопки
     @PostMapping("/orderIsProcessed")
-    public @ResponseBody
-    String orderIsProcessed(@RequestParam(name = "fb", required = false) String radioValue) {
+    public String orderIsProcessed(@RequestParam(name = "fb", required = false) String radioValue, Model model, Principal principal) {
 
-        return "fb: " + radioValue;
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
+
+        List<Requests> requestsList = basket.getRequestsList();
+
+        Long inxIns = 1L;
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+        if (finalOrderList.size() > 0) {
+            inxIns = finalOrderList.get(finalOrderList.size() - 1).getId() + 1;
+        }
+
+
+        FinalOrder finalOrder = new FinalOrder();
+        finalOrder.setId(inxIns);
+        finalOrder.setDate(new Date().toString());
+        finalOrder.setFinalPrice(basket.getFinalPrice());
+        finalOrder.setUser(userService.findByUsername(principal.getName()));
+        finalOrderRepository.save(finalOrder);
+
+        for (Requests rq : requestsList) {
+            rq.setFinalOrder(finalOrder);
+            rq.setBasket(null);
+        }
+        requestsRepository.saveAll(requestsList);
+        basket.setRequestsList(null); //бесполезно
+        basketRepository.deleteById(basket.getId());
+
+        List<AddressD> addressDList = addressDRepository.findAll();
+        Long idAd = 1L;
+        if (addressDList.size() > 0) {
+            idAd = addressDList.get(addressDList.size() - 1).getId() + 1;
+        }
+
+        AddressD addressD0=null;
+        if (radioValue.equals("obsh")) {
+            addressD0 = addressDRepository.getOne(10001L);
+        }else {
+            addressD0 = addressDRepository.getOne(10002L);
+        }
+
+        //найти последнее в списке с id пользователя
+
+        List<Delivery> deliveryList = deliveryRepository.findAll();
+        Long idL = 1L;
+        if (deliveryList.size() > 0) {
+            idL = deliveryList.get(deliveryList.size() - 1).getId() + 1;
+        }
+
+        //возможно вставить получение последнего id
+        Delivery delivery = new Delivery();
+        delivery.setId(idL); //нужно автомтически
+        delivery.setAddressD(addressD0);
+        delivery.setDate(new Date().toString());
+        delivery.setTypeOfDelivery(typeOfDeliveryRepository.getOne(1L));
+
+        deliveryRepository.save(delivery);
+
+        finalOrder.setDelivery(delivery);
+
+        finalOrderRepository.save(finalOrder);
+
+        return "orderComplete";
     }
 
 
@@ -499,7 +563,7 @@ public class CreateOrderController {
     public String completeCheckout(@RequestParam(name = "city", required = false) String city,
                                    @RequestParam(name = "street", required = false) String street,
                                    @RequestParam(name = "flat_number", required = false) String flat_number,
-                                   Principal principal,Model model) {
+                                   Principal principal, Model model) {
 
         model = menuService.getMenuItems(model); //get menu items
 
@@ -516,7 +580,7 @@ public class CreateOrderController {
 
         FinalOrder finalOrder = new FinalOrder();
         finalOrder.setId(inxIns);
-        finalOrder.setDate("data ochka");
+        finalOrder.setDate(new Date().toString());
         finalOrder.setFinalPrice(basket.getFinalPrice());
         finalOrder.setUser(userService.findByUsername(principal.getName()));
         finalOrderRepository.save(finalOrder);
@@ -577,8 +641,6 @@ public class CreateOrderController {
 
         return "orderComplete";
     }
-
-
 
 
     @GetMapping("/tesFin")

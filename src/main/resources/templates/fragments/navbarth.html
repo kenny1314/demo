@@ -31,7 +31,7 @@
                     <a class="dropdown-item" href="/genres">Все жанры</a>
                     <hr style="margin-top: 5px;margin-bottom: 5px;">
                     <div th:each="i : ${genresList}">
-                        <a class="dropdown-item" th:href="@{'/genres'}" th:utext="${i.name}">P</a>
+                        <a class="dropdown-item" th:href="${'/getGameByGenre/'+i.id}" th:utext="${i.name}">P</a>
                     </div>
 
                 </div>
