@@ -133,7 +133,6 @@ public class AdminController {
     }
 
 
-    //TODO возможно сюда добавить тригер
     @GetMapping("/delplatform/{id}")
     public String delPlatformId(@PathVariable String id, Model model) {
 

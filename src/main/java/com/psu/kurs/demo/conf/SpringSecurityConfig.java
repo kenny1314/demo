@@ -45,7 +45,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/accountUser").permitAll()
                 .antMatchers("/getGameByPlatform/**").permitAll()
                 .antMatchers("/getGameByGenre/**").permitAll()
-                .antMatchers("/addGenres").hasAnyRole("ADMIN")
+                .antMatchers("/addGenres","/delgame/**","/delplatform/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

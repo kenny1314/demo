@@ -265,7 +265,6 @@ public class CreateOrderController {
         return "store_selection";
     }
 
-    //TODO добавить
     //выбрать кнопку и добавить нужный адрес
     //registration order
     //вывод значения с радиокнопки

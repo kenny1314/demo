@@ -48,7 +48,9 @@
                                     <div class="card" style="width: 14rem;margin-bottom: 20px;height: 245px;"
                                          id="card1id">
 <!--                                        <img src="img/action.jpg" class="card-img-top">-->
+                                        <a th:href="${'/getGameByGenre/'+info.id}">
                                         <img  th:src="@{'/getimgg/'+${info.id}}" class="card-img-top" style="height: 124px;">
+                                        </a>
                                         <div class="card-body">
 
                                             <h5 class="card-title " style="text-align: center;margin-bottom: 0px;"

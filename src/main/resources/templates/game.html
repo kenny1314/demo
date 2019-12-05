@@ -49,9 +49,11 @@
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3" style="padding-left: 24px;">
-                                            <a th:href="${'/delgame/'+product.id}">
+                                            <th:block th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+                                            <a  th:href="${'/delgame/'+product.id}">
                                                 <button class="btn btn-danger">Удалить</button>
                                             </a>
+                                            </th:block>
                                         </div>
                                     </div>
                                     <table border="0 " id="tabinfo">
@@ -110,7 +112,7 @@
                                                                             th:text="${product.oneDayPrice+' р/д'}"
                                                                             id="pric">mmm</h5></div>
                                                                     <div class="col-md-6" style="text-align: center"><h5
-                                                                            th:text="${product.fullPrice+' р/итог'}"
+                                                                            th:text="${product.oneDayPrice*3+' р/итог'}"
                                                                             id="finPri">mmm</h5></div>
                                                                 </div>
                                                                 <div class="row">
