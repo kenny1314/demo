@@ -1,5 +1,6 @@
 package com.psu.kurs.demo.controller;
 
+import com.psu.kurs.demo.PoiTestWord;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.Platforms;
@@ -8,7 +9,6 @@ import com.psu.kurs.demo.entity.User;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +77,48 @@ public class MainController {
     @Autowired
     OtherService otherService;
 
+
+//    @Autowired
+//    private ServletContext servletContext;
+//
+//    @GetMapping("/down")
+//    public ResponseEntity<InputStreamResource> downloadFile1() throws IOException, FileNotFoundException {
+//
+//        String fileName = "3.xls";
+//        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+//        logger.info("  "+mediaType);
+//        System.out.println("fileName: " + fileName);
+//        System.out.println("mediaType: " + mediaType);
+//
+//        File file = new File("C:\\Users\\Ihar_Hruntou\\eclipse-workspace\\blank\\3.xls");
+//        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+//
+//        return ResponseEntity.ok()
+//                // Content-Disposition
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+//                // Content-Type
+//                .contentType(mediaType)
+//                // Contet-Length
+//                .contentLength(file.length()) //
+//                .body(resource);
+//    }
+
+
+    @GetMapping(value = {"/t"})
+    public @ResponseBody
+    String getword() {
+
+        List<Products> productsList = productsRepository.findAll();
+        System.out.println("size: " + productsList.size());
+        PoiTestWord poiTestWord = new PoiTestWord();
+        try {
+            poiTestWord.run(productsRepository);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "word";
+    }
+
     @GetMapping(value = {"/"})
     public String index(Model model) {
 
@@ -91,18 +134,19 @@ public class MainController {
         List<Products> productsList = productsRepository.findAll();
 
         for (Products prod : productsList) {
-            System.out.println("idP:"+prod.getPlatforms().getId());
-            if (prod.getPlatforms().getId()==Long.valueOf(id)) {
+            System.out.println("idP:" + prod.getPlatforms().getId());
+            if (prod.getPlatforms().getId() == Long.valueOf(id)) {
                 newListProduct.add(prod);
             }
         }
 
         model = menuService.getMenuItems(model); //get menu items
         model.addAttribute("newListProduct", newListProduct);
-        System.out.println("size prod:"+newListProduct.size());
+        System.out.println("size prod:" + newListProduct.size());
 
         return "getGameByPlatform";
     }
+
     @GetMapping(value = {"/getGameByGenre/{id}"})
     public String getGameByGenre(Model model, @PathVariable String id) {
 
@@ -111,14 +155,14 @@ public class MainController {
 
         for (Products prod : productsList) {
 //            System.out.println("idP:"+prod.getPlatforms().getId());
-            if (prod.getGenres().getId()==Long.valueOf(id)) {
+            if (prod.getGenres().getId() == Long.valueOf(id)) {
                 newListProduct.add(prod);
             }
         }
 
         model = menuService.getMenuItems(model); //get menu items
         model.addAttribute("newListProduct", newListProduct);
-        System.out.println("size prod:"+newListProduct.size());
+        System.out.println("size prod:" + newListProduct.size());
 
         return "getGameByGenre";
     }
