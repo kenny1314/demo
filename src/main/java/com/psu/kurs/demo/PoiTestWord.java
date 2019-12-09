@@ -32,7 +32,7 @@ public class PoiTestWord {
         FileOutputStream out = new FileOutputStream(
                 new File("products.docx"));
 
-        //create paragraph
+        //create parafffgraph
         XWPFParagraph paragraph = document.createParagraph();
 
         //Set alignment paragraph to RIGHT
