@@ -1,24 +1,35 @@
 package com.psu.kurs.demo.controller;
 
+import com.psu.kurs.demo.PoiTestExel;
 import com.psu.kurs.demo.PoiTestWord;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.Platforms;
 import com.psu.kurs.demo.entity.Products;
 import com.psu.kurs.demo.entity.User;
+import com.psu.kurs.demo.services.MediaTypeUtils;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,44 +89,86 @@ public class MainController {
     OtherService otherService;
 
 
-//    @Autowired
-//    private ServletContext servletContext;
-//
-//    @GetMapping("/down")
-//    public ResponseEntity<InputStreamResource> downloadFile1() throws IOException, FileNotFoundException {
-//
-//        String fileName = "3.xls";
-//        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-//        logger.info("  "+mediaType);
-//        System.out.println("fileName: " + fileName);
-//        System.out.println("mediaType: " + mediaType);
-//
-//        File file = new File("C:\\Users\\Ihar_Hruntou\\eclipse-workspace\\blank\\3.xls");
-//        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-//
-//        return ResponseEntity.ok()
-//                // Content-Disposition
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
-//                // Content-Type
-//                .contentType(mediaType)
-//                // Contet-Length
-//                .contentLength(file.length()) //
-//                .body(resource);
-//    }
+    @Autowired
+    private ServletContext servletContext;
 
+    @GetMapping("/downExel")
+    public ResponseEntity<InputStreamResource> downloadExel() throws IOException, FileNotFoundException {
 
-    @GetMapping(value = {"/t"})
-    public @ResponseBody
-    String getword() {
+        PoiTestExel poiTestExel = new PoiTestExel();
+        try {
+            poiTestExel.run(productsRepository);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        List<Products> productsList = productsRepository.findAll();
-        System.out.println("size: " + productsList.size());
+        String fileName = "products.xls";
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+        logger.info("  " + mediaType);
+        System.out.println("fileName: " + fileName);
+        System.out.println("mediaType: " + mediaType);
+
+        File file = new File("D:\\demo_\\products.xls");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                .contentType(mediaType)
+                .contentLength(file.length())
+                .body(resource);
+    }
+
+    @GetMapping("/downWord")
+    public ResponseEntity<InputStreamResource> downloadWord() throws IOException, FileNotFoundException {
+
         PoiTestWord poiTestWord = new PoiTestWord();
         try {
             poiTestWord.run(productsRepository);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String fileName = "products.docx";
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+        logger.info("  " + mediaType);
+        System.out.println("fileName: " + fileName);
+        System.out.println("mediaType: " + mediaType);
+
+        File file = new File("D:\\demo_\\products.docx");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                .contentType(mediaType)
+                .contentLength(file.length())
+                .body(resource);
+    }
+
+    @GetMapping("/e")
+    public @ResponseBody
+    String getWordExel() {
+
+        PoiTestExel poiTestExel = new PoiTestExel();
+        try {
+            poiTestExel.run(productsRepository);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "exel";
+    }
+
+    @GetMapping("/t")
+    public @ResponseBody
+    String getWordFile() {
+
+        PoiTestWord poiTestWord = new PoiTestWord();
+        try {
+            poiTestWord.run(productsRepository);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "word";
     }
 
