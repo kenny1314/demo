@@ -1,7 +1,10 @@
 package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
-import com.psu.kurs.demo.entity.*;
+import com.psu.kurs.demo.entity.ImagesG;
+import com.psu.kurs.demo.entity.ImagesP;
+import com.psu.kurs.demo.entity.ImagesT;
+import com.psu.kurs.demo.entity.Products;
 import com.psu.kurs.demo.services.GetImageBufferBD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 
 @RestController
@@ -39,8 +46,21 @@ public class RestControllerName {
     ImagesPRepository imagesPRepository;
 
 
-//    @Autowired
-//    EmployeeRepository employeeRepository;
+    @RequestMapping("/searchq")
+//    public List<Products> search(@RequestParam(value = "value") String value) throws IOException {
+    public List<String> search(@RequestParam(value = "value") String value) throws IOException {
+        List<String> lists = new ArrayList<>();
+        try{
+            List<Products> products = productsRepository.findByTitleContainsIgnoreCase(value);
+            for(Products pr: products){
+                lists.add(pr.getTitle());
+            }
+            return lists;
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
 
 
     //не надо использовать //загрузка одного файла в базу данных
@@ -88,7 +108,7 @@ public class RestControllerName {
     //получить изображение Продукта
     @RequestMapping(value = "/getimgp/{id}", method = RequestMethod.GET)
     public void getImageBDProducts(@RequestHeader(required = false, value = "Content-Type") String contextHeader,
-                                 HttpServletResponse response, @PathVariable String id) throws IOException {
+                                   HttpServletResponse response, @PathVariable String id) throws IOException {
         logger.info("id: " + id);
 
         logger.info("mmm: " + productsRepository.findAll().size());

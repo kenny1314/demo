@@ -46,8 +46,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/t").permitAll()
                 .antMatchers("/e").permitAll()
                 .antMatchers("/downWord").permitAll()
+                .antMatchers("/errfind").permitAll()
                 .antMatchers("/downExel").permitAll()
-                .antMatchers("/laba").permitAll()
+                .antMatchers("/laba","/searchq/**","/productq").permitAll()
+
                 .antMatchers("/getGameByPlatform/**").permitAll()
                 .antMatchers("/getGameByGenre/**").permitAll()
                 .antMatchers("/addGenres","/delgame/**","/delplatform/**").hasAnyRole("ADMIN")

@@ -11,6 +11,7 @@ import com.psu.kurs.demo.services.MediaTypeUtils;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,8 +89,42 @@ public class MainController {
     @Autowired
     OtherService otherService;
 
+    @GetMapping("/errfind")
+    public String errfind(Model model){
+        model = menuService.getMenuItems(model); //get menu items
+        return "errfind";
+    }
 
 
+    @GetMapping("/productq")
+    public String getProductByName(@RequestParam(value = "productName", required = true) String productName,
+                                   Model model) {
+        if(productName==null||productName=="") {
+            return "redirect:/index";
+        }
+        Products product = productsRepository.findByTitle(productName);
+        if(product == null)
+        {
+            System.out.println("productnull");
+//            Category category = null;
+//            List<Category> categories = catRepository.findByNameContainsIgnoreCase(productName);
+//            if(categories.size()>0)
+//                category = categories.get(0);
+//            if(category == null)
+//            {
+//                return "redirect:/index";
+//            }
+//            else {
+//                return "redirect:/products?catId="+category.getId();
+//            }
+
+            return "redirect:/errfind";
+        }
+
+
+//        model.addAttribute("product", product);
+        return "redirect:/game/"+product.getId();
+    }
 
 
     @Autowired
