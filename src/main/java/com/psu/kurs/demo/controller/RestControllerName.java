@@ -52,11 +52,11 @@ public class RestControllerName {
     GirlsRepository girlsRepository;
 
     @RequestMapping("/api/platforms")
-    public Man findAllPlatforms() {
+    public List<Man> findAllPlatforms() {
 
-        Man man = new Man();
-        man.setNameMan("Igor");
-        manRepository.save(man);
+//        Man man = new Man();
+//        man.setNameMan("Igor");
+//        manRepository.save(man);
 
 
 //        if (manRepository.findAll() != null) {
@@ -65,44 +65,79 @@ public class RestControllerName {
 //            long inxM = manList.get(manList.size() - 1).getId();
 //        }
 
-        Girls girls = new Girls();
-        girls.setNameGirl("Masha");
-        girls.setMan(manRepository.getOne(1L));
-        girlsRepository.save(girls);
-
-        System.out.println(manRepository.getOne(1L).getGirlsList());
-
-        List<Girls> girlsList = new ArrayList<>();
-        girlsRepository.getOne(1L);
+//        Girls girls = new Girls();
+//        girls.setNameGirl("Masha");
+//        girls.setMan(manRepository.getOne(1L));
+//        girlsRepository.save(girls);
+//
+//        System.out.println(manRepository.getOne(1L).getGirlsList());
+//
+//        List<Girls> girlsList = new ArrayList<>();
+//        girlsRepository.getOne(1L);
 //
 //        Man man1 = manRepository.getOne(1L);
-        List<Girls> girlsList2=new ArrayList<>();
+        List<Girls> girlsList2 = new ArrayList<>();
 //        girlsList.add(girlsRepository.getOne(1L));
 ////        man1.setGirlsList(girlsList);
 ////        man1.setGirlsList(girlsRepository.findAll());
 //        manRepository.save(man1);
 
-        List<Man> manList = manRepository.findAll();
 
-        girlsList2.add(girlsRepository.getOne(1L));
+//        List<Man> manList = manRepository.findAll();
+//
+//        girlsList2.add(girlsRepository.getOne(1L));
+//
+//        Man man2=manRepository.getOne(1L);
+//        man2.setGirlsList(girlsList2);
 
-        Man man2=manRepository.getOne(1L);
-        man2.setGirlsList(girlsList2);
+        Girls girls = girlsRepository.getOne(1L);
 
 //        Gson gson = new Gson();
-//
-//
-//        // Java objects to String
-//        // String json = gson.toJson(staff);
-//
+////
+////
+//         String json = gson.toJson(girls);
+////
 //        // Java objects to File
 //        try (FileWriter writer = new FileWriter("D:\\man2.json")) {
-//            gson.toJson(man2, writer);
+//            gson.toJson(json, writer);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 
-        return man2;
+        // compact print
+//        Gson gson = new Gson();
+//
+        Tabi tabi = new Tabi();
+        tabi.setId(2L);
+        tabi.setName("igor");
+//
+//
+//        Girls girls1=girlsRepository.getOne(1L);
+//        System.out.println(girls1.toString());
+//
+//        String lang = gson.toJson(tabi);
+//        String lang2 = gson.toJson(girls1,Girls.class);
+//
+////        System.out.println(lang);
+//        System.out.println(lang2);
+
+//        ObjectMapper Obj = new ObjectMapper();
+//
+//        try {
+//
+//            // get Oraganisation object as a json string
+//            String jsonStr = Obj.writeValueAsString(girls);
+//
+//            // Displaying JSON String
+//            System.out.println(jsonStr);
+//        }
+//
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+        return manRepository.findAll();
     }
 
 

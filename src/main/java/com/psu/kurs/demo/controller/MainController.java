@@ -11,7 +11,7 @@ import com.psu.kurs.demo.services.MediaTypeUtils;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
-import org.apache.commons.math3.stat.descriptive.summary.Product;
+//import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -35,11 +35,4 @@ public class Tabi {
     }
 
 
-    @Override
-    public String toString() {
-        return "Tabi{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

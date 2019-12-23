@@ -1,10 +1,29 @@
 package com.psu.kurs.demo.entity;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "girls", schema = "cursovaya", catalog = "kurss")
-public class Girls extends AbstractEntity {
+public class Girls {
+
+    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private String nameGirl;
 
     public Girls() {
@@ -26,15 +45,17 @@ public class Girls extends AbstractEntity {
         this.man = man;
     }
 
+    @JsonBackReference
     public Man getMan() {
         return  man;
     }
 
-    @Override
-    public String toString() {
-        return "Girls{" +
-                "id='" + super.getId() + '\'' +
-                "nameGirl='" + nameGirl + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Girls{" +
+//                "id=" + id +
+//                ", nameGirl='" + nameGirl + '\'' +
+//                ", man=" + man +
+//                '}';
+//    }
 }
