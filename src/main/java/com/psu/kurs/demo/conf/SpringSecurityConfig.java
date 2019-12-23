@@ -38,8 +38,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/getimgp/**", "/getimg/**", "/getimgg/**", "/css/**", "/img/**", "/403").permitAll()
-                .antMatchers("/registration", "/", "/index", "/genres", "/listplatforms", "/delivery", "/about", "/testDB", "/game/**","/platform/**",
-                        "/testinput", "/testDB/**", "/basket","/delProdBask/**").permitAll()
+                .antMatchers("/registration", "/", "/index", "/genres", "/listplatforms", "/delivery", "/about", "/testDB", "/game/**", "/platform/**",
+                        "/testinput", "/testDB/**", "/basket", "/delProdBask/**").permitAll()
                 .antMatchers("/createOrder").permitAll()
                 .antMatchers("/accountAdmin").permitAll()
                 .antMatchers("/accountUser").permitAll()
@@ -48,11 +48,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/downWord").permitAll()
                 .antMatchers("/errfind").permitAll()
                 .antMatchers("/downExel").permitAll()
-                .antMatchers("/laba","/searchq/**","/productq").permitAll()
+                .antMatchers("/laba", "/searchq/**", "/productq").permitAll()
 
+                .antMatchers("/api/platforms").permitAll()
                 .antMatchers("/getGameByPlatform/**").permitAll()
                 .antMatchers("/getGameByGenre/**").permitAll()
-                .antMatchers("/addGenres","/delgame/**","/delplatform/**").hasAnyRole("ADMIN")
+                .antMatchers("/addGenres", "/delgame/**", "/delplatform/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

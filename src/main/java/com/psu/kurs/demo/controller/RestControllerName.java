@@ -1,10 +1,7 @@
 package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.*;
-import com.psu.kurs.demo.entity.ImagesG;
-import com.psu.kurs.demo.entity.ImagesP;
-import com.psu.kurs.demo.entity.ImagesT;
-import com.psu.kurs.demo.entity.Products;
+import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.GetImageBufferBD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,19 +42,81 @@ public class RestControllerName {
     @Autowired
     ImagesPRepository imagesPRepository;
 
+    @Autowired
+    AgeLimitsRepository ageLimitsRepository;
+
+    @Autowired
+    ManRepository manRepository;
+
+    @Autowired
+    GirlsRepository girlsRepository;
+
+    @RequestMapping("/api/platforms")
+    public Man findAllPlatforms() {
+
+        Man man = new Man();
+        man.setNameMan("Igor");
+        manRepository.save(man);
+
+
+//        if (manRepository.findAll() != null) {
+//            List<Man> manList = manRepository.findAll();
+//
+//            long inxM = manList.get(manList.size() - 1).getId();
+//        }
+
+        Girls girls = new Girls();
+        girls.setNameGirl("Masha");
+        girls.setMan(manRepository.getOne(1L));
+        girlsRepository.save(girls);
+
+        System.out.println(manRepository.getOne(1L).getGirlsList());
+
+        List<Girls> girlsList = new ArrayList<>();
+        girlsRepository.getOne(1L);
+//
+//        Man man1 = manRepository.getOne(1L);
+        List<Girls> girlsList2=new ArrayList<>();
+//        girlsList.add(girlsRepository.getOne(1L));
+////        man1.setGirlsList(girlsList);
+////        man1.setGirlsList(girlsRepository.findAll());
+//        manRepository.save(man1);
+
+        List<Man> manList = manRepository.findAll();
+
+        girlsList2.add(girlsRepository.getOne(1L));
+
+        Man man2=manRepository.getOne(1L);
+        man2.setGirlsList(girlsList2);
+
+//        Gson gson = new Gson();
+//
+//
+//        // Java objects to String
+//        // String json = gson.toJson(staff);
+//
+//        // Java objects to File
+//        try (FileWriter writer = new FileWriter("D:\\man2.json")) {
+//            gson.toJson(man2, writer);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        return man2;
+    }
+
 
     @RequestMapping("/searchq")
 //    public List<Products> search(@RequestParam(value = "value") String value) throws IOException {
     public List<String> search(@RequestParam(value = "value") String value) throws IOException {
         List<String> lists = new ArrayList<>();
-        try{
+        try {
             List<Products> products = productsRepository.findByTitleContainsIgnoreCase(value);
-            for(Products pr: products){
+            for (Products pr : products) {
                 lists.add(pr.getTitle());
             }
             return lists;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

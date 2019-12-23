@@ -115,14 +115,15 @@ public class AdminController {
 
 
     @GetMapping("/delgame/{id}")
-    public @ResponseBody String delGameId(@PathVariable String id, Model model) {
+    public @ResponseBody
+    String delGameId(@PathVariable String id, Model model) {
 
         //если удаляем игру, то и удаляем и requests с этой игрой
 
-        List<Requests> requestsList=requestsRepository.findAll();
-        for(Requests req: requestsList){
-            if(req.getProducts().getId()==Long.valueOf(id)){
-                logger.info("совпадает"+req.getId());
+        List<Requests> requestsList = requestsRepository.findAll();
+        for (Requests req : requestsList) {
+            if (req.getProducts().getId() == Long.valueOf(id)) {
+                logger.info("совпадает" + req.getId());
                 requestsRepository.deleteById(req.getId());
             }
         }
@@ -158,19 +159,18 @@ public class AdminController {
     }
 
     @PostMapping("/uploadGame")
-    public @ResponseBody
-    String uploadGame(@RequestParam("title") String title,
-                      @RequestParam("langFormGame") String language,
-                      @RequestParam("platformFormGame") String platform,
-                      @RequestParam("yearOfIssue") String yearOfIssue,
-                      @RequestParam("ageLimitFormGame") String ageLimits,
-                      @RequestParam("genreFormGame") String genre,
-                      @RequestParam("publisherFormGame") String publisher,
-                      @RequestParam("quantity") String quantity,
-                      @RequestParam("oneDayPrice") String oneDayPrice,
-                      @RequestParam("fullPrice") String fullPrice,
-                      @RequestParam("description") String description,
-                      @RequestParam("file") MultipartFile file) {
+    public String uploadGame(@RequestParam("title") String title,
+                             @RequestParam("langFormGame") String language,
+                             @RequestParam("platformFormGame") String platform,
+                             @RequestParam("yearOfIssue") String yearOfIssue,
+                             @RequestParam("ageLimitFormGame") String ageLimits,
+                             @RequestParam("genreFormGame") String genre,
+                             @RequestParam("publisherFormGame") String publisher,
+                             @RequestParam("quantity") String quantity,
+                             @RequestParam("oneDayPrice") String oneDayPrice,
+                             @RequestParam("fullPrice") String fullPrice,
+                             @RequestParam("description") String description,
+                             @RequestParam("file") MultipartFile file) {
 
 
         if (!file.isEmpty()) {
@@ -227,23 +227,24 @@ public class AdminController {
                 productsRepository.save(product);
 
                 logger.info("product.toString(): " + product.toString());
-
-                return "form:\n" + "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
-                        " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
-                        " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
-                        " description: " + description +
-                        "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+                return "redirect:/";
+//                return "form:\n" + "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
+//                        " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
+//                        " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
+//                        " description: " + description +
+//                        "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
-                e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+//                e.printStackTrace();
+//                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+//            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/uploadGenres", method = RequestMethod.POST)
-    public @ResponseBody
+    public
     String formUploadGenres(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
         if (!file.isEmpty()) {
             try {
@@ -279,30 +280,30 @@ public class AdminController {
                 logger.info("genres.toString(): " + genres.toString());
 
 
-                return "form:\n" +
-                        "   " + name +
-                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+//                return "form:\n" +
+//                        "   " + name +
+//                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+//                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+//            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
+        return "redirect:/genres";
     }
 
     //add console
     @RequestMapping(value = "/upload2", method = RequestMethod.POST)
-    public @ResponseBody
-    String formUpload(@RequestParam("file") MultipartFile file,
-                      @RequestParam("name") String name,
-                      @RequestParam("manufacturer") String manufacturer,
-                      @RequestParam("relaseDate") String relaseDate,
-                      @RequestParam("generation") String generation,
-                      @RequestParam("piecesSold") String piecesSold,
-                      @RequestParam("cpu") String cpu,
-                      @RequestParam("description") String description,
-                      @RequestParam("story") String story
+    public String formUpload(@RequestParam("file") MultipartFile file,
+                             @RequestParam("name") String name,
+                             @RequestParam("manufacturer") String manufacturer,
+                             @RequestParam("relaseDate") String relaseDate,
+                             @RequestParam("generation") String generation,
+                             @RequestParam("piecesSold") String piecesSold,
+                             @RequestParam("cpu") String cpu,
+                             @RequestParam("description") String description,
+                             @RequestParam("story") String story
 
     ) {
         if (!file.isEmpty()) {
@@ -338,17 +339,20 @@ public class AdminController {
 
                 logger.info("platform.toString(): " + platform.toString());
 
-                return "form:\n" +
-                        "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
-                        + description + "    " + story +
-                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+                return "redirect:/listplatforms";
+//                return "form:\n" +
+//                        "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
+//                        + description + "    " + story +
+//                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+//                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+            logger.info("err");
+//            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
+        return "redirect:/listplatforms";
     }
 
 
