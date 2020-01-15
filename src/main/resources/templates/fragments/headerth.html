@@ -21,7 +21,7 @@
         <script>
             async function search(input) {
 
-                fetch("http://localhost:8080/searchq/?value=" + input.value, {
+                fetch("http://localhost:8080/searchq2/?value=" + input.value, {
                     credentials: 'same-origin',
                     method: 'POST',
                     headers: {
@@ -30,11 +30,15 @@
                     }
                 }).then(response => response.json())
                     .then(products => {
+                        //title
                         // alert("find");
+                        // alert(products.length);
                         document.getElementById("results").innerHTML = '';
                         for (var i of products) {
+                            // alert("name: "+i.title);
+                            alert("name: "+i.platforms.imagesT.name);
                             var optionElement = document.createElement("option");
-                            optionElement.value = i;
+                            optionElement.value = i.title;
                             // alert("m:"+i);
                             document.getElementById("results").appendChild(optionElement);
                         }

@@ -12,14 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "man", schema = "cursovaya", catalog = "kurss")
 public class Man extends AbstractEntity {
-
-
-
     private String nameMan;
 
-
-
-    @OneToMany (mappedBy="man", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "man", fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Girls> girlsList;
 

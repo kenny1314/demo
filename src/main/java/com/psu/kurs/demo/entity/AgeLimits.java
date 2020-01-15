@@ -1,8 +1,12 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "age_limits", schema = "cursovaya", catalog = "kurss")
 public class AgeLimits {
@@ -31,6 +35,7 @@ public class AgeLimits {
     }
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonBackReference
     @JoinColumn(name = "age_limits_id")
     public List<Products> getProductsList() {
         return productsList;

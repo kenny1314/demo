@@ -1,7 +1,11 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "requests", schema = "cursovaya", catalog = "kurss")
 public class Requests {
@@ -70,6 +74,7 @@ public class Requests {
         this.price = price;
     }
 
+    @JsonBackReference
     public Products getProducts() {
         return products;
     }

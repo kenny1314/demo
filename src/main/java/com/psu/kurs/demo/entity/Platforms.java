@@ -1,11 +1,15 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.awt.*;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "platforms", schema = "cursovaya", catalog = "kurss")
 public class Platforms {
@@ -124,6 +128,7 @@ public class Platforms {
         this.story = story;
     }
 
+    @JsonIgnore
     public List<Products> getProductsList() {
         return productsList;
     }

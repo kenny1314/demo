@@ -1,9 +1,14 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "imagesg", schema = "cursovaya", catalog = "kurss")
 public class ImagesG extends Images {
@@ -51,6 +56,8 @@ public class ImagesG extends Images {
         this.name = name;
     }
 
+    //чтоб данные картинки не выводились
+    @JsonIgnore
     public String getData() {
         return data;
     }
@@ -75,6 +82,8 @@ public class ImagesG extends Images {
         this.extension = extension;
     }
 
+    //игнорируем жанр, иначе рекурсия
+    @JsonIgnore
     public Genres getGenres() {
         return genres;
     }

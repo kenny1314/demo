@@ -136,11 +136,26 @@ public class RestControllerName {
 //            e.printStackTrace();
 //        }
 
+        System.out.println(manRepository.getOne(1L).getGirlsList().size());
+
 
         return manRepository.findAll();
     }
 
 
+    @RequestMapping("/searchq2")
+    public List<Products> search2(@RequestParam(value = "value") String value) throws IOException {
+        try {
+            List<Products> products = productsRepository.findByTitleContainsIgnoreCase(value);
+            return products;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    //костыль
+//    @Deprecated
     @RequestMapping("/searchq")
 //    public List<Products> search(@RequestParam(value = "value") String value) throws IOException {
     public List<String> search(@RequestParam(value = "value") String value) throws IOException {
