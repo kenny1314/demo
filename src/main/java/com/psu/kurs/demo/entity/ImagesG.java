@@ -98,8 +98,8 @@ public class ImagesG extends Images {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", contentType='" + contentType + '\'' +
-                ", extension='" + extension + '\'' +
-                ", data='" + data + '\'' +
+                ", extensionSSS='" + extension + '\'' +
+                ", data='" + (data.length() > 0 ? data.substring(0, 20) : data) + '\'' +
                 '}';
     }
 }

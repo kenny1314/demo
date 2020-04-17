@@ -217,6 +217,7 @@ public class CreateOrderController {
         return "createOrder";
     }
 
+    //TODO какие-то магические числа
     //оформление заказа
     @PostMapping("/completeСheckout1")
     public @ResponseBody

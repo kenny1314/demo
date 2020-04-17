@@ -1,8 +1,6 @@
 package com.psu.kurs.demo.services;
 
-
 import com.psu.kurs.demo.entity.User;
-
 import java.util.List;
 
 public interface UserService {

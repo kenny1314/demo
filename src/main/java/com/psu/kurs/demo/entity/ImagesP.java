@@ -97,7 +97,7 @@ public class ImagesP extends Images {
                 ", name='" + name + '\'' +
                 ", contentType='" + contentType + '\'' +
                 ", extension='" + extension + '\'' +
-                ", data='" + data + '\'' +
+                ", data='" + (data.length() > 0 ? data.substring(0, 20) : data) + '\'' +
                 '}';
     }
 }

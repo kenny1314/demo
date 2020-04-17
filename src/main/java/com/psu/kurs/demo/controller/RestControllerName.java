@@ -184,14 +184,14 @@ public class RestControllerName {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, "jpeg", bos);
         byte[] data = bos.toByteArray();
-        logger.info("string" + data.toString());
+//        logger.info("string" + data.toString());
 
         String encodedString = Base64.getEncoder().encodeToString(data);
-        logger.info("str: " + encodedString);
+//        logger.info("str: " + encodedString);
 
         ImagesT imagesT = new ImagesT(9L, file.getName().toString(), encodedString, "nULL1", "nULL2");
 
-        logger.info("imagesT: " + imagesT.toString());
+//        logger.info("imagesT: " + imagesT.toString());
 
         imagesTRepository.save(imagesT);
 
@@ -220,8 +220,8 @@ public class RestControllerName {
                                    HttpServletResponse response, @PathVariable String id) throws IOException {
         logger.info("id: " + id);
 
-        logger.info("mmm: " + productsRepository.findAll().size());
-        logger.info("mmm: " + imagesPRepository.findAll().size());
+        logger.info("productsRepository.size(): " + productsRepository.findAll().size());
+        logger.info("imagesRepository.size(): " + imagesPRepository.findAll().size());
 
         Long idNew = 1L;
 

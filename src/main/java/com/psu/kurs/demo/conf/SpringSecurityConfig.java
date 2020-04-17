@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
@@ -43,8 +42,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/createOrder").permitAll()
                 .antMatchers("/accountAdmin").permitAll()
                 .antMatchers("/accountUser").permitAll()
-                .antMatchers("/t").permitAll()
-                .antMatchers("/e").permitAll()
+                .antMatchers("/t").permitAll() //wtf
+                .antMatchers("/e").permitAll() //wtf
                 .antMatchers("/downWord").permitAll()
                 .antMatchers("/errfind").permitAll()
                 .antMatchers("/downExel").permitAll()

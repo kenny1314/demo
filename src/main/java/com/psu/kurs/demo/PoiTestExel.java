@@ -41,17 +41,17 @@ public class PoiTestExel {
         for (Products prod : productsList) {
             Row row1 = sheet.createRow(rowNum1++);
             int colNum = 0;
-            row1.createCell(colNum++).setCellValue(prod.getId().toString());
+            row1.createCell(colNum++).setCellValue(prod.getId().intValue());
             row1.createCell(colNum++).setCellValue(prod.getTitle());
             row1.createCell(colNum++).setCellValue(prod.getFullPrice().toString());
             row1.createCell(colNum++).setCellValue(prod.getOneDayPrice().toString());
-            row1.createCell(colNum++).setCellValue(prod.getQuantity().toString());
-            row1.createCell(colNum++).setCellValue(String.valueOf(prod.getYearOfIssue()));
+            row1.createCell(colNum++).setCellValue(prod.getQuantity());
+            row1.createCell(colNum++).setCellValue(prod.getYearOfIssue());
             row1.createCell(colNum++).setCellValue(prod.getAgeLimits().getYear());
             row1.createCell(colNum++).setCellValue(prod.getGenres().getName());
             row1.createCell(colNum++).setCellValue(prod.getLanguages().getName());
             row1.createCell(colNum++).setCellValue(prod.getPlatforms().getName());
-            row1.createCell(colNum++).setCellValue(prod.getPublishers().getName());
+            row1.createCell(colNum).setCellValue(prod.getPublishers().getName());
             System.out.println("++");
         }
 
