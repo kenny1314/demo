@@ -1,9 +1,12 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "imagesp", schema = "cursovaya", catalog = "kurss")
 public class ImagesP extends Images {
@@ -51,6 +54,8 @@ public class ImagesP extends Images {
         this.name = name;
     }
 
+    //чтоб данные картинки не выводились
+    @JsonIgnore
     public String getData() {
         return data;
     }
@@ -75,6 +80,8 @@ public class ImagesP extends Images {
         this.extension = extension;
     }
 
+    //игнорируем продукт, иначе рекурсия
+    @JsonIgnore
     public Products getProducts() {
         return products;
     }
@@ -90,7 +97,7 @@ public class ImagesP extends Images {
                 ", name='" + name + '\'' +
                 ", contentType='" + contentType + '\'' +
                 ", extension='" + extension + '\'' +
-                ", data='" + data + '\'' +
+                ", data='" + (data.length() > 0 ? data.substring(0, 20) : data) + '\'' +
                 '}';
     }
 }

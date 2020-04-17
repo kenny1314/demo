@@ -1,8 +1,15 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "genres", schema = "cursovaya", catalog = "kurss")
 public class Genres {
@@ -16,6 +23,7 @@ public class Genres {
     private List<Products> productsList;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "imagesg_id", referencedColumnName = "id")
     private ImagesG imagesG;
 
@@ -45,6 +53,7 @@ public class Genres {
     }
 
 
+    @JsonIgnore
     public List<Products> getProductsList() {
         return productsList;
     }

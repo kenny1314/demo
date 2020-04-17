@@ -7,6 +7,7 @@ import com.psu.kurs.demo.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -70,14 +72,13 @@ public class AdminController {
     @Autowired
     MenuService menuService;
 
-
     @GetMapping("/addgame")
     public String addGame(Model model) {
 
         model = menuService.getMenuItems(model); //get menu items
 
         try {
-            //для формы
+            //для формы  ввода
 
             List<Languages> languagesList = languagesRepository.findAll();
             model.addAttribute("languagesList", languagesList);
@@ -89,53 +90,46 @@ public class AdminController {
             model.addAttribute("publishersList", publishersList);
 
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
         return "addGame";
     }
 
-
-    //admin
     @GetMapping("/addGenres")
     public String addGenres(Model model) {
         model = menuService.getMenuItems(model); //get menu items
-
         return "addGenres";
     }
 
-    //admin
-    //addplatform
     @GetMapping("/addplatform")
     public String addPlatform(Model model) {
-
         model = menuService.getMenuItems(model); //get menu items
-
         return "addPlatform";
     }
 
-
     @GetMapping("/delgame/{id}")
-    public @ResponseBody String delGameId(@PathVariable String id, Model model) {
+    public @ResponseBody
+    String delGameId(@PathVariable String id, Model model) {
 
         //если удаляем игру, то и удаляем и requests с этой игрой
-
-        List<Requests> requestsList=requestsRepository.findAll();
-        for(Requests req: requestsList){
-            if(req.getProducts().getId()==Long.valueOf(id)){
-                logger.info("совпадает"+req.getId());
+        List<Requests> requestsList = requestsRepository.findAll();
+        for (Requests req : requestsList) {
+            if (req.getProducts().getId() == Long.valueOf(id)) {
+                logger.info("совпадает" + req.getId());
                 requestsRepository.deleteById(req.getId());
             }
         }
 
         productsRepository.deleteById(Long.valueOf(id));
 
-        return "Так-с ";
+        return "Так-с";
     }
 
-
+    //TODO что-то странное
     @GetMapping("/delplatform/{id}")
     public String delPlatformId(@PathVariable String id, Model model) {
 
+        //TODO Если удаляем платформу, то Удаляем игру??
         //TODO должен работать триггер
 //        List<Products> productsList = productsRepository.findAll();
 //        for (Products prod : productsList) {
@@ -157,45 +151,67 @@ public class AdminController {
         return "redirect:/listplatforms";
     }
 
+    public Long getLastId(JpaRepository<?, ?> jp, String str) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InstantiationException {
+        //получение последнего id из списка платформ
+        List<JpaRepository<?, ?>> productsList = (List<JpaRepository<?, ?>>) jp.findAll();
+
+        int siz = productsList.size();
+        List<Long> listSize = new ArrayList<>();
+        Class cl = Class.forName(str);
+
+        Long actualCount = -1L;
+
+        logger.info("size: " + siz);
+        if (siz > 0) {
+            for (Object obj : productsList) {
+
+                Field f = cl.getDeclaredField("id");
+                boolean flag = f.isAccessible();
+                f.setAccessible(true);
+
+                System.out.println(f.get(obj));
+
+                listSize.add((Long) f.get(obj));
+
+                f.setAccessible(flag);
+            }
+
+            logger.info("collection print: "+listSize);
+            actualCount = Collections.max(listSize);
+            logger.info("___max value in list: " + actualCount);
+        } else {
+            actualCount = 0L;
+        }
+        return actualCount;
+    }
+
     @PostMapping("/uploadGame")
-    public @ResponseBody
-    String uploadGame(@RequestParam("title") String title,
-                      @RequestParam("langFormGame") String language,
-                      @RequestParam("platformFormGame") String platform,
-                      @RequestParam("yearOfIssue") String yearOfIssue,
-                      @RequestParam("ageLimitFormGame") String ageLimits,
-                      @RequestParam("genreFormGame") String genre,
-                      @RequestParam("publisherFormGame") String publisher,
-                      @RequestParam("quantity") String quantity,
-                      @RequestParam("oneDayPrice") String oneDayPrice,
-                      @RequestParam("fullPrice") String fullPrice,
-                      @RequestParam("description") String description,
-                      @RequestParam("file") MultipartFile file) {
+    public String uploadGame(@RequestParam("title") String title,
+                             @RequestParam("langFormGame") String language,
+                             @RequestParam("platformFormGame") String platform,
+                             @RequestParam("yearOfIssue") String yearOfIssue,
+                             @RequestParam("ageLimitFormGame") String ageLimits,
+                             @RequestParam("genreFormGame") String genre,
+                             @RequestParam("publisherFormGame") String publisher,
+                             @RequestParam("quantity") String quantity,
+                             @RequestParam("oneDayPrice") String oneDayPrice,
+                             @RequestParam("fullPrice") String fullPrice,
+                             @RequestParam("description") String description,
+                             @RequestParam("file") MultipartFile file) {
 
 
         if (!file.isEmpty()) {
             try {
-
                 //получение последнего id из списка платформ
                 List<Products> productsList = productsRepository.findAll();
+
                 int siz = productsList.size();
                 List<Long> listSize = new ArrayList<>();
 
-                Long actualCount = -1L;
+                Long actualCount = getLastId(productsRepository, Products.class.getCanonicalName());
+                actualCount++;
 
-                logger.info("size: " + siz);
-                if (siz > 0) {
-                    for (Products prod : productsList) {
-                        listSize.add(prod.getId());
-                    }
-
-                    actualCount = Collections.max(listSize);
-                    logger.info("___max value in list: " + actualCount);
-                    actualCount++;
-                    logger.info("___next id in these tables: " + actualCount);
-                } else {
-                    actualCount = 0L;
-                }
+                //получение последнего id из списка платформ
 
                 Products product = new Products();
                 product.setId(actualCount);
@@ -218,57 +234,42 @@ public class AdminController {
 
                 product.setImagesP(imagesP);
 
-//                imagesPre
-
-                //
-
                 imagesPRepository.save(imagesP);
 
                 productsRepository.save(product);
 
-                logger.info("product.toString(): " + product.toString());
-
-                return "form:\n" + "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
-                        " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
-                        " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
-                        " description: " + description +
-                        "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+                logger.info("\n====\nproduct.toString(): " + product.toString());
+                //TODO может нужен редирект на страницу с тем, что добавляли
+                return "redirect:/";
+//                return "form:\n" + "title: " + title + " lang: " + language + " platform: " + platform + " yearOfIssue:" + yearOfIssue +
+//                        " ageLimits: " + ageLimits + " genre: " + genre + " publisher: " + publisher +
+//                        " quantity: " + quantity + " oneDayPrice: " + oneDayPrice + " fullPrice: " + fullPrice +
+//                        " description: " + description +
+//                        "  " + "name: " + imagesP.getName() + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
-                e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+//                e.printStackTrace();
+//                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+//            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/uploadGenres", method = RequestMethod.POST)
-    public @ResponseBody
-    String formUploadGenres(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
+    public String formUploadGenres(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
         if (!file.isEmpty()) {
             try {
-
                 //получение последнего id из списка платформ
                 List<Genres> genresList = genresRepository.findAll();
                 int siz = genresList.size();
                 List<Long> listSize = new ArrayList<>();
 
-                Long actualCount = -1L;
+                Long actualCount = getLastId(genresRepository, Genres.class.getCanonicalName());
+                actualCount++;
+                System.out.println("actualCount"+actualCount);
 
-                logger.info("size: " + siz);
-                if (siz > 0) {
-                    for (Genres gr : genresList) {
-                        listSize.add(gr.getId());
-                    }
-
-                    actualCount = Collections.max(listSize);
-                    logger.info("___max value in list: " + actualCount);
-                    actualCount++;
-                    logger.info("___next id in these tables: " + actualCount);
-                } else {
-                    actualCount = 0L;
-                }
-
+                //получение последнего id из списка платформ
                 Images images = getImagesClass(file, actualCount);
                 ImagesG imagesG = new ImagesG(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
 
@@ -276,58 +277,43 @@ public class AdminController {
 
                 genresRepository.save(genres);
 
-                logger.info("genres.toString(): " + genres.toString());
 
-
-                return "form:\n" +
-                        "   " + name +
-                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+//                return "form:\n" +
+//                        "   " + name +
+//                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+//                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+//            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
+        return "redirect:/genres";
     }
 
     //add console
-    @RequestMapping(value = "/upload2", method = RequestMethod.POST)
-    public @ResponseBody
-    String formUpload(@RequestParam("file") MultipartFile file,
-                      @RequestParam("name") String name,
-                      @RequestParam("manufacturer") String manufacturer,
-                      @RequestParam("relaseDate") String relaseDate,
-                      @RequestParam("generation") String generation,
-                      @RequestParam("piecesSold") String piecesSold,
-                      @RequestParam("cpu") String cpu,
-                      @RequestParam("description") String description,
-                      @RequestParam("story") String story
+    @RequestMapping(value = "/uploadPlatform", method = RequestMethod.POST)
+    public String formUpload(@RequestParam("file") MultipartFile file,
+                             @RequestParam("name") String name,
+                             @RequestParam("manufacturer") String manufacturer,
+                             @RequestParam("relaseDate") String relaseDate,
+                             @RequestParam("generation") String generation,
+                             @RequestParam("piecesSold") String piecesSold,
+                             @RequestParam("cpu") String cpu,
+                             @RequestParam("description") String description,
+                             @RequestParam("story") String story
 
     ) {
         if (!file.isEmpty()) {
             try {
-
-                //получение последнего id из списка платформ
                 List<Platforms> platformsList = platformsRepository.findAll();
                 int siz = platformsList.size();
                 List<Long> listSize = new ArrayList<>();
 
-                Long actualCount = -1L;
+                Long actualCount = getLastId(platformsRepository, Platforms.class.getCanonicalName());
+                actualCount++;
 
-                logger.info("size: " + siz);
-                if (siz > 0) {
-                    for (Platforms pl : platformsList) {
-                        listSize.add(pl.getId());
-                    }
-
-                    actualCount = Collections.max(listSize);
-                    logger.info("___max value in list: " + actualCount);
-                    actualCount++;
-                    logger.info("___next id in these tables: " + actualCount);
-                } else {
-                    actualCount = 0L;
-                }
+                //получение последнего id из списка платформ
 
                 Images images = getImagesClass(file, actualCount);
                 ImagesT imagesT = new ImagesT(images.getId(), images.getName(), images.getData(), images.getContentType(), images.getExtension());
@@ -338,24 +324,25 @@ public class AdminController {
 
                 logger.info("platform.toString(): " + platform.toString());
 
-                return "form:\n" +
-                        "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
-                        + description + "    " + story +
-                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
+                return "redirect:/listplatforms";
+//                return "form:\n" +
+//                        "   " + name + "   " + manufacturer + "   " + relaseDate + "   " + generation + "   " + piecesSold + " " + cpu + "   "
+//                        + description + "    " + story +
+//                        "  " + "name: " + name + " Вы удачно загрузили изображение: " + file.getOriginalFilename() + " " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+//                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
+            logger.info("err");
+//            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
         }
+        return "redirect:/listplatforms";
     }
 
 
-    //service
+    //service convert file to Images
     private Images getImagesClass(MultipartFile file, Long actualCount) throws IOException {
-        byte[] bytes = file.getBytes();
-
         File convFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
@@ -368,49 +355,10 @@ public class AdminController {
         logger.info("string genres" + data.toString());
 
         String encodedString = Base64.getEncoder().encodeToString(data);
-        logger.info("str: " + encodedString);
+        logger.info("str: " + encodedString.substring(0, 20));
 
         Images image = new Images(actualCount, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
         convFile.delete();
         return image;
-    }
-
-
-    //consoles??
-    //что это?
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody
-    String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-
-                File convFile = new File(file.getOriginalFilename());
-                FileOutputStream fos = new FileOutputStream(convFile);
-                fos.write(file.getBytes());
-                fos.close();
-
-                BufferedImage bufferedImage = ImageIO.read(convFile);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, file.getContentType().split("\\/")[1], bos); //split to get an extension
-                byte[] data = bos.toByteArray();
-                logger.info("string" + data.toString());
-
-                String encodedString = Base64.getEncoder().encodeToString(data);
-                logger.info("str: " + encodedString);
-
-                ImagesT imagesT = new ImagesT(0L, convFile.getName().toString(), encodedString, file.getContentType(), file.getContentType().split("\\/")[1]);
-
-                logger.info("imagesT: " + imagesT.toString());
-
-                imagesTRepository.save(imagesT);
-
-                return "Вы удачно загрузили " + convFile.getName() + " _____ " + file.getContentType() + " rex: " + file.getContentType().split("\\/")[1] + "!";
-            } catch (Exception e) {
-                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
-            }
-        } else {
-            return "Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.";
-        }
     }
 }

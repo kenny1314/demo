@@ -58,6 +58,14 @@ public class Images {
         this.extension = extension;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Images{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", data='" + (data.length() > 0 ? data.substring(0, 20) : data) + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", extension='" + extension + '\'' +
+                '}';
+    }
 }

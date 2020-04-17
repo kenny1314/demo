@@ -46,7 +46,7 @@
                             <thead>
                             <tr class="table-active">
                                 <th scope="row">ID</th>
-                                <td>ID2</td>
+                                <td style="text-align: center;">ID user</td>
                                 <td>Дата</td>
                                 <td>Сумма</td>
                             </tr>
@@ -54,9 +54,9 @@
                             <tbody>
 
                             <th:block th:each="info : ${listFinalOrder}">
-                            <tr>
+                            <tr >
                                 <th scope="row" th:text="${info.id}">Default</th>
-                                <td th:text="${info.user.id}">Column content</td>
+                                <td th:text="${info.user.id}"  style="text-align: center;">Column content</td>
                                 <td th:text="${info.date}">Column content</td>
                                 <td th:text="${info.finalPrice}">Column content</td>
                             </tr>

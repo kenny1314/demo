@@ -1,8 +1,12 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "languages", schema = "cursovaya", catalog = "kurss")
 public class Languages {
@@ -31,6 +35,7 @@ public class Languages {
     }
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonBackReference //избежать печать всех продуктов
     @JoinColumn(name = "languages_id")
     public List<Products> getProductsList() {
         return productsList;

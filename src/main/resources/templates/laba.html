@@ -12,7 +12,7 @@
 
 <body>
 <div class="bodycl">
-<!--    <h1>Store select</h1>-->
+    <!--    <h1>basket</h1>-->
     <div class="site">
         <div class="maincl">
 
@@ -33,70 +33,79 @@
 
                     <div class="col-md-9" style="padding-left: 0px;">
 
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10" style="padding-top: 15px; text-align: center">
-                                <h3>Выбор магазина</h3>
+                        <div class="container">
+                            <div>
+                                <div th:switch="${state}">
+                                    <div th:case="1">
+                                        <form th:action="@{/laba}" method="post">
+
+                                            <div class="row">
+                                                <div class="col-md-3"></div>
+                                            <div class="form-group col-md-6">
+                                                <label for="sq">База данных</label>
+                                                <select id="sq" name="datname" class="form-control">
+                                                    <option th:each=" db: ${datnames}" th:value="${db}" th:text="${db}">db</option>
+                                                </select>
+                                            </div>
+                                                <div class="col-md-3"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3"></div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" th:value="Выбрать" type="submit">
+                                            </div>
+                                                <div class="col-md-3"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div th:case="2">
+                                        <form th:action="@{/laba}" method="post" >
+                                            <div class="row">
+                                                <div class="col-md-3"></div>
+                                            <div class="form-group col-md-6">
+                                                <label for="sel">Таблица</label>
+                                                <select id="sel" name="table" class="form-control">
+                                                    <option th:each=" tbl: ${tbls}" th:value="${tbl}" th:text="${tbl}">tablename</option>
+                                                </select>
+                                            </div>
+                                                <div class="col-md-3"></div>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-md-3"></div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" th:value="Выбрать" type="submit">
+                                            </div>
+                                            <div class="col-md-3"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                                <hr>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            column_name
+                                        </th>
+                                        <th scope="row">
+                                            data_type
+                                        </th>
+                                        <th scope="row">
+                                            is_nullable
+                                        </th>
+
+                                    </tr>
+                                    <tr th:each="col: ${cols}">
+                                        <td th:text="${col.column_name}"> column_name</td>
+                                        <td th:text="${col.data_type}"> data_type</td>
+                                        <td th:text="${col.is_nullable}"> is_nullable</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-md-1"></div>
-                        </div> <!-- /row -->
-                        <hr>
-
-                        <div class="row">
-
-                            <form class="col-md-12" method="POST" action="/orderIsProcessed">
-
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-
-                                    <div class="col-md-3" >
-                                        <label>
-                                            <span style="padding-left: 80px;">г. Новополоцк</span>
-                                            <br><span style="padding-left: 67px;">ул. Молодёжная 69</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>
-                                            <span style="padding-left: 120px;">г. Полоцк</span>
-                                           <br> <span style="padding-left: 97px;"> ул. Стрелецкая 4</span>
-<!--                                            <br> ул. Стрелецкая 4-->
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-
-                                    <div class="col-md-10">
-                                        <label >
-                                            <input type="radio" name="fb" value="obsh"/>
-                                            <img  src="/img/obsh.jpg" style="height: 200px; width: 260px">
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="fb" value="psu"/>
-                                            <img src="/img/psu1.jpg" style="height: 200px; width: 260px">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-md-4"></div>
-
-                                    <div class="col-md-4" style="padding-left: 67px;">
-                                        <button type="submit" class="btn btn-success btn-lg">Выбрать</button>
-                                        <!--                                        <button class="btn btn-success" type="submit">Выбрать</button>-->
-                                    </div>
-                                    <div class="col-md-4"></div>
-                                    <!--                                    -->
-                                    <!--                                    <div class="com-md-5">ff</div>-->
-                                    <!--                                    <div class="col-md-2" style="text-align: center" >-->
-                                    <!--                                    <button class="btn btn-success" type="submit">Выбрать</button>-->
-                                    <!--                                    </div>-->
-                                    <!--                                    <div class="com-md-5">ff</div>-->
-                                </div>
-                            </form>
                         </div>
-
 
                     </div> <!-- /Col-md-9 -->
                 </div> <!-- /Row -->

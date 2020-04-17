@@ -22,7 +22,6 @@
 <body>
 
 <div class="bodycl">
-    <h1>Add platforms</h1>
     <div class="site">
     <div class="maincl" >
 
@@ -59,7 +58,7 @@
                         <div class="form-group row">
                             <label id="labform1" class="col-sm-2 col-form-label">Название</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Название" name="title">
+                                <input type="text" class="form-control" placeholder="Название" name="title" required >
                             </div>
                         </div>
 
@@ -68,7 +67,7 @@
                             <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Язык</label>
                             <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
                                 <select class="form-control form-control-sm" id="optionsList" name="langFormGame"
-                                        style="height: 35px;">
+                                        style="height: 35px;" required>
                                     <option th:each="option: ${languagesList}"
                                             th:value="${option.id}"
                                             th:text="${option.name}"
@@ -81,7 +80,7 @@
                             <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Платформа</label>
                             <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
                                 <select class="form-control form-control-sm" id="optionsList" name="platformFormGame"
-                                        style="height: 35px;">
+                                        style="height: 35px;" required >
                                     <option th:each="option: ${platforms}"
                                             th:value="${option.id}"
                                             th:text="${option.name}"
@@ -93,7 +92,7 @@
                         <div class="form-group row" style="margin-bottom: 2px;">
                             <label id="labform1" class="col-sm-2 col-form-label">Год выпуска</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Год выпуска" name="yearOfIssue">
+                                <input type="text" class="form-control" placeholder="Год выпуска" name="yearOfIssue" required>
                             </div>
                         </div>
 
@@ -101,7 +100,7 @@
                                 <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Возрастное ограничение</label>
                             <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px;  margin-top: 13px;">
                                 <select class="form-control form-control-sm" id="optionsList" name="ageLimitFormGame"
-                                        style="height: 35px;">
+                                        style="height: 35px;" required >
                                     <option th:each="option: ${ageLimitsList}"
                                             th:value="${option.id}"
                                             th:text="${option.year}+'+'"
@@ -114,7 +113,7 @@
                             <label id="labform1" class="col-sm-2 col-form-label"  style="padding-top: 5px;">Жанр</label>
                             <div class="col-sm-10" style="padding-left: 0px;padding-right: 210px; ">
                                 <select class="form-control form-control-sm" id="optionsList" name="genreFormGame"
-                                        style="height: 35px;">
+                                        style="height: 35px;" required >
                                     <option th:each="option: ${genresList}"
                                             th:value="${option.id}"
                                             th:text="${option.name}"
@@ -140,26 +139,26 @@
                         <div class="form-group row">
                             <label id="labform1" class="col-sm-2 col-form-label">Количество</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Количество" name="quantity">
+                                <input type="text" class="form-control" placeholder="Количество" name="quantity" required >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label id="labform1" class="col-sm-2 col-form-label">Цена за день</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Цена за день" name="oneDayPrice">
+                                <input type="text" class="form-control" placeholder="Цена за день" name="oneDayPrice" required >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label id="labform1" class="col-sm-2 col-form-label">Полная цена</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <input type="text" class="form-control" placeholder="Полная цена" name="fullPrice">
+                                <input type="text" class="form-control" placeholder="Полная цена" name="fullPrice" required >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label id="labform1" class="col-sm-2 col-form-label">Описание</label>
                             <div class="col-sm-10" style="padding-left: 0px;" id="inputtextplatform">
-                                <textarea class="form-control" rows="3" name="description"></textarea>
+                                <textarea class="form-control" rows="3" name="description" required ></textarea>
                             </div>
                         </div>
 
@@ -169,7 +168,7 @@
                             <div class="row">
                                 <div class="custom-file" style="border-right-width: 10px;margin-left: 15px;">
                                     <input type="file" name="file" class="custom-file-input" id="inputGroupFile02"
-                                           style="padding-right: 214px;padding-left: 10px;">
+                                           style="padding-right: 214px;padding-left: 10px;" required >
                                     <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                                 </div>
                             </div>
@@ -195,10 +194,12 @@
 </div> <!-- /site class -->
 </div>
 <div th:replace="fragments/footerth :: footer"></div>
+
 <script>
     $('#inputGroupFile02').on('change', function () {
         //get the file name
         var fileName = $(this).val();
+        alert("file: "+fileName);
         //replace the "Choose a file" label
         $(this).next('.custom-file-label').html(fileName);
     })

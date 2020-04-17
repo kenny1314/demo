@@ -1,0 +1,18 @@
+INSERT INTO cursovaya.age_limits (id, year) VALUES (1, 0);
+INSERT INTO cursovaya.age_limits (id, year) VALUES (2, 6);
+INSERT INTO cursovaya.age_limits (id, year) VALUES (3, 12);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (1, 'Аркада', 1);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (2, 'Экшон', 2);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (3, 'Приключения', 3);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (4, 'Файтинг', 4);
+INSERT INTO cursovaya.genres (id, name, imagesg_id) VALUES (5, 'Стратегии', 5);
+INSERT INTO cursovaya.languages (id, name) VALUES (4, 'Japanese');
+INSERT INTO cursovaya.languages (id, name) VALUES (1, 'Russian');
+INSERT INTO cursovaya.languages (id, name) VALUES (3, 'Chinese');
+INSERT INTO cursovaya.languages (id, name) VALUES (2, 'Huinglish');
+INSERT INTO cursovaya.publishers (id, name) VALUES (1, 'EA');
+INSERT INTO cursovaya.publishers (id, name) VALUES (2, 'Wargaming');
+INSERT INTO cursovaya.publishers (id, name) VALUES (3, 'Blizard');
+INSERT INTO cursovaya.products (id, description, full_price, idd, one_day_price, quantity, title, year_of_issue, age_limits_id, genres_id, imagesp_id, languages_id, platforms_id, publishers_id) VALUES (5, '3232323', 2, 5, 1, 22, 'Igorkik', 23, 2, 2, 5, 3, 5, 1);
+INSERT INTO cursovaya.products (id, description, full_price, idd, one_day_price, quantity, title, year_of_issue, age_limits_id, genres_id, imagesp_id, languages_id, platforms_id, publishers_id) VALUES (4, 'Вот тут вот очень много описания для теста влазит ли всё в нужный размер. Так вот и так...Вот тут вот очень много описания для теста влазит ли всё в нужный размер. Так вот и так...', 343, 4, 12, 223, 'Spider man', 2000, 3, 2, 4, 3, 6, 3);
+INSERT INTO cursovaya.products (id, description, full_price, idd, one_day_price, quantity, title, year_of_issue, age_limits_id, genres_id, imagesp_id, languages_id, platforms_id, publishers_id) VALUES (6, 'Сюжет игры близко следует событиям мультфильма: волею судьбы уличный вор Аладдин находит волшебную лампу, в которой живёт Джинн, способный исполнить три его желания. Влюблённый в принцессу Жасмин Аладдин просит Джинна превратить его в принца, и вскоре добивается расположения принцессы. Однако коварный визирь Джафар, желающий сесть на трон Аграбы, пытается заполучить лампу.', 30, null, 2.5, 23, 'Igorkik', 1993, 1, 3, 6, 1, 8, 1);

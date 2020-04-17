@@ -1,5 +1,9 @@
 package com.psu.kurs.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -7,6 +11,7 @@ import java.util.List;
 
 //5 доп таблиц
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "products", schema = "cursovaya", catalog = "kurss")
 public class Products {
@@ -38,6 +43,7 @@ public class Products {
     private AgeLimits ageLimits;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "genres_id")
     private Genres genres;
 
@@ -58,9 +64,12 @@ public class Products {
     private ImagesP imagesP;
 
 //    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    @OneToMany
-    @JoinColumn(name = "products_id")
-    private List<Requests> requestsList;
+
+//    @OneToMany (mappedBy="man", fetch=FetchType.LAZY)
+//    @OneToMany
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinColumn(name = "products_id")
+//    private List<Requests> requestsList;
 
 
     public Products() {
@@ -188,13 +197,14 @@ public class Products {
     }
 
 
-    public List<Requests> getRequestsList() {
-        return requestsList;
-    }
+//    @JsonManagedReference
+//    public List<Requests> getRequestsList() {
+//        return requestsList;
+//    }
 
-    public void setRequestsList(List<Requests> requestsList) {
-        this.requestsList = requestsList;
-    }
+//    public void setRequestsList(List<Requests> requestsList) {
+//        this.requestsList = requestsList;
+//    }
 
     @Override
     public String toString() {

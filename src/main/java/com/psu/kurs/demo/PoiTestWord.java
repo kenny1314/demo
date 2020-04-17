@@ -1,23 +1,16 @@
 package com.psu.kurs.demo;
 
-import com.psu.kurs.demo.dao.*;
-import com.psu.kurs.demo.entity.AgeLimits;
+import com.psu.kurs.demo.dao.ProductsRepository;
 import com.psu.kurs.demo.entity.Products;
-import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.List;
+
 
 public class PoiTestWord {
 
@@ -40,14 +33,12 @@ public class PoiTestWord {
         XWPFRun run = paragraph.createRun();
         run.setText("Отчёт по продуктах в базе данных");
 
-
         int rowQuant = productsList.size() * 12 + 1; //количество строк для вывода +1
 
         XWPFTable table = document.createTable(rowQuant, 2);
 
         table.getRow(0).getCell(0).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2500));
         table.getRow(0).getCell(1).getCTTc().addNewTcPr().addNewTcW().setW(BigInteger.valueOf(2500));
-
 
         table.getRow(0).getCell(0).setText("Name");
         table.getRow(0).getCell(1).setText("Value");
@@ -83,19 +74,12 @@ public class PoiTestWord {
             table.getRow(counter2++).getCell(0).setText("Platform");
             table.getRow(counter2++).getCell(0).setText("Publisher");
 
-
             mergeCellsHorizontal(table, counter, 0, 1);
             counter++;
             counter2++;
-
-
         }
 
-
         table.setTableAlignment(TableRowAlign.CENTER);
-
-//        setTableAlign(table, ParagraphAlignment.CENTER);
-
 
         document.write(out);
         out.close();
@@ -113,12 +97,5 @@ public class PoiTestWord {
         }
     }
 
-
-    public void setTableAlign(XWPFTable table, ParagraphAlignment align) {
-        CTTblPr tblPr = table.getCTTbl().getTblPr();
-        CTJc jc = (tblPr.isSetJc() ? tblPr.getJc() : tblPr.addNewJc());
-        STJc.Enum en = STJc.Enum.forInt(align.getValue());
-        jc.setVal(en);
-    }
 
 }

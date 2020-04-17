@@ -25,15 +25,22 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 
 .maincl {
     margin: auto;
-    width: 1226px;
+    width: 1226px !important;
     background-color: white;
     border-radius: 10px;
     min-height: calc(100vh - 85px);
 }
 
+@media screen and (min-width: 1226px) {/* если окно браузера больше максимальной ширины сайта; убирает сдвиг влево */
+    html {
+        margin-left: calc(98vw - 100%);
+        margin-right: 0;
+    }
+}
+
 #logo {
     width: 140px;
-    margin-left: 35px;
+    margin-left: 25px;
 }
 
 #imgl {

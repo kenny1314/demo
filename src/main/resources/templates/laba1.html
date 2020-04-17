@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
     <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
-    <title>Account admin</title>
+    <title>Index</title>
 </head>
 
 <body>
@@ -28,50 +28,67 @@
                 <div class="row">
                     <!-- Menu -->
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <div th:replace="fragments/menuth :: menuCUser"></div>
+                        <div th:replace="fragments/menuth :: menu"></div>
                     </div>
 
                     <div class="col-md-9" style="padding-left: 0px;">
 
-                        <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4" style="padding-top: 15px; text-align: center">
-                                <h3>Личный кабинет</h3>
+                        <div class="container">
+                            <div class="jumbotron">
+                                <div th:switch="${state}">
+                                    <div th:case="1">
+                                        <form th:action="@{/laba}" method="post">
+                                            <div class="form-group col-md-6">
+                                                <label for="sq">База данных</label>
+                                                <select id="sq" name="datname" class="form-control">
+                                                    <option th:each=" db: ${datnames}" th:value="${db}" th:text="${db}">db</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" th:value="Выбрать" type="submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div th:case="2">
+                                        <form th:action="@{/laba}" method="post">
+                                            <div class="form-group col-md-6">
+                                                <label for="sel">Таблица</label>
+                                                <select id="sel" name="table" class="form-control">
+                                                    <option th:each=" tbl: ${tbls}" th:value="${tbl}" th:text="${tbl}">tablename</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" th:value="Выбрать" type="submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                                <hr>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            column_name
+                                        </th>
+                                        <th scope="row">
+                                            data_type
+                                        </th>
+                                        <th scope="row">
+                                            is_nullable
+                                        </th>
+
+                                    </tr>
+                                    <tr th:each="col: ${cols}">
+                                        <td th:text="${col.column_name}"> column_name</td>
+                                        <td th:text="${col.data_type}"> data_type</td>
+                                        <td th:text="${col.is_nullable}"> is_nullable</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-md-2" style="padding-top: 18px;">
-                                <a class="btn btn-info" href="/downWord">Скачать word</a>
-                            </div>
-                            <div class="col-md-2" style="padding-top: 18px;">
-                                <a class="btn btn-success" href="/downExel">Скачать Exel</a>
-                            </div>
-                        </div> <!-- /row -->
-                        <hr>
-
-                        <table class="table table-hover">
-                            <thead>
-                            <tr class="table-active">
-                                <th scope="row">ID</th>
-                                <td>ID user</td>
-                                <td>Дата</td>
-                                <td>Сумма</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <th:block th:each="info : ${listFinalOrder}">
-                                <tr>
-                                    <th scope="row" th:text="${info.id}">Default</th>
-                                    <td th:text="${info.user.id}">Column content</td>
-                                    <td th:text="${info.date}">Column content</td>
-                                    <td th:text="${info.finalPrice}">Column content</td>
-                                </tr>
-                            </th:block>
-
-                            </tbody>
-                        </table>
-
-                        <hr>
-
+                        </div>
 
                     </div> <!-- /Col-md-9 -->
                 </div> <!-- /Row -->

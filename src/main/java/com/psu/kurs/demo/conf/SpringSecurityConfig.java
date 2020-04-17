@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
@@ -38,15 +37,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/getimgp/**", "/getimg/**", "/getimgg/**", "/css/**", "/img/**", "/403").permitAll()
-                .antMatchers("/registration", "/", "/index", "/genres", "/listplatforms", "/delivery", "/about", "/testDB", "/game/**","/platform/**",
-                        "/testinput", "/testDB/**", "/basket","/delProdBask/**").permitAll()
+                .antMatchers("/registration", "/", "/index", "/genres", "/listplatforms", "/delivery", "/about", "/testDB", "/game/**", "/platform/**",
+                        "/testinput", "/testDB/**", "/basket", "/delProdBask/**").permitAll()
                 .antMatchers("/createOrder").permitAll()
                 .antMatchers("/accountAdmin").permitAll()
                 .antMatchers("/accountUser").permitAll()
+                .antMatchers("/t").permitAll() //wtf
+                .antMatchers("/e").permitAll() //wtf
+                .antMatchers("/downWord").permitAll()
+                .antMatchers("/errfind").permitAll()
+                .antMatchers("/downExel").permitAll()
+                .antMatchers("/laba", "/searchq/**", "/productq").permitAll()
+                .antMatchers("/searchq2/**").permitAll()
+                .antMatchers("/searchq2").permitAll()
+
+                .antMatchers("/api/platforms").permitAll()
                 .antMatchers("/getGameByPlatform/**").permitAll()
                 .antMatchers("/getGameByGenre/**").permitAll()
-                .antMatchers("/t").permitAll()
-                .antMatchers("/addGenres","/delgame/**","/delplatform/**").hasAnyRole("ADMIN")
+                .antMatchers("/addGenres", "/delgame/**", "/delplatform/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

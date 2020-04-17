@@ -1,13 +1,11 @@
 package com.psu.kurs.demo.controller;
 
-import com.psu.kurs.demo.CityNameDTO;
-import com.psu.kurs.demo.dao.*;
-import com.psu.kurs.demo.entity.*;
+import com.psu.kurs.demo.dao.AddressRepository;
+import com.psu.kurs.demo.dao.FinalOrderRepository;
+import com.psu.kurs.demo.entity.FinalOrder;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
-import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.security.RolesAllowed;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -29,37 +25,7 @@ public class AccountController {
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
-    ProductsRepository productsRepository;
-
-    @Autowired
-    PlatformsRepository platformsRepository;
-
-    @Autowired
-    GenresRepository genresRepository;
-
-    @Autowired
-    LanguagesRepository languagesRepository;
-
-    @Autowired
-    AgeLimitsRepository ageLimitsRepository;
-
-    @Autowired
-    PublishersRepository publishersRepository;
-
-    @Autowired
-    ImagesTRepository imagesTRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
     UserService userService;
-
-    @Autowired
-    RequestsRepository requestsRepository;
-
-    @Autowired
-    BasketRepository basketRepository;
 
     @Autowired
     FinalOrderRepository finalOrderRepository;
@@ -73,7 +39,7 @@ public class AccountController {
     @Autowired
     OtherService otherService;
 
-    //registration order
+    //TODO исправить название
     @GetMapping("/accountAdmin")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String accountAdmin(Model model, Principal principal, HttpServletRequest request) {
@@ -85,12 +51,7 @@ public class AccountController {
         return "accountAdmin";
     }
 
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-
-    @GetMapping("/accountUser")
+    @GetMapping("/accountUser") //можно зайти под админом
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String accountUser(Model model, Principal principal, HttpServletRequest request) {
 
@@ -109,26 +70,17 @@ public class AccountController {
         return "accountUser";
     }
 
+    //TODO информация об аккаунте изменить ссылку
     @GetMapping("/infoUser")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String infoUser(Model model, Principal principal, HttpServletRequest request) {
 
         model = menuService.getMenuItems(model); //get menu items
 
-        List<FinalOrder> newListFinalOrder = new ArrayList<>();
-
-        for (FinalOrder fin : finalOrderRepository.findAll()) {
-            if (fin.getUser().getId() == userService.findByUsername(principal.getName()).getId()) {
-                newListFinalOrder.add(fin);
-            }
-        }
-
         System.out.println(addressRepository.findAll().size());
 
-
-        model.addAttribute("address",addressRepository.getOne(userService.findByUsername(principal.getName()).getAddress().getId()));
-        model.addAttribute("usr",userService.findByUsername(principal.getName()));
-        model.addAttribute("listFinalOrder", newListFinalOrder); //
+        model.addAttribute("address", addressRepository.getOne(userService.findByUsername(principal.getName()).getAddress().getId()));
+        model.addAttribute("usr", userService.findByUsername(principal.getName()));
 
         return "infoUser";
     }
