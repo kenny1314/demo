@@ -161,7 +161,7 @@ public class AdminController {
 
         Long actualCount = -1L;
 
-        logger.info("size: " + siz);
+//        logger.info("size: " + siz);
         if (siz > 0) {
             for (Object obj : productsList) {
 
@@ -169,14 +169,14 @@ public class AdminController {
                 boolean flag = f.isAccessible();
                 f.setAccessible(true);
 
-                System.out.println(f.get(obj));
+//                System.out.println(f.get(obj));
 
                 listSize.add((Long) f.get(obj));
 
                 f.setAccessible(flag);
             }
 
-            logger.info("collection print: "+listSize);
+//            logger.info("collection print: "+listSize);
             actualCount = Collections.max(listSize);
             logger.info("___max value in list: " + actualCount);
         } else {

@@ -104,7 +104,7 @@ public class Requests {
         return "Requests{" +
                 "id=" + id +
                 ", products=" + products +
-//                ", idBucket=" + basket.getId() +
+                ", IIIidBucket=" + basket +
                 ", date='" + date + '\'' +
                 ", numberOfDays=" + numberOfDays +
                 ", price=" + price +

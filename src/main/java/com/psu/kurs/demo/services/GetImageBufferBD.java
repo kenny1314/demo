@@ -1,20 +1,15 @@
 package com.psu.kurs.demo.services;
 
-import com.psu.kurs.demo.controller.RestControllerName;
-import com.psu.kurs.demo.dao.ImagesTRepository;
-import com.psu.kurs.demo.dao.PlatformsRepository;
 import com.psu.kurs.demo.entity.Images;
-import com.psu.kurs.demo.entity.ImagesT;
-import com.psu.kurs.demo.entity.Platforms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
-import java.util.List;
 
 public class GetImageBufferBD {
 

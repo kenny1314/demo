@@ -1,4 +1,4 @@
-package com.psu.kurs.demo.dao;
+package com.psu.kurs.demo.dao.dep;
 
 import com.psu.kurs.demo.entity.Girls;
 import com.psu.kurs.demo.entity.Man;

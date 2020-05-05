@@ -16,7 +16,6 @@ import java.math.BigInteger;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CityNameDTO {
-//
     @Getter
     @Setter
     public BigInteger id;
