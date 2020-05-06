@@ -9,9 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -25,6 +28,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
+@EnableTransactionManagement
 @Controller
 public class AdminController {
 
@@ -125,7 +129,47 @@ public class AdminController {
         return "Так-с";
     }
 
-    //TODO что-то странное
+    //если есть игра с таким жанром, то не удаляем жанр
+    @Transactional
+    @GetMapping("/delGenreId/{id}")
+    public String delGenreId(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        Long idGenre = null;
+        try {
+            idGenre = Long.valueOf(id);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        boolean trExistsOfGame=false;
+
+        if (genresRepository.existsById(Long.valueOf(id))) {
+            List<Products> productsList = productsRepository.findAll();
+
+            for (Products prod : productsList) {
+                if (prod.getGenres().getId().equals(idGenre)){
+                    trExistsOfGame=true;
+                    model.addAttribute("error",true);
+                    redirectAttributes.addFlashAttribute("error",true);
+                    return "redirect:/genres";
+//                    return "delGenreError";
+                    //перенаправить на стриницу ошибки или передать ошибку на текущую и вывести ошибку вверху
+                }
+            }
+            if(!trExistsOfGame){
+                genresRepository.deleteById(idGenre);
+                return "redirect:/genres";
+            }
+        }
+
+        return "redirect:/genres";
+    }
+
+
+    //Если удаляем платформу, то меняем платформу на другую в игре
+    //наверно нужно переделать, что не можем удалить платформу, если есть игра с такой платформой
     @GetMapping("/delplatform/{id}")
     public String delPlatformId(@PathVariable String id, Model model) {
 
@@ -267,7 +311,7 @@ public class AdminController {
 
                 Long actualCount = getLastId(genresRepository, Genres.class.getCanonicalName());
                 actualCount++;
-                System.out.println("actualCount"+actualCount);
+                System.out.println("actualCount" + actualCount);
 
                 //получение последнего id из списка платформ
                 Images images = getImagesClass(file, actualCount);

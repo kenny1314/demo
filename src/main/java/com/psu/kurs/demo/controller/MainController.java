@@ -73,10 +73,13 @@ public class MainController {
     OtherService otherService;
 
     @GetMapping(value = {"/", "index"})
-    public String index(Model model) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+    public String index(Model model, HttpServletRequest httpServletRequest) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchFieldException {
         model = menuService.getMenuItems(model); //get menu items
 
-        AdminController adminController=new AdminController();
+        boolean isAdmin = httpServletRequest.isUserInRole("ROLE_USER");
+        System.out.println("http serv__:" + isAdmin);
+
+        AdminController adminController = new AdminController();
 //        System.out.println(Platforms.class.getCanonicalName());
 //      logger.info("_______________size: "+adminController.getLastId(platformsRepository,Platforms.class.getCanonicalName()));
 
@@ -86,7 +89,6 @@ public class MainController {
     @GetMapping("/genres")
     public String genres(Model model) {
         model = menuService.getMenuItems(model); //get menu items
-
         return "genres";
     }
 

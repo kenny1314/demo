@@ -1,12 +1,10 @@
 package com.psu.kurs.demo.controller;
 
-import com.psu.kurs.demo.CityNameDTO;
 import com.psu.kurs.demo.dao.*;
 import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -209,14 +209,14 @@ public class CreateOrderController {
         if (basketRepository.existsById(userService.findByUsername(principal.getName()).getId()) == false) {
 //            rollback
 
-            FinalOrder finalOrder = new FinalOrder();
-            finalOrder.setId(10099999L);
-            finalOrder.setDate(new Date().toString());
-            finalOrder.setFinalPrice(9009999);
-            finalOrder.setUser(userService.findByUsername(principal.getName()));
-            finalOrderRepository.save(finalOrder);
-            throw new NullPointerException("&&&test tranx on");
-//            return "procOrderError";
+//            FinalOrder finalOrder = new FinalOrder();
+//            finalOrder.setId(10099999L);
+//            finalOrder.setDate(new Date().toString());
+//            finalOrder.setFinalPrice(9009999);
+//            finalOrder.setUser(userService.findByUsername(principal.getName()));
+//            finalOrderRepository.save(finalOrder);
+//            throw new NullPointerException("&&&test tranx on");
+            return "procOrderError";
         }
 
         List<Requests> requestsList = basket.getRequestsList(); //&&&
@@ -297,26 +297,16 @@ public class CreateOrderController {
         if (requestsRepository.existsById(Long.valueOf(id))) {
             requestsRepository.deleteById(Long.valueOf(id));
 
-//            List<Requests> requestsList = requestsRepository.findAll();
             Basket basket = basketRepository.getOne(user.getId());
 
-//            System.out.println("++++bask req list:"+basket.getRequestsList().size());
             double finalPrice = 0;
-//            logger.info("___________________");
 
             for (Requests value : basket.getRequestsList()) {
                 finalPrice += value.getPrice() * value.getNumberOfDays();
             }
-
-//            logger.info("___________________");
-
-//            FinalOrder finalOrder = finalOrderRepository.getOne(user.getId());
-
             basket.setFinalPrice(finalPrice);
-//            finalOrder.setFinalPrice(finalPrice);
 
             basketRepository.save(basket);
-//            finalOrderRepository.save(finalOrder);
         } else {
             logger.info("product doesn't exist" + id);
         }
