@@ -21,8 +21,7 @@ public class User extends AbstractEntity {
     @Column
     private String password;
 
-
-    private String count_reqests;
+    private double count_reqests;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -72,11 +71,11 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public String getCount_reqests() {
+    public double getCount_reqests() {
         return count_reqests;
     }
 
-    public void setCount_reqests(String count_reqests) {
+    public void setCount_reqests(double count_reqests) {
         this.count_reqests = count_reqests;
     }
 

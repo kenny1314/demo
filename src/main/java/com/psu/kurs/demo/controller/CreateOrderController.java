@@ -462,10 +462,21 @@ public class CreateOrderController {
         requestsList = requestsRepository.findAll();
         int counter = 0;
         double finalPrice = 0;
+        double coefUser=1.0;
+        if(user.getCount_reqests()!=0.0){
+            coefUser=Double.valueOf(user.getCount_reqests());
+            if(coefUser>500){
+                coefUser=0.9;
+            }else {
+                coefUser=1;
+            }
+        }
+//        coefUser = Double.valueOf(user.getCount_reqests());
+
         for (Requests value : requestsList) {
             //если request id совпадает с корзиной, то считаем общую сумму в корзине
             if ((value.getBasket() != null) && (value.getBasket().getId() == basket.getId())) {
-                finalPrice += value.getPrice() * value.getNumberOfDays();
+                finalPrice += value.getPrice()*coefUser * value.getNumberOfDays();
                 counter++;
             }
         }

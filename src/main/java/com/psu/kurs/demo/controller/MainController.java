@@ -78,6 +78,7 @@ public class MainController {
 
         boolean isAdmin = httpServletRequest.isUserInRole("ROLE_USER");
         System.out.println("http serv__:" + isAdmin);
+        System.out.println("uuuuser:" +httpServletRequest.getRemoteUser());
 
         AdminController adminController = new AdminController();
 //        System.out.println(Platforms.class.getCanonicalName());

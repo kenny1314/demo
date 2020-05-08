@@ -64,7 +64,6 @@
 
                     <div class="col-md-9" style="padding-left: 0px;">
 
-
                         <!-- Carousel -->
                         <div id="carouselExampleInterval" class="carousel slide"
                              data-ride="carousel">
@@ -138,9 +137,16 @@
                                                         <!--                                                    <div class="col-md-2"></div>-->
                                                         <!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
 
-                                                        <div class="col-md-7"
-                                                             style="text-align: center;padding-left: 42px;"><b
-                                                                th:text="${info.oneDayPrice+' р/день'}">100р</b></div>
+                                                        <div sec:authorize="isAnonymous()" class="col-md-7" style="text-align: center;">
+                                                            <b th:text="${info.oneDayPrice}">old</b>
+                                                            <b th:text=" 'р/день'">r/day</b>
+                                                        </div>
+                                                        <div sec:authorize="isAuthenticated()" class="col-md-7" style="text-align: center;">
+                                                            <b th:if="${ user.count_reqests>500}" th:text="${info.oneDayPrice*0.9}"></b>
+                                                            <b th:if="${ user.count_reqests<500}" th:text="${info.oneDayPrice}"></b>
+                                                            <s th:text="${info.oneDayPrice}">old</s>
+                                                            <b th:text=" 'р/день'">r/day</b>
+                                                        </div>
                                                         <div class="col-md-5">
                                                             <b th:id="${info.id}"
                                                                th:text="${info.oneDayPrice*3+'р'}"></b>

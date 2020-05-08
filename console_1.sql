@@ -44,54 +44,37 @@ DECLARE
     cn2    int;
     cnt    int;
     curcnt int;
+    fprice double precision;
     finstr varchar(30);
 BEGIN
 
-
-    --     cn := cursovaya.requests.number_of_days from cursovaya.requests where cursovaya.requests.id = 107;
---     cn := cursovaya.requests.final_order_id from cursovaya.requests where cursovaya.requests.id = new.id;
-
-
-    cn := cursovaya.requests.basket_id from cursovaya.requests order by id desc limit 1;
+    cn := cursovaya.requests.basket_id from cursovaya.requests order by id desc limit 1; --id user's
     cn2 := cursovaya.requests.final_order_id from cursovaya.requests order by id desc limit 1;
     --id users
+
 --добавить это значение к счётчику заказов
     cnt := sum(cursovaya.requests.number_of_days) from cursovaya.requests where cursovaya.requests.basket_id = cn;
 
---     curcnt := usr.count_reqests from cursovaya."user" as usr where usr.id = cn;
+    fprice := sum(fo.final_price) from cursovaya.final_order as fo where fo.user_id = cn;
 
---     curcnt := usr.count_reqests from cursovaya."user" as usr where usr.id = cn;
-
+    --count_reqests - заменить на общую сумму
     if (select usr.count_reqests from cursovaya."user" as usr where usr.id = cn) is null then
-        curcnt=0;
-        else
+        curcnt = 0;
+    else
         curcnt := usr.count_reqests from cursovaya."user" as usr where usr.id = cn;
     end if;
 
---     if curcnt >= 0 then
-        cnt = cnt + curcnt;
---     else
---         cnt = cnt+1000;
---     end if;
-
-
---     update cursovaya."user" set count_reqests=99 where cursovaya."user".id=1;
+    cnt = fprice + curcnt;
 
     update cursovaya."user"
     set count_reqests=cnt
     where cursovaya."user".id = cn;
 
---     cn2 := cursovaya.requests.final_order_id from cursovaya.requests where cursovaya.requests.id = new.id;
-
     mstr = concat('countr: ', cn);
     mstr = concat(mstr, '  ');
---     mstr = concat(mstr, new.id);
     mstr = concat(mstr, cn2);
 
---     mstr = select
     insert into cursovaya.tabi (id, name) values (NEW.id, mstr);
-    --     insert into cursovaya.tabi (id,name) values (NEW.id,mstr);
---     insert into cursovaya.tabi (name) values ('tdffrigi');
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

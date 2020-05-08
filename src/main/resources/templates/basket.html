@@ -135,7 +135,8 @@
                                             </div>
 
                                             <div class="col-md-4" style="text-align: center">
-                                                <p th:text="${productsListBasket[i].oneDayPrice}"></p>
+<!--                                                <p th:text="${productsListBasket[i].oneDayPrice}"></p>-->
+                                                <p th:if="${ user.count_reqests>500}" th:text="${productsListBasket[i].oneDayPrice*0.9}"></p>
                                                 <p th:id="${productsListBasket[i].id}"
                                                    th:text="${productsListBasket[i].oneDayPrice*requestsList[i].numberOfDays}+'р'">
                                                     всего</p>

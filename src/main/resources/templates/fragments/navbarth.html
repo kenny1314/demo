@@ -94,12 +94,12 @@
                 <a class="nav-link " href="/basket">Корзина</a>
             </li>
 
-            <li class="nav-item " th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" style="padding-left: 275px;">
-                <a class="nav-link " href="/basket">Корзина</a>
+            <li class="nav-item " th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" style="padding-left: 255px;">
+                <a class="nav-link " href="/basket">Корзина (<b th:text="${basketCount!=null}? ${basketCount} : -0">2222</b>) </a>
             </li>
 
-            <li class="nav-item " th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}" style="padding-left: 515px;">
-                <a class="nav-link " href="/basket">Корзина</a>
+            <li class="nav-item " th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}" style="padding-left: 495px;">
+                <a class="nav-link " href="/basket">Корзина (<b th:text="${basketCount!=null}? ${basketCount} : -0">2222</b>) </a>
             </li>
 
             <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
