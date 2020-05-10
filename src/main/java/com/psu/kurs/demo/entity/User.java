@@ -21,7 +21,10 @@ public class User extends AbstractEntity {
     @Column
     private String password;
 
-    private double count_reqests;
+    private Double order_amount;
+
+    @Column
+    private Double discount_rate;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -71,12 +74,20 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public double getCount_reqests() {
-        return count_reqests;
+    public Double getOrder_amount() {
+        return order_amount;
     }
 
-    public void setCount_reqests(double count_reqests) {
-        this.count_reqests = count_reqests;
+    public void setOrder_amount(Double order_amount) {
+        this.order_amount = order_amount;
+    }
+
+    public Double getDiscount_rate() {
+        return discount_rate;
+    }
+
+    public void setDiscount_rate(Double discount_rate) {
+        this.discount_rate = discount_rate;
     }
 
     public List<FinalOrder> getFinalOrderList() {

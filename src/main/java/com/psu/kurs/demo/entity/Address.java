@@ -68,4 +68,14 @@ public class Address {
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", flatNumber='" + flatNumber + '\'' +
+                '}';
+    }
 }

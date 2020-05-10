@@ -44,38 +44,48 @@
                             <div class="col-md-2 register-left"></div>
 
                             <div class="col-md-4 ">
+<!--                                <form action="/updateUserAddress" method="post" th:object="${address}">-->
+                                    <form action="#" th:action="@{/updateUserAddress}" th:object="${address}" method="post">
 
                                 <div class="form-group col-md-12" style=" text-align: center">
                                     <h5>Ваш адрес</h5>
                                 </div>
                                 <div class="form-row ">
                                     <div class="form-group col-md-12">
-                                        <input type="text" class="form-control" th:value="${address.city}"
-                                               disabled/>
+                                        <input name="city" type="text" class="form-control" th:field="*{city}" th:value="${address.city}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-row ">
                                     <div class="form-group col-md-12">
-                                        <input type="text" class="form-control" th:value="${address.street}"
-                                               disabled/>
+                                        <input name="street" type="text" class="form-control" th:field="*{street}" th:value="${address.street}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-row ">
                                     <div class="form-group col-md-12">
-                                        <input type="text" class="form-control"
-                                               th:value="${address.flatNumber}" disabled/>
+                                        <input name="flat_number" type="text" class="form-control" th:field="*{flatNumber}"
+                                               th:value="${address.flatNumber}"/>
                                     </div>
                                 </div>
+                                <div class="form-row ">
+                                    <div class="form-group col-md-12">
+                                        <input type="submit" value="Submit" class="btn btn-outline-success"
+                                               />
+                                    </div>
+
+                                </div>
+                                </form>
                             </div> <!-- !col-md-4 form -->
+                            <a href="/updateUserAddress"></a>
 
                             <div class="col-md-3"></div>
                             <div class="col-md-3">
                                 <h5>Ник</h5>
                                 <h6 th:text="${usr.username}">Ник</h6>
                                 <h5>Сумма заказов</h5>
-                                <h6 th:if="${usr.count_reqests!=null}" th:text="${usr.count_reqests}"></h6>
+<!--                                <h6 th:if="${usr.order_amount!=null}" th:text="${usr.order_amount}"></h6>-->
+                                <h6 th:text="${usr.order_amount==null?0:usr.order_amount}" ></h6>
                             </div>
                         </div>
                     </div> <!-- /Col-md-9 -->

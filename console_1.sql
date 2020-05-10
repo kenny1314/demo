@@ -45,6 +45,7 @@ DECLARE
     cnt    int;
     curcnt int;
     fprice double precision;
+    drate  double precision; -- коэф скидки 1 - целая стоимость, 0.9 скидка 10 процентов
     finstr varchar(30);
 BEGIN
 
@@ -53,26 +54,43 @@ BEGIN
     --id users
 
 --добавить это значение к счётчику заказов
-    cnt := sum(cursovaya.requests.number_of_days) from cursovaya.requests where cursovaya.requests.basket_id = cn;
+--     cnt := sum(cursovaya.requests.number_of_days) from cursovaya.requests where cursovaya.requests.basket_id = cn;
+
+    --order_amount - заменить на общую сумму
+--     if (select usr.order_amount from cursovaya."user" as usr where usr.id = cn) is null then
+--         fprice = 0;
+--     else
+
+--     end if;
 
     fprice := sum(fo.final_price) from cursovaya.final_order as fo where fo.user_id = cn;
 
-    --count_reqests - заменить на общую сумму
-    if (select usr.count_reqests from cursovaya."user" as usr where usr.id = cn) is null then
-        curcnt = 0;
-    else
-        curcnt := usr.count_reqests from cursovaya."user" as usr where usr.id = cn;
+    drate = 1.0;
+
+    if (fprice > 500 and fprice < 2000)
+    then
+        drate = 0.9;
+    end if;
+    if (fprice >= 2000 and fprice < 5000)
+    then
+        drate = 0.8;
+    end if;
+    if (fprice >= 5000)
+    then
+        drate = 0.7;
     end if;
 
-    cnt = fprice + curcnt;
-
     update cursovaya."user"
-    set count_reqests=cnt
+    set order_amount=fprice
     where cursovaya."user".id = cn;
 
-    mstr = concat('countr: ', cn);
+    update cursovaya."user"
+    set discount_rate=drate
+    where cursovaya."user".id = cn;
+
+    mstr = concat('sum: ', cn);
     mstr = concat(mstr, '  ');
-    mstr = concat(mstr, cn2);
+    mstr = concat(mstr, fprice);
 
     insert into cursovaya.tabi (id, name) values (NEW.id, mstr);
     RETURN NEW;

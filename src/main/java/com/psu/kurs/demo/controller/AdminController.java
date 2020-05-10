@@ -139,26 +139,26 @@ public class AdminController {
         Long idGenre = null;
         try {
             idGenre = Long.valueOf(id);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        boolean trExistsOfGame=false;
+        boolean trExistsOfGame = false;
 
         if (genresRepository.existsById(Long.valueOf(id))) {
             List<Products> productsList = productsRepository.findAll();
 
             for (Products prod : productsList) {
-                if (prod.getGenres().getId().equals(idGenre)){
-                    trExistsOfGame=true;
-                    model.addAttribute("error",true);
-                    redirectAttributes.addFlashAttribute("error",true);
+                if (prod.getGenres().getId().equals(idGenre)) {
+                    trExistsOfGame = true;
+                    model.addAttribute("error", true);
+                    redirectAttributes.addFlashAttribute("error", true);
                     return "redirect:/genres";
 //                    return "delGenreError";
                     //перенаправить на стриницу ошибки или передать ошибку на текущую и вывести ошибку вверху
                 }
             }
-            if(!trExistsOfGame){
+            if (!trExistsOfGame) {
                 genresRepository.deleteById(idGenre);
                 return "redirect:/genres";
             }
@@ -208,19 +208,22 @@ public class AdminController {
 //        logger.info("size: " + siz);
         if (siz > 0) {
             for (Object obj : productsList) {
+                if (str.equals("com.psu.kurs.demo.entity.FinalOrder")) {
+                    FinalOrder finalOrder = (FinalOrder) obj;
+                    listSize.add(finalOrder.getId());
 
-                Field f = cl.getDeclaredField("id");
-                boolean flag = f.isAccessible();
-                f.setAccessible(true);
+                } else {
+                    Field f = cl.getDeclaredField("id");
+                    boolean flag1 = f.isAccessible();
+                    f.setAccessible(true);
 
-//                System.out.println(f.get(obj));
-
-                listSize.add((Long) f.get(obj));
-
-                f.setAccessible(flag);
+                    listSize.add((Long) f.get(obj));
+                    f.setAccessible(flag1);
+                }
             }
 
 //            logger.info("collection print: "+listSize);
+            System.out.println("list sizzeee:" + listSize);
             actualCount = Collections.max(listSize);
             logger.info("___max value in list: " + actualCount);
         } else {

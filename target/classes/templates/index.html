@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
     <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
     <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
     <title>Index</title>
@@ -28,35 +28,35 @@
             <div class="container-fluet" style="width: 1211px;">
                 <div class="row">
                     <!-- Menu -->
-<!--                    <div class="col-md-3" style="padding-right: 0px;">-->
+                    <!--                    <div class="col-md-3" style="padding-right: 0px;">-->
                     <div class="col-md-3" style="padding-right: 0px;">
-<!--<div id="navwh">-->
-<!--                        <a class="navbar-brand" style="padding-left: 18px;" href="#">Console</a>-->
-<!--                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"-->
-<!--                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"-->
-<!--                                aria-label="Toggle navigation" style="-->
-<!--    border-top-width: 0px;-->
-<!--    border-right-width: 0px;-->
-<!--    border-bottom-width: 0px;-->
-<!--    border-left-width: 0px;-->
-<!--    width: 40px;-->
-<!--    height: 35px;-->
-<!--    padding-left: 0px;-->
-<!--    padding-top: 0px;-->
-<!--    padding-bottom: 2px;-->
-<!--    padding-right: 0px;-->
-<!--    margin-bottom: 2px;-->
-<!--">-->
-<!--                            <img src="../img/hum1.png" style="width: 30px;-->
-<!--    height: 30px;"></button>-->
-<!--                        <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">-->
-<!--                            <ul class="navbar-nav mr-auto" th:each="platfom: ${platforms}">-->
-<!--                                <li><a th:href="@{'/platform/' + ${platfom.id}}" class="list-group-item list-group-item-action"-->
-<!--                                       th:text="${platfom.name}">Sega Master-->
-<!--                                    System</a></li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--</div>-->
+                        <!--<div id="navwh">-->
+                        <!--                        <a class="navbar-brand" style="padding-left: 18px;" href="#">Console</a>-->
+                        <!--                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"-->
+                        <!--                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"-->
+                        <!--                                aria-label="Toggle navigation" style="-->
+                        <!--    border-top-width: 0px;-->
+                        <!--    border-right-width: 0px;-->
+                        <!--    border-bottom-width: 0px;-->
+                        <!--    border-left-width: 0px;-->
+                        <!--    width: 40px;-->
+                        <!--    height: 35px;-->
+                        <!--    padding-left: 0px;-->
+                        <!--    padding-top: 0px;-->
+                        <!--    padding-bottom: 2px;-->
+                        <!--    padding-right: 0px;-->
+                        <!--    margin-bottom: 2px;-->
+                        <!--">-->
+                        <!--                            <img src="../img/hum1.png" style="width: 30px;-->
+                        <!--    height: 30px;"></button>-->
+                        <!--                        <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">-->
+                        <!--                            <ul class="navbar-nav mr-auto" th:each="platfom: ${platforms}">-->
+                        <!--                                <li><a th:href="@{'/platform/' + ${platfom.id}}" class="list-group-item list-group-item-action"-->
+                        <!--                                       th:text="${platfom.name}">Sega Master-->
+                        <!--                                    System</a></li>-->
+                        <!--                            </ul>-->
+                        <!--                        </div>-->
+                        <!--</div>-->
                         <div th:replace="fragments/menuth :: menu"></div>
 
 
@@ -134,18 +134,27 @@
                                                         серии.</p>
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
                                                     <div class="row">
-                                                        <!--                                                    <div class="col-md-2"></div>-->
-                                                        <!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
-
-                                                        <div class="col-md-7" style="text-align: center;">
-                                                            <b th:text="${user.count_reqests}+${info.oneDayPrice}">new</b>
+                                                        <div sec:authorize="isAnonymous()" class="col-md-12"
+                                                             style="text-align: center;">
+                                                            <b th:text="${info.oneDayPrice}">old</b>
+                                                            <b th:text=" 'р/день'">r/day</b>
+                                                        </div>
+                                                        <div sec:authorize="isAuthenticated()" class="col-md-12"
+                                                             style="text-align: center;">
+                                                            <!--                                                            <b th:if="${ user.order_amount>500}" th:text="${info.oneDayPrice*0.9}"></b>-->
+                                                            <!--                                                            <b th:if="${ user.order_amount<500}" th:text="${info.oneDayPrice}"></b>-->
+                                                            <b th:text="${info.oneDayPrice*user.discount_rate}"
+                                                               class="idoneday">
+                                                            </b>
                                                             <s th:text="${info.oneDayPrice}">old</s>
                                                             <b th:text=" 'р/день'">r/day</b>
-<!--                                                            <b th:text="${user.count_reqests+' р/день'}">100р</b>-->
                                                         </div>
-                                                        <div class="col-md-5">
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="text-align: center">
                                                             <b th:id="${info.id}"
-                                                               th:text="${info.oneDayPrice*3+'р'}"></b>
+                                                               th:text="${#numbers.formatDecimal(info.oneDayPrice*user.discount_rate*3, 1, 'POINT', 2, 'POINT')+'p'}"></b>
                                                         </div>
                                                     </div>
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
@@ -168,7 +177,7 @@
                                                                     <!--                                                                    <input   onchange="incr(this)" type="text"-->
                                                                     <input onchange="incr(this)" type="text"
                                                                            th:id="${'quant['+info.id+']'}"
-                                                                           th:name="inputplus"
+                                                                           th:name="${user.discount_rate}"
                                                                            class="form-control input-number" value="3"
                                                                            min="1"
                                                                            max="10" style="text-align: center;"
@@ -177,12 +186,13 @@
 
                                                                     <script>
                                                                         function incr(e) {
-                                                                            var temp = e.value * e.alt;
+                                                                            var temp = e.value * e.alt*e.name;
+                                                                            alert(e.name);
 
                                                                             if ((temp + "").indexOf(".") > 0) {
-                                                                                document.getElementById(e.title).innerText = temp + 'р';
+                                                                                document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + 'р';
                                                                             } else {
-                                                                                document.getElementById(e.title).innerText = temp + '.0р';
+                                                                                document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + '.00р';
                                                                             }
                                                                         }
 
@@ -233,6 +243,11 @@
 <div th:include="fragments/scriptth :: script"></div>
 
 <script>
+
+    for (let i = 0; i < document.getElementsByClassName("idoneday").length; i++) { // выведет 0, затем 1, затем 2
+        var temp = document.getElementsByClassName("idoneday")[i].textContent;
+        document.getElementsByClassName("idoneday")[i].innerHTML = parseFloat(temp).toFixed(2);
+    }
 
     //plugin bootstrap minus and plus
     //http://jsfiddle.net/laelitenetwork/puJ6G/

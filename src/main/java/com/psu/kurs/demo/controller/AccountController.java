@@ -2,6 +2,7 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.AddressRepository;
 import com.psu.kurs.demo.dao.FinalOrderRepository;
+import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.FinalOrder;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -77,12 +81,26 @@ public class AccountController {
 
         model = menuService.getMenuItems(model); //get menu items
 
-        System.out.println(addressRepository.findAll().size());
+//        System.out.println(addressRepository.findAll().size());
 
         model.addAttribute("address", addressRepository.getOne(userService.findByUsername(principal.getName()).getAddress().getId()));
         model.addAttribute("usr", userService.findByUsername(principal.getName()));
 
         return "infoUser";
+    }
+
+    @PostMapping("/updateUserAddress")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String updateUserAddress(Model model, Principal principal, HttpServletRequest request,
+                                    @ModelAttribute Address address) {
+
+        Address address0 = userService.findByUsername(principal.getName()).getAddress();
+        address0.setCity(address.getCity());
+        address0.setStreet(address.getStreet());
+        address0.setFlatNumber(address.getFlatNumber());
+
+        addressRepository.save(address0);
+        return "redirect:/infoUser";
     }
 
 }

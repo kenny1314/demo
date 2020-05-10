@@ -5,6 +5,7 @@ import com.psu.kurs.demo.entity.*;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
+import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -422,8 +423,17 @@ public class CreateOrderController {
 
         requests.setBasket(basket);
 
+        double discountRateNew = 1.0;
+        if (user.getDiscount_rate() != null) {
+            discountRateNew = user.getDiscount_rate();
+        }
+
+        System.out.println("before: " + products.getOneDayPrice() * discountRateNew);
+        System.out.println("before: " + Precision.round(products.getOneDayPrice() * discountRateNew, 2));
+
+
         requests.setNumberOfDays(Integer.parseInt(numberOfDays));
-        requests.setPrice(products.getOneDayPrice());
+        requests.setPrice(Precision.round(products.getOneDayPrice() * discountRateNew, 2));
         requests.setProducts(products);
 
         requestsRepository.save(requests); //добавить request чтоб отображалось в корзине
@@ -462,25 +472,19 @@ public class CreateOrderController {
         requestsList = requestsRepository.findAll();
         int counter = 0;
         double finalPrice = 0;
-        double coefUser=1.0;
-        if(user.getCount_reqests()!=0.0){
-            coefUser=Double.valueOf(user.getCount_reqests());
-            if(coefUser>500){
-                coefUser=0.9;
-            }else {
-                coefUser=1;
-            }
-        }
-//        coefUser = Double.valueOf(user.getCount_reqests());
 
         for (Requests value : requestsList) {
             //если request id совпадает с корзиной, то считаем общую сумму в корзине
             if ((value.getBasket() != null) && (value.getBasket().getId() == basket.getId())) {
-                finalPrice += value.getPrice()*coefUser * value.getNumberOfDays();
+                finalPrice += value.getPrice() * value.getNumberOfDays();
                 counter++;
             }
         }
         logger.info("counter: " + counter);
+
+        System.out.println("finalprice: " + finalPrice);
+        finalPrice = Precision.round(finalPrice, 2);
+        System.out.println("finalprice: " + finalPrice);
 
         basket.setFinalPrice(finalPrice);
         basketRepository.save(basket);

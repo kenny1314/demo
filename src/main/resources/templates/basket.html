@@ -108,6 +108,7 @@
                                                     <input type="text" onchange="incr(this)"
                                                            th:id="${'quant['+requestsList[i].id+']'}"
                                                            th:name="inputplus"
+                                                           th:accept="${user.discount_rate}"
                                                            class="form-control input-number"
                                                            th:value="${requestsList[i].numberOfDays}"
                                                            min="1"
@@ -117,8 +118,8 @@
 
                                                     <script>
                                                         function incr(e) {
-                                                            var temp = e.value * e.alt;
-                                                            document.getElementById(e.title).innerText = temp + 'р';
+                                                            var temp = e.value * e.alt*e.accept;
+                                                            document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + 'р';
                                                         }
 
                                                         function neincr(e) {
@@ -135,10 +136,9 @@
                                             </div>
 
                                             <div class="col-md-4" style="text-align: center">
-<!--                                                <p th:text="${productsListBasket[i].oneDayPrice}"></p>-->
-                                                <p th:if="${ user.count_reqests>500}" th:text="${productsListBasket[i].oneDayPrice*0.9}"></p>
+                                                <p th:text="${#numbers.formatDecimal(productsListBasket[i].oneDayPrice*user.discount_rate, 1, 'POINT', 2, 'POINT')}"></p>
                                                 <p th:id="${productsListBasket[i].id}"
-                                                   th:text="${productsListBasket[i].oneDayPrice*requestsList[i].numberOfDays}+'р'">
+                                                   th:text="${#numbers.formatDecimal(productsListBasket[i].oneDayPrice*user.discount_rate*requestsList[i].numberOfDays, 1, 'POINT', 2, 'POINT')}+'р'">
                                                     всего</p>
                                             </div>
                                             <div class="col-md-4" style="padding-left: 22px;">
