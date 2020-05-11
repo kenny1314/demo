@@ -9,6 +9,8 @@ import com.psu.kurs.demo.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +77,12 @@ public class MainController {
     @GetMapping(value = {"/", "index"})
     public String index(Model model, HttpServletRequest httpServletRequest) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchFieldException {
         model = menuService.getMenuItems(model); //get menu items
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("---auth:"+auth);
+        if (auth != null){
+            logger.info("User '" + auth.getName() + "' attempted to access the protected URL: " + httpServletRequest.getRequestURI());
+        }
 
         boolean isAdmin = httpServletRequest.isUserInRole("ROLE_USER");
         System.out.println("http serv__:" + isAdmin);

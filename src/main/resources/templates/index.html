@@ -102,27 +102,7 @@
                                             <!--                                        <img src="img/card1.jpg " class="card-img-top">-->
                                             <div class="card-body">
                                                 <form method="post" th:action="@{'/testDB/'+${info.id}}">
-                                                    <!--                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>-->
                                                     <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
-
-                                                    <!--                                                    <p class="card-text" th:text="${info.description}"></p>-->
-                                                    <!--                                                    ${#strings.toString(obj)}                           // так же array*, list* and set*-->
-
-                                                    <!--                                                    <p class="card-text" th:text="${#strings.toString(${info})}"></p>-->
-                                                    <!--                                                    <block th:with = "test=${info.description}">-->
-
-
-                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.substring(test,0,5)}"></p>&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${#strings.length(test)}"></p>&ndash;&gt;-->
-                                                    <!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
-                                                    <!--&lt;!&ndash;                                                    <p class="card-text" th:text="${test}"></p>&ndash;&gt;-->
-                                                    <!--                                                    </block>-->
-                                                    <!--                                                    <p class="card-text " th:text="${#strings.substring(info.description,0,160)}"-->
-
-
-                                                    <!--                                                    <p class="card-text" th:text="${#strings.length(test)>150}? ${#strings.substring(test,0,160)} :'gruntov'"></p>-->
-                                                    <!--                                                    -->
-                                                    <!--                                                    <p th:text="${strings.concat('ig','orr')}"></p>-->
 
                                                     <p class="card-text"
                                                        th:text="${#strings.length(info.description)>160}? ${#strings.substring(info.description,0,160)}+'...' :'gruntov'"
@@ -134,12 +114,27 @@
                                                         серии.</p>
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
                                                     <div class="row">
-                                                        <div sec:authorize="isAnonymous()" class="col-md-12"
+                                                        <div th:if="${!(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"
+                                                             class="col-md-12"
                                                              style="text-align: center;">
                                                             <b th:text="${info.oneDayPrice}">old</b>
                                                             <b th:text=" 'р/день'">r/day</b>
                                                         </div>
-                                                        <div sec:authorize="isAuthenticated()" class="col-md-12"
+
+<!--                                                        <div th:if="${(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"-->
+<!--                                                             class="col-md-12"-->
+<!--                                                             style="text-align: center;">-->
+<!--                                                            <b th:text="${info.oneDayPrice}"-->
+<!--                                                               class="idoneday">-->
+<!--                                                            </b>-->
+<!--                                                            <s th:text="${info.oneDayPrice}">old</s>-->
+<!--                                                            <b th:text=" 'р/день'">r/day</b>-->
+<!--                                                        </div>-->
+
+                                                        <!-- User Admin-->
+
+                                                        <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
+                                                             class="col-md-12"
                                                              style="text-align: center;">
                                                             <!--                                                            <b th:if="${ user.order_amount>500}" th:text="${info.oneDayPrice*0.9}"></b>-->
                                                             <!--                                                            <b th:if="${ user.order_amount<500}" th:text="${info.oneDayPrice}"></b>-->
@@ -151,7 +146,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="row">
+                                                    <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
+                                                         class="row">
                                                         <div class="col-md-12" style="text-align: center">
                                                             <b th:id="${info.id}"
                                                                th:text="${#numbers.formatDecimal(info.oneDayPrice*user.discount_rate*3, 1, 'POINT', 2, 'POINT')+'p'}"></b>
@@ -175,7 +171,8 @@
                                                                            name="custId"
                                                                            th:value="${info.oneDayPrice}">
                                                                     <!--                                                                    <input   onchange="incr(this)" type="text"-->
-                                                                    <input onchange="incr(this)" type="text"
+                                                                    <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
+                                                                           onchange="incr(this)" type="text"
                                                                            th:id="${'quant['+info.id+']'}"
                                                                            th:name="inputplus"
                                                                            th:accept="${user.discount_rate}"
@@ -185,9 +182,19 @@
                                                                            th:alt="${info.oneDayPrice}"
                                                                            th:title="${info.id}">
 
+                                                                    <input th:if="${!(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"
+                                                                           onchange="incr(this)" type="text"
+                                                                           th:id="${'quant['+info.id+']'}"
+                                                                           th:name="inputplus"
+                                                                           class="form-control input-number" value="3"
+                                                                           min="1"
+                                                                           max="10" style="text-align: center;"
+                                                                           th:alt="${info.oneDayPrice}"
+                                                                           th:title="${info.id}">
+
                                                                     <script>
                                                                         function incr(e) {
-                                                                            var temp = e.value * e.alt*e.accept;
+                                                                            var temp = e.value * e.alt * e.accept;
 
                                                                             if ((temp + "").indexOf(".") > 0) {
                                                                                 document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + 'р';

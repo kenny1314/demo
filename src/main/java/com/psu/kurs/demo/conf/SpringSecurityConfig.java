@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
@@ -42,8 +43,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/createOrder").permitAll()
                 .antMatchers("/accountAdmin").permitAll()
                 .antMatchers("/accountUser").permitAll()
-                .antMatchers("/t").permitAll() //wtf
-                .antMatchers("/e").permitAll() //wtf
+                .antMatchers("/t").permitAll()
+                .antMatchers("/e").permitAll()
                 .antMatchers("/downWord").permitAll()
                 .antMatchers("/errfind").permitAll()
                 .antMatchers("/downExel").permitAll()
@@ -54,7 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/platforms").permitAll()
                 .antMatchers("/getGameByPlatform/**").permitAll()
                 .antMatchers("/getGameByGenre/**").permitAll()
-                .antMatchers("/addGenres", "/delgame/**", "/delplatform/**", "/delGenreId/**").hasAnyRole("ADMIN")
+                .antMatchers("/addGenres", "/delgame/**", "/delplatform/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -74,6 +75,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}1234").roles("USER")
+                .and()
+                .withUser("courier").password("{noop}1234").roles("COURIER")
                 .and()
                 .withUser("admin").password("{noop}1234").roles("ADMIN");
     }

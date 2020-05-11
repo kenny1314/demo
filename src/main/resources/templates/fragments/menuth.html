@@ -71,8 +71,11 @@
     height: 30px;"></button>
     <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
         <ul class="navbar-nav mr-auto">
+
+            <th:block th:if="${!#httpServletRequest.isUserInRole('ROLE_COURIER')}">
             <li><a href="/infoUser" class="list-group-item list-group-item-action">Информация</a></li>
             <li><a href="/accountUser" class="list-group-item list-group-item-action">Заказы</a></li>
+            </th:block>
             <li>
                 <a th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}"
                    class="list-group-item list-group-item-action" href="/accountAdmin">Все заказы</a>

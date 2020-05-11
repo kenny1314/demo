@@ -22,6 +22,9 @@ public class FinalOrder {
     private double finalPrice;
     private String date;
 
+    @Column(name = "is_delivered", columnDefinition = "boolean default false")
+    private boolean idDelivered;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", referencedColumnName = "id")
     private Delivery delivery;
@@ -67,6 +70,14 @@ public class FinalOrder {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean isIdDelivered() {
+        return idDelivered;
+    }
+
+    public void setIdDelivered(boolean idDelivered) {
+        this.idDelivered = idDelivered;
     }
 
     public Delivery getDelivery() {

@@ -46,6 +46,11 @@ public class Initializer implements ApplicationListener<ApplicationReadyEvent> {
             role.setName("ROLE_USER");
             roleRepository.saveAndFlush(role);
 
+            Role role0 = new Role();
+            role0.setName("ROLE_COURIER");
+            roleRepository.saveAndFlush(role0);
+
+
             //users
             User user = new User();
             user.setUsername("admin");
@@ -56,6 +61,13 @@ public class Initializer implements ApplicationListener<ApplicationReadyEvent> {
             user.setUsername("user");
             user.setPassword("1234");
             userService.save(user);
+
+            User user0 = new User();
+            user0.setUsername("courier");
+            user0.setPassword("1234");
+            user0.setRoles(Arrays.asList(roleRepository.findByName("ROLE_COURIER")));
+            userService.save(user0);
+
 
 
         }

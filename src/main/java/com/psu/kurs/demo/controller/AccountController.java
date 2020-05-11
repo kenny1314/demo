@@ -2,8 +2,10 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.AddressRepository;
 import com.psu.kurs.demo.dao.FinalOrderRepository;
+import com.psu.kurs.demo.dao.RequestsRepository;
 import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.FinalOrder;
+import com.psu.kurs.demo.entity.Requests;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +59,7 @@ public class AccountController {
     }
 
     @GetMapping("/accountUser") //можно зайти под админом
-    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
     public String accountUser(Model model, Principal principal, HttpServletRequest request) {
 
         model = menuService.getMenuItems(model); //get menu items
@@ -101,6 +104,59 @@ public class AccountController {
 
         addressRepository.save(address0);
         return "redirect:/infoUser";
+    }
+
+
+    @GetMapping("/confirmOrders") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String confirmOrders(Model model, Principal principal, HttpServletRequest request) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+
+        List<FinalOrder> finalOrderListNew = new ArrayList<>();
+        System.out.println("sizefinalorder: " + finalOrderList.size());
+        for (FinalOrder finalOrder : finalOrderList) {
+            if (!finalOrder.isIdDelivered()) {
+                finalOrderListNew.add(finalOrder);
+            }
+        }
+
+        model.addAttribute("listFinalOrder", finalOrderListNew);
+
+        return "confirmOrders";
+    }
+
+    @PostMapping("/confirmDeliveryCourier") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String confirmDeliveryCourier(Model model, Principal principal, HttpServletRequest request,
+                                         @RequestParam("id") String id,RedirectAttributes redirectAttributes) {
+
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        System.out.println("idd: " + id);
+
+        FinalOrder finalOrder0 = finalOrderRepository.getOne(Long.valueOf(id));
+        finalOrder0.setIdDelivered(true);
+        finalOrderRepository.saveAndFlush(finalOrder0);
+
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+
+        List<FinalOrder> finalOrderListNew = new ArrayList<>();
+        System.out.println("sizefinalorder: " + finalOrderList.size());
+        for (FinalOrder finalOrder : finalOrderList) {
+            if (!finalOrder.isIdDelivered()) {
+                finalOrderListNew.add(finalOrder);
+            }
+        }
+
+//        model.addAttribute("listFinalOrder", finalOrderListNew);
+
+        redirectAttributes.addFlashAttribute("listFinalOrder", finalOrderListNew);
+
+        return "redirect:/confirmOrders";
     }
 
 }

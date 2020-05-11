@@ -97,7 +97,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 --Изменяется количество заказов, если заказ оформлен --Изменяется количество заказов, если заказ оформлен --Изменяется количество заказов, если заказ оформлен
+select * from user_mappings;
 
+SELECT * FROM pg_catalog.pg_tables;
+
+
+SELECT * FROM public.user_roles;
+
+SELECT relname, relpages FROM pg_class;
 --Работает удаление платформы --Работает удаление платформы --Работает удаление платформы --Работает удаление платформы --Работает удаление платформы
 drop trigger dp_platform on cursovaya.platforms;
 
