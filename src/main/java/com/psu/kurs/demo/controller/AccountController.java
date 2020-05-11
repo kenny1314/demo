@@ -66,8 +66,9 @@ public class AccountController {
 
         List<FinalOrder> newListFinalOrder = new ArrayList<>();
 
+        //выбрать заказы по id  usera и заказы не завершены
         for (FinalOrder fin : finalOrderRepository.findAll()) {
-            if (fin.getUser().getId() == userService.findByUsername(principal.getName()).getId()) {
+            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId())&&!fin.isCompleted()) {
                 newListFinalOrder.add(fin);
             }
         }
@@ -75,6 +76,26 @@ public class AccountController {
         model.addAttribute("listFinalOrder", newListFinalOrder);
 
         return "accountUser";
+    }
+
+    @GetMapping("/accountUserCompleted") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String accountUserComplite(Model model, Principal principal, HttpServletRequest request) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        List<FinalOrder> newListFinalOrder = new ArrayList<>();
+
+        //выбрать заказы по id  usera и заказы не завершены
+        for (FinalOrder fin : finalOrderRepository.findAll()) {
+            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId())&&fin.isCompleted()) {
+                newListFinalOrder.add(fin);
+            }
+        }
+
+        model.addAttribute("listFinalOrder", newListFinalOrder);
+
+        return "accountUserCompleted";
     }
 
     //TODO информация об аккаунте изменить ссылку
@@ -91,6 +112,7 @@ public class AccountController {
 
         return "infoUser";
     }
+
 
     @PostMapping("/updateUserAddress")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
@@ -131,7 +153,7 @@ public class AccountController {
     @PostMapping("/confirmDeliveryCourier") //можно зайти под админом
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
     public String confirmDeliveryCourier(Model model, Principal principal, HttpServletRequest request,
-                                         @RequestParam("id") String id,RedirectAttributes redirectAttributes) {
+                                         @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
 
 
         model = menuService.getMenuItems(model); //get menu items
@@ -158,5 +180,62 @@ public class AccountController {
 
         return "redirect:/confirmOrders";
     }
+
+    @GetMapping("/ordersWithStatus") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String ordersWithStatus(Model model, Principal principal, HttpServletRequest request) {
+        model = menuService.getMenuItems(model); //get menu items
+
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+
+        model.addAttribute("listFinalOrder", finalOrderList);
+
+        return "ordersWithStatus";
+    }
+
+    @PostMapping("/returnOrder") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String returnOrder(Model model, Principal principal, HttpServletRequest request,
+                               @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        System.out.println("idd: " + id);
+
+        FinalOrder finalOrder0 = finalOrderRepository.getOne(Long.valueOf(id));
+        finalOrder0.setCompleted(true);
+        finalOrderRepository.saveAndFlush(finalOrder0);
+
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+
+        redirectAttributes.addFlashAttribute("listFinalOrder", finalOrderList);
+
+        return "redirect:/accountUser";
+    }
+
+
+    @PostMapping("/keepYourself") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String keepYourself(Model model, Principal principal, HttpServletRequest request,
+                                         @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        System.out.println("idd: " + id);
+
+        FinalOrder finalOrder0 = finalOrderRepository.getOne(Long.valueOf(id));
+        finalOrder0.setKeepYourself(true);
+        finalOrder0.setCompleted(true);
+        finalOrderRepository.saveAndFlush(finalOrder0);
+
+        List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
+
+        redirectAttributes.addFlashAttribute("listFinalOrder", finalOrderList);
+
+        return "redirect:/accountUser";
+    }
+
+
+
 
 }

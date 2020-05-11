@@ -25,6 +25,12 @@ public class FinalOrder {
     @Column(name = "is_delivered", columnDefinition = "boolean default false")
     private boolean idDelivered;
 
+    @Column(name = "is_keep_yourself", columnDefinition = "boolean default false")
+    private boolean keepYourself;
+
+    @Column(name = "is_completed", columnDefinition = "boolean default false")
+    private boolean completed;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", referencedColumnName = "id")
     private Delivery delivery;
@@ -78,6 +84,22 @@ public class FinalOrder {
 
     public void setIdDelivered(boolean idDelivered) {
         this.idDelivered = idDelivered;
+    }
+
+    public boolean isKeepYourself() {
+        return keepYourself;
+    }
+
+    public void setKeepYourself(boolean keepYourself) {
+        this.keepYourself = keepYourself;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public Delivery getDelivery() {

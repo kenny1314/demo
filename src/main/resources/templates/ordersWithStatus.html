@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<h1>order with status</h1>
 <div class="bodycl">
     <!--    <h1>basket</h1>-->
     <div class="site">
@@ -49,41 +50,41 @@
                                 <td style="text-align: center;">ID user</td>
                                 <td>Дата</td>
                                 <td>Сумма</td>
-                                <td>Вернуть</td>
-                                <td>Оставить себе</td>
+                                <td>Статус доставки</td>
+                                <td>Статус возврата</td>
+                                <td>Завершён</td>
                             </tr>
                             </thead>
                             <tbody>
 
                             <th:block th:each="info : ${listFinalOrder}">
-
-<!--                                <tr th:if="${info.idDelivered}" class="table-light">-->
                                 <tr>
-
-
                                     <th scope="row" th:text="${info.id}">Default</th>
                                     <td th:text="${info.user.id}" style="text-align: center;">Column content</td>
                                     <td th:text="${info.date}">Column content</td>
                                     <td th:text="${info.finalPrice}">Column content</td>
-                                    <td>
-                                        <form method="POST" action="/returnOrder">
-                                            <input th:value="${info.id}" type="text" class="form-control"
-                                                   placeholder="Название" name="id"
-                                                   hidden>
-                                            <button th:if="${info.idDelivered}" class="btn btn-success">Вернуть</button>
-                                            <button th:if="${!info.idDelivered}" class="btn btn-success" disabled>Вернуть</button>
-                                        </form>
+                                    <td style="padding-left: 55px;">
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input th:if="${info.idDelivered}" type="checkbox" class="custom-control-input" id="customControlInline" disabled checked>
+                                            <input th:if="${!info.idDelivered}" type="checkbox" class="custom-control-input" id="customControlInline" disabled >
+                                            <label class="custom-control-label" for="customControlInline"></label>
+                                        </div>
+                                    </td>
+                                    <td style="padding-left: 55px;">
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input th:if="${info.keepYourself}" type="checkbox" class="custom-control-input" id="customControlInline" disabled checked>
+                                            <input th:if="${!info.keepYourself}" type="checkbox" class="custom-control-input" id="customControlInline" disabled >
+                                            <label class="custom-control-label" for="customControlInline"></label>
+                                        </div>
+                                    </td>
+                                    <td style="padding-left: 55px;">
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input th:if="${info.completed}" type="checkbox" class="custom-control-input" id="customControlInline" disabled checked>
+                                            <input th:if="${!info.completed}" type="checkbox" class="custom-control-input" id="customControlInline" disabled >
+                                            <label class="custom-control-label" for="customControlInline"></label>
+                                        </div>
                                     </td>
 
-                                    <td>
-                                        <form method="POST" action="/keepYourself">
-                                            <input th:value="${info.id}" type="text" class="form-control"
-                                                   placeholder="Название" name="id"
-                                                   hidden>
-                                            <button th:if="${info.idDelivered}" class="btn btn-info">Оставить</button>
-                                            <button th:if="${!info.idDelivered}" class="btn btn-info" disabled>Оставить</button>
-                                        </form>
-                                    </td>
                                 </tr>
                             </th:block>
 

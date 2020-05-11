@@ -49,48 +49,32 @@
                                 <td style="text-align: center;">ID user</td>
                                 <td>Дата</td>
                                 <td>Сумма</td>
-                                <td>Вернуть</td>
-                                <td>Оставить себе</td>
                             </tr>
                             </thead>
                             <tbody>
 
                             <th:block th:each="info : ${listFinalOrder}">
+                            <tr th:if="${info.keepYourself}" class="table-info">
+                                <th scope="row" th:text="${info.id}">Default</th>
+                                <td th:text="${info.user.id}"  style="text-align: center;">Column content</td>
+                                <td th:text="${info.date}">Column content</td>
+                                <td th:text="${info.finalPrice}">Column content</td>
+                            </tr>
 
-<!--                                <tr th:if="${info.idDelivered}" class="table-light">-->
-                                <tr>
-
-
-                                    <th scope="row" th:text="${info.id}">Default</th>
-                                    <td th:text="${info.user.id}" style="text-align: center;">Column content</td>
-                                    <td th:text="${info.date}">Column content</td>
-                                    <td th:text="${info.finalPrice}">Column content</td>
-                                    <td>
-                                        <form method="POST" action="/returnOrder">
-                                            <input th:value="${info.id}" type="text" class="form-control"
-                                                   placeholder="Название" name="id"
-                                                   hidden>
-                                            <button th:if="${info.idDelivered}" class="btn btn-success">Вернуть</button>
-                                            <button th:if="${!info.idDelivered}" class="btn btn-success" disabled>Вернуть</button>
-                                        </form>
-                                    </td>
-
-                                    <td>
-                                        <form method="POST" action="/keepYourself">
-                                            <input th:value="${info.id}" type="text" class="form-control"
-                                                   placeholder="Название" name="id"
-                                                   hidden>
-                                            <button th:if="${info.idDelivered}" class="btn btn-info">Оставить</button>
-                                            <button th:if="${!info.idDelivered}" class="btn btn-info" disabled>Оставить</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                            <tr th:if="${!info.keepYourself}" class="table-success">
+                                <th scope="row" th:text="${info.id}">Default</th>
+                                <td th:text="${info.user.id}"  style="text-align: center;">Column content</td>
+                                <td th:text="${info.date}">Column content</td>
+                                <td th:text="${info.finalPrice}">Column content</td>
+                            </tr>
                             </th:block>
 
                             </tbody>
                         </table>
 
                         <hr>
+
+
 
 
                     </div> <!-- /Col-md-9 -->

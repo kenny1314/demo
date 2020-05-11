@@ -76,8 +76,11 @@
                     <div class="row">
                         <h6 href="/" style="margin-bottom: 4px;"> [[${#httpServletRequest.remoteUser}]]</h6>
                     </div>
-                    <div class="row" style="padding-top: 3px;">
+                    <div th:if="${!#httpServletRequest.isUserInRole('ROLE_COURIER')}" class="row" style="padding-top: 3px;">
                         <a href="/accountUser">Личный кабинет</a>
+                    </div>
+                    <div th:if="${#httpServletRequest.isUserInRole('ROLE_COURIER')}" class="row" style="padding-top: 3px;">
+                        <a href="/confirmOrders">Личный кабинет</a>
                     </div>
                 </div>
 

@@ -72,15 +72,20 @@
     <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
         <ul class="navbar-nav mr-auto">
 
+            <th:block th:if="${#httpServletRequest.isUserInRole('ROLE_COURIER')}">
+                <li><a href="/confirmOrders" class="list-group-item list-group-item-action">Подтвердить заказы</a></li>
+                <li><a href="/ordersWithStatus" class="list-group-item list-group-item-action">Статусы заказов</a></li>
+            </th:block>
             <th:block th:if="${!#httpServletRequest.isUserInRole('ROLE_COURIER')}">
-            <li><a href="/infoUser" class="list-group-item list-group-item-action">Информация</a></li>
-            <li><a href="/accountUser" class="list-group-item list-group-item-action">Заказы</a></li>
+                <li><a href="/infoUser" class="list-group-item list-group-item-action">Информация</a></li>
+                <li><a href="/accountUser" class="list-group-item list-group-item-action">Заказы</a></li>
+                <li><a href="/accountUserCompleted" class="list-group-item list-group-item-action">Завершённые заказы</a></li>
             </th:block>
             <li>
                 <a th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}"
                    class="list-group-item list-group-item-action" href="/accountAdmin">Все заказы</a>
             </li>
-<!--            <li><a class="list-group-item list-group-item-action">Настройки</a></li>-->
+            <!--            <li><a class="list-group-item list-group-item-action">Настройки</a></li>-->
         </ul>
     </div>
 </nav>
