@@ -55,7 +55,7 @@ public class AccountController {
 
         model.addAttribute("listFinalOrder", finalOrderRepository.findAll());
 
-        return "accountAdmin";
+        return "/account/accountAdmin";
     }
 
     @GetMapping("/accountUser") //можно зайти под админом
@@ -75,7 +75,7 @@ public class AccountController {
 
         model.addAttribute("listFinalOrder", newListFinalOrder);
 
-        return "accountUser";
+        return "/account/accountUser";
     }
 
     @GetMapping("/accountUserCompleted") //можно зайти под админом
@@ -95,7 +95,7 @@ public class AccountController {
 
         model.addAttribute("listFinalOrder", newListFinalOrder);
 
-        return "accountUserCompleted";
+        return "/account/accountUserCompleted";
     }
 
     //TODO информация об аккаунте изменить ссылку
@@ -110,7 +110,7 @@ public class AccountController {
         model.addAttribute("address", addressRepository.getOne(userService.findByUsername(principal.getName()).getAddress().getId()));
         model.addAttribute("usr", userService.findByUsername(principal.getName()));
 
-        return "infoUser";
+        return "/account/infoUser";
     }
 
 
@@ -190,7 +190,7 @@ public class AccountController {
 
         model.addAttribute("listFinalOrder", finalOrderList);
 
-        return "ordersWithStatus";
+        return "/account/ordersWithStatus";
     }
 
     @PostMapping("/returnOrder") //можно зайти под админом
@@ -235,7 +235,25 @@ public class AccountController {
         return "redirect:/accountUser";
     }
 
+    @GetMapping("/accountDelGenre") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String accountDelGenre(Model model, Principal principal, HttpServletRequest request) {
 
+        model = menuService.getMenuItems(model); //get menu items
+
+//        List<FinalOrder> newListFinalOrder = new ArrayList<>();
+//
+//        //выбрать заказы по id  usera и заказы не завершены
+//        for (FinalOrder fin : finalOrderRepository.findAll()) {
+//            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId())&&!fin.isCompleted()) {
+//                newListFinalOrder.add(fin);
+//            }
+//        }
+//
+//        model.addAttribute("listFinalOrder", newListFinalOrder);
+
+        return "/account/accountDelGenre";
+    }
 
 
 }

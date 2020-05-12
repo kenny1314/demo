@@ -14,15 +14,23 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.imageio.ImageIO;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -96,19 +104,19 @@ public class AdminController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "addGame";
+        return "/add/addGame";
     }
 
     @GetMapping("/addGenres")
     public String addGenres(Model model) {
         model = menuService.getMenuItems(model); //get menu items
-        return "addGenres";
+        return "/add/addGenres";
     }
 
     @GetMapping("/addplatform")
     public String addPlatform(Model model) {
         model = menuService.getMenuItems(model); //get menu items
-        return "addPlatform";
+        return "/add/addPlatform";
     }
 
     @GetMapping("/delgame/{id}")
@@ -129,13 +137,35 @@ public class AdminController {
         return "Так-с";
     }
 
+    @Autowired
+    ServletContext servletContext;
+
     //если есть игра с таким жанром, то не удаляем жанр
     @Transactional
     @GetMapping("/delGenreId/{id}")
-    public String delGenreId(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
+    public String delGenreId(@PathVariable String id, Model model, RedirectAttributes redirectAttributes,
+                             HttpServletRequest request) throws IOException, ServletException {
+
+        URL url = new URL(request.getHeader("Referer")); //where request is the HttpServletRequest
+        String urlStr = url.getPath();
+//        System.out.println("lru: " + urlStr);
 
         model = menuService.getMenuItems(model); //get menu items
 
+        String resqMeth = getDelGenre(id);
+
+        if (resqMeth.equals("error")) {
+            redirectAttributes.addFlashAttribute("error", true);
+            model.addAttribute("error", true);
+        }
+        String retStr = "redirect:" + urlStr;
+
+        return retStr;
+    }
+
+
+    //если нельзя удалить то посылаем на страницу error
+    public String getDelGenre(String id) {
         Long idGenre = null;
         try {
             idGenre = Long.valueOf(id);
@@ -151,9 +181,9 @@ public class AdminController {
             for (Products prod : productsList) {
                 if (prod.getGenres().getId().equals(idGenre)) {
                     trExistsOfGame = true;
-                    model.addAttribute("error", true);
-                    redirectAttributes.addFlashAttribute("error", true);
-                    return "redirect:/genres";
+//                    model.addAttribute("error", true);
+
+                    return "error";
 //                    return "delGenreError";
                     //перенаправить на стриницу ошибки или передать ошибку на текущую и вывести ошибку вверху
                 }
