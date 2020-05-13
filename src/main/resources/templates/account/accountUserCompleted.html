@@ -46,8 +46,7 @@
                             <thead>
                             <tr class="table-active">
                                 <th scope="row">ID</th>
-                                <td style="text-align: center;">ID user</td>
-                                <td>Дата</td>
+                                <td style="text-align: center">Дата</td>
                                 <td>Сумма</td>
                             </tr>
                             </thead>
@@ -56,15 +55,13 @@
                             <th:block th:each="info : ${listFinalOrder}">
                             <tr th:if="${info.keepYourself}" class="table-info">
                                 <th scope="row" th:text="${info.id}">Default</th>
-                                <td th:text="${info.user.id}"  style="text-align: center;">Column content</td>
-                                <td th:text="${info.date}">Column content</td>
+                                <td style="text-align: center" th:text="${info.date}">Column content</td>
                                 <td th:text="${info.finalPrice}">Column content</td>
                             </tr>
 
                             <tr th:if="${!info.keepYourself}" class="table-success">
                                 <th scope="row" th:text="${info.id}">Default</th>
-                                <td th:text="${info.user.id}"  style="text-align: center;">Column content</td>
-                                <td th:text="${info.date}">Column content</td>
+                                <td style="text-align: center" th:text="${info.date}">Column content</td>
                                 <td th:text="${info.finalPrice}">Column content</td>
                             </tr>
                             </th:block>

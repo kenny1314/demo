@@ -83,7 +83,7 @@
                     заказы</a></li>
             </th:block>
 
-            <th:block>
+            <th:block th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
                 <li>
                     <a class="list-group-item list-group-item-action" href="/accountAdmin">Все заказы</a>
                     <a class="list-group-item list-group-item-action" href="/accountDelGenre">Удалить жанры</a>

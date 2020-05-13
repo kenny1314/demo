@@ -241,6 +241,11 @@ public class CreateOrderController {
         finalOrder.setDate(new Date().toString());
         finalOrder.setFinalPrice(basket.getFinalPrice());
         finalOrder.setUser(userService.findByUsername(principal.getName()));
+
+        //установить флаг доставки, потому что самовывоз
+        finalOrder.setIdDelivered(true);
+        //установить флаг доставки, потому что самовывоз
+
         finalOrderRepository.save(finalOrder);
         finalOrderRepository.flush();
 
@@ -436,12 +441,14 @@ public class CreateOrderController {
         requests.setPrice(Precision.round(products.getOneDayPrice() * discountRateNew, 2));
         requests.setProducts(products);
 
-        requestsRepository.save(requests); //добавить request чтоб отображалось в корзине
+        //почему оно добавляется
+//        requestsRepository.save(requests); //добавить request чтоб отображалось в корзине
 
         boolean trAdd = false;
 
         List<Requests> requestsList = requestsRepository.findAll();
 
+        //TODO странно работает удаляет и добавляет заново, если такого нет
         //если такой товар уже есть и мы добавляем его снова и удаляем старый request
         if (requestsRepository.findAll().size() > 0) {
             for (int i = 0; i < requestsRepository.findAll().size(); i++) {
@@ -452,9 +459,8 @@ public class CreateOrderController {
                     logger.info("id old: " + oldID);
                     logger.info("((((Такая корзина и продукт уже есть уже есть");
 
-                    basketRepository.save(basket);
-
                     requestsRepository.delete(requestsRepository.getOne(oldID)); //удалить старый request
+                    //странное с id
                     requestsRepository.save(requests); //сохранить новый
 
                     logger.info("add to db");

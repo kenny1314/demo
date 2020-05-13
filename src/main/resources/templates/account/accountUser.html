@@ -46,8 +46,7 @@
                             <thead>
                             <tr class="table-active">
                                 <th scope="row">ID</th>
-                                <td style="text-align: center;">ID user</td>
-                                <td>Дата</td>
+                                <td style="text-align: center">Дата</td>
                                 <td>Сумма</td>
                                 <td>Вернуть</td>
                                 <td>Оставить себе</td>
@@ -57,13 +56,10 @@
 
                             <th:block th:each="info : ${listFinalOrder}">
 
-<!--                                <tr th:if="${info.idDelivered}" class="table-light">-->
                                 <tr>
 
-
                                     <th scope="row" th:text="${info.id}">Default</th>
-                                    <td th:text="${info.user.id}" style="text-align: center;">Column content</td>
-                                    <td th:text="${info.date}">Column content</td>
+                                    <td style="text-align: center" th:text="${info.date}">Column content</td>
                                     <td th:text="${info.finalPrice}">Column content</td>
                                     <td>
                                         <form method="POST" action="/returnOrder">
@@ -71,7 +67,9 @@
                                                    placeholder="Название" name="id"
                                                    hidden>
                                             <button th:if="${info.idDelivered}" class="btn btn-success">Вернуть</button>
-                                            <button th:if="${!info.idDelivered}" class="btn btn-success" disabled>Вернуть</button>
+                                            <button th:if="${!info.idDelivered}" class="btn btn-success" disabled>
+                                                Вернуть
+                                            </button>
                                         </form>
                                     </td>
 
@@ -81,7 +79,9 @@
                                                    placeholder="Название" name="id"
                                                    hidden>
                                             <button th:if="${info.idDelivered}" class="btn btn-info">Оставить</button>
-                                            <button th:if="${!info.idDelivered}" class="btn btn-info" disabled>Оставить</button>
+                                            <button th:if="${!info.idDelivered}" class="btn btn-info" disabled>
+                                                Оставить
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

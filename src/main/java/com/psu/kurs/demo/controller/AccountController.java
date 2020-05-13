@@ -2,10 +2,8 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.AddressRepository;
 import com.psu.kurs.demo.dao.FinalOrderRepository;
-import com.psu.kurs.demo.dao.RequestsRepository;
 import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.FinalOrder;
-import com.psu.kurs.demo.entity.Requests;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
@@ -147,7 +145,7 @@ public class AccountController {
 
         model.addAttribute("listFinalOrder", finalOrderListNew);
 
-        return "confirmOrders";
+        return "/account/confirmOrders";
     }
 
     @PostMapping("/confirmDeliveryCourier") //можно зайти под админом

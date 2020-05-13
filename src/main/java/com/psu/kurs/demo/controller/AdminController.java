@@ -119,9 +119,9 @@ public class AdminController {
         return "/add/addPlatform";
     }
 
+    //переделать
     @GetMapping("/delgame/{id}")
-    public @ResponseBody
-    String delGameId(@PathVariable String id, Model model) {
+    public String delGameId(@PathVariable String id, Model model) {
 
         //если удаляем игру, то и удаляем и requests с этой игрой
         List<Requests> requestsList = requestsRepository.findAll();
@@ -134,7 +134,7 @@ public class AdminController {
 
         productsRepository.deleteById(Long.valueOf(id));
 
-        return "Так-с";
+        return "redirect:/";
     }
 
     @Autowired

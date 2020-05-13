@@ -54,12 +54,13 @@ public class LogRegisController {
         return "/registration";
     }
 
-    @GetMapping("/delusr")
-    public @ResponseBody
-    String delUsr() {
-//        userService.deleteUserWithRole(4L);
-        return "test del usr";
-    }
+
+//    @GetMapping("/delusr")
+//    public @ResponseBody
+//    String delUsr() {
+////        userService.deleteUserWithRole(4L);
+//        return "test del usr";
+//    }
 
     //что-то с транзакциями
     @PersistenceContext

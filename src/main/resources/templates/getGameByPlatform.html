@@ -36,10 +36,30 @@
                     <div class="col-md-9" style="padding-left: 0px;">
                         <!-- Carousel -->
 
+                        <th:block th:if="${ #lists.size(newListProduct)==0}">
+                            <!--                            <h2>Игр с таким жанром нет</h2>-->
 
-                        <br>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10" style=" padding-top: 15px; text-align: center">
+                                    <h3>Игр с такой платформой нет</h3>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </th:block>
+
                         <!-- Container with card -->
                         <div class="container" style="padding-left: 0px;">
+
+                            <div class="row" th:if="${ #lists.size(newListProduct)!=0}">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                    <h3 th:text="${yourplatform}">Личный кабинет</h3>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div> <!-- /row -->
+                            <hr>
+
                             <th:block
                                     th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(newListProduct, 3)}">
                                 <div class="row " th:each="partition: ${partitions}">

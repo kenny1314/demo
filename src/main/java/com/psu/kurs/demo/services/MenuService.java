@@ -74,7 +74,7 @@ public class MenuService {
             model.addAttribute("genresList", genresList);
 
         } catch (Exception ex) {
-
+        ex.printStackTrace();
         }
 
         return model;

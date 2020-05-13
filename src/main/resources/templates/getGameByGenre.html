@@ -48,9 +48,16 @@
                             </div>
                         </th:block>
 
-                        <br>
                         <!-- Container with card -->
                         <div class="container" style="padding-left: 0px;">
+                            <div class="row" th:if="${ #lists.size(newListProduct)!=0}">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                    <h3 th:text="${yourgenre}">Личный кабинет</h3>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div> <!-- /row -->
+                            <hr>
                             <th:block
                                     th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(newListProduct, 3)}">
                                 <div class="row " th:each="partition: ${partitions}">

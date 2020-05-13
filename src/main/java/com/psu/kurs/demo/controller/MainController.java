@@ -73,24 +73,25 @@ public class MainController {
 
     @Autowired
     OtherService otherService;
+//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println("---auth:"+auth);
+//        if (auth != null){
+//        logger.info("User '" + auth.getName() + "' attempted to access the protected URL: " + httpServletRequest.getRequestURI());
+//    }
+//
+//    boolean isAdmin = httpServletRequest.isUserInRole("ROLE_USER");
+//        System.out.println("http serv__:" + isAdmin);
+//        System.out.println("uuuuser:" +httpServletRequest.getRemoteUser());
+//
+//    AdminController adminController = new AdminController();
+////        System.out.println(Platforms.class.getCanonicalName());
+////      logger.info("_______________size: "+adminController.getLastId(platformsRepository,Platforms.class.getCanonicalName()));
+
+
 
     @GetMapping(value = {"/", "index"})
     public String index(Model model, HttpServletRequest httpServletRequest) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchFieldException {
         model = menuService.getMenuItems(model); //get menu items
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("---auth:"+auth);
-        if (auth != null){
-            logger.info("User '" + auth.getName() + "' attempted to access the protected URL: " + httpServletRequest.getRequestURI());
-        }
-
-        boolean isAdmin = httpServletRequest.isUserInRole("ROLE_USER");
-        System.out.println("http serv__:" + isAdmin);
-        System.out.println("uuuuser:" +httpServletRequest.getRemoteUser());
-
-        AdminController adminController = new AdminController();
-//        System.out.println(Platforms.class.getCanonicalName());
-//      logger.info("_______________size: "+adminController.getLastId(platformsRepository,Platforms.class.getCanonicalName()));
 
         return "index";
     }
@@ -129,7 +130,7 @@ public class MainController {
         List<Products> productsList = productsRepository.findAll();
 
         for (Products prod : productsList) {
-            System.out.println("idP:" + prod.getPlatforms().getId());
+//            System.out.println("idP:" + prod.getPlatforms().getId());
             if (prod.getPlatforms().getId() == Long.valueOf(id)) {
                 newListProduct.add(prod);
             }
@@ -137,7 +138,8 @@ public class MainController {
 
         model = menuService.getMenuItems(model); //get menu items
         model.addAttribute("newListProduct", newListProduct);
-        System.out.println("size prod:" + newListProduct.size());
+        model.addAttribute("yourplatform", platformsRepository.getOne(Long.valueOf(id)).getName());
+//        System.out.println("size prod:" + newListProduct.size());
 
         return "getGameByPlatform";
     }
@@ -148,7 +150,7 @@ public class MainController {
         List<Products> productsList = productsRepository.findAll();
 
         for (Products prod : productsList) {
-            System.out.println("idP:" + prod.getPlatforms().getId());
+//            System.out.println("idP:" + prod.getPlatforms().getId());
             if (prod.getGenres().getId() == Long.valueOf(id)) {
                 newListProduct.add(prod);
             }
@@ -156,7 +158,8 @@ public class MainController {
 
         model = menuService.getMenuItems(model); //get menu items
         model.addAttribute("newListProduct", newListProduct);
-        System.out.println("size prod:" + newListProduct.size());
+        model.addAttribute("yourgenre", genresRepository.getOne(Long.valueOf(id)).getName());
+//        System.out.println("size prod:" + newListProduct.size());
 
         return "getGameByGenre";
     }
