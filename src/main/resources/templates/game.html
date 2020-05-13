@@ -50,9 +50,9 @@
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3" style="padding-left: 24px;">
                                             <th:block th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
-                                            <a  th:href="${'/delgame/'+product.id}">
-                                                <button class="btn btn-danger">Удалить</button>
-                                            </a>
+                                                <a th:href="${'/delgame/'+product.id}">
+                                                    <button class="btn btn-danger">Удалить</button>
+                                                </a>
                                             </th:block>
                                         </div>
                                     </div>
@@ -106,15 +106,39 @@
                                                     <div class="col-md-10">
                                                         <div class="row">
                                                             <div class="container">
-                                                                <div class="row">
 
+                                                                <div th:if="${!(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"
+                                                                     class="row">
                                                                     <div class="col-md-6" style="text-align: center"><h5
-                                                                            th:text="${product.oneDayPrice+' р/д'}"
+                                                                            th:text="${#numbers.formatDecimal(product.oneDayPrice, 1, 'POINT', 2, 'POINT')+' p/д'}"
                                                                             id="pric">mmm</h5></div>
-                                                                    <div class="col-md-6" style="text-align: center; padding-right: 0px;"><h5
-                                                                            th:text="${product.oneDayPrice*3+' р/итог'}"
-                                                                            id="finPri">mmm</h5></div>
+                                                                    <div class="col-md-6"
+                                                                         style="text-align: center; padding-right: 0px;">
+                                                                        <h5
+                                                                                th:text="${#numbers.formatDecimal(product.oneDayPrice*3, 1, 'POINT', 2, 'POINT')}"
+                                                                                id="finPri">mmm</h5>
+                                                                        <h5>p/итог</h5>
+                                                                    </div>
                                                                 </div>
+                                                                <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
+                                                                     class="row">
+                                                                    <div class="col-md-6" style="text-align: center">
+                                                                        <h5 th:text="${#numbers.formatDecimal(product.oneDayPrice*user.discount_rate, 1, 'POINT', 2, 'POINT')+' p/д'}"
+                                                                            id="pric">mmm</h5>
+                                                                        <s><h5 th:text="${#numbers.formatDecimal(product.oneDayPrice, 1, 'POINT', 2, 'POINT')+' p/д'}"
+                                                                            id="pric">mmm</h5></s>
+                                                                    </div>
+                                                                    <div class="col-md-6"
+                                                                         style="text-align: center; padding-right: 0px;">
+                                                                        <h5
+                                                                                th:text="${#numbers.formatDecimal(product.oneDayPrice*user.discount_rate*3, 1, 'POINT', 2, 'POINT')}"
+                                                                                id="finPri">mmm</h5>
+                                                                        <h5>p/итог</h5>
+
+                                                                    </div>
+                                                                </div>
+
+
                                                                 <div class="row">
                                                                     <div class="col-md-6"
                                                                          style="padding-top: 4px; text-align: right;">
@@ -138,7 +162,20 @@
                                                                                    name="custId"
                                                                                    th:value="${product.oneDayPrice}">
                                                                             <!--                                                                    <input   onchange="incr(this)" type="text"-->
-                                                                            <input onchange="incr(this)" type="text"
+                                                                            <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
+                                                                                   onchange="incr(this)" type="text"
+                                                                                   th:id="${'quant['+product.id+']'}"
+                                                                                   th:name="inputplus"
+                                                                                   class="form-control input-number"
+                                                                                   value="3"
+                                                                                   min="1"
+                                                                                   max="10" style="text-align: center;"
+                                                                                   th:alt="${product.oneDayPrice}"
+                                                                                   th:accept="${user.discount_rate}"
+                                                                                   th:title="${product.id}">
+
+                                                                            <input th:if="${!(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"
+                                                                                   onchange="incr(this)" type="text"
                                                                                    th:id="${'quant['+product.id+']'}"
                                                                                    th:name="inputplus"
                                                                                    class="form-control input-number"
@@ -151,9 +188,18 @@
                                                                             <script>
                                                                                 function incr(e) {
                                                                                     var vi = document.getElementById('finPri');
-                                                                                    var temp = e.value * e.alt;
+
+                                                                                    if (e.accept.length != 0) {
+                                                                                        var temp = e.value * e.alt * e.accept;
+                                                                                    } else {
+                                                                                        var temp = e.value * e.alt;
+                                                                                    }
+
+                                                                                    // var temp = e.value * e.alt * e.accept;
+                                                                                    var temp = parseFloat(temp).toFixed(2);
                                                                                     // alert(temp);
-                                                                                    vi.innerText = temp + 'р/итог';
+                                                                                    // vi.innerText = temp + ' р/итог';
+                                                                                    vi.innerText = temp;
                                                                                 }
 
                                                                                 function neincr(e) {
