@@ -1,5 +1,8 @@
 package com.psu.kurs.demo.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,19 +30,18 @@ public class User extends AbstractEntity {
     @Column
     private Double discount_rate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private List<FinalOrder> finalOrderList;
-
-    //TODO для адреса
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id", referencedColumnName = "id")
-//    private Address address;
-
+    @Getter
+    @Setter
+    @Column(name = "balance", columnDefinition = "double precision default 0")
+    private Double balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<FinalOrder> finalOrderList;
 
     public User() {
     }
@@ -99,12 +101,19 @@ public class User extends AbstractEntity {
         this.finalOrderList = finalOrderList;
     }
 
-
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }

@@ -2,8 +2,10 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.AddressRepository;
 import com.psu.kurs.demo.dao.FinalOrderRepository;
+import com.psu.kurs.demo.dao.UserRepository;
 import com.psu.kurs.demo.entity.Address;
 import com.psu.kurs.demo.entity.FinalOrder;
+import com.psu.kurs.demo.entity.User;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
@@ -255,6 +257,42 @@ public class AccountController {
         model = menuService.getMenuItems(model); //get menu items
 
         return "/account/accountDelPlatform";
+    }
+
+    @GetMapping("/accountBalance") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String accountBalance(Model model, Principal principal, HttpServletRequest request) {
+        model = menuService.getMenuItems(model); //get menu items
+
+        model.addAttribute("usr", userService.findByUsername(principal.getName()));
+        return "/account/accountBalance";
+    }
+
+    @Autowired
+    UserRepository userRepository;
+
+    @PostMapping("/updateBalance")
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
+    public String updateBalance(Model model, Principal principal, HttpServletRequest request,
+                                @RequestParam("balance") String balance0
+    ) {
+
+        System.out.println("balance str: " + balance0);
+
+        Double balance = 0.0;
+        try {
+            balance = Math.abs(Double.valueOf(balance0));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("balance after abs: " + balance);
+
+        User user = userService.findByUsername(principal.getName());
+        user.setBalance(user.getBalance()+balance);
+        user.getPassword();
+        userRepository.save(user);
+
+        return "redirect:/infoUser";
     }
 
 

@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class LogRegisController {
@@ -88,8 +91,20 @@ public class LogRegisController {
         }
         User user = new User(1, username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
 
-        Address address = new Address();
+        Long addressID = null;
+        if (addressRepository.findAll().size() > 0) {
+            List<Long> addressList = new ArrayList<>();
 
+            for (Address addres : addressRepository.findAll()) {
+                addressList.add(addres.getId());
+            }
+            addressID = Collections.max(addressList);
+            addressID++;
+            System.out.println("addressiD: "+addressID);
+        }
+
+        Address address = new Address();
+        address.setId(addressID);
         address.setCity(city);
         address.setStreet(street);
         address.setFlatNumber(flatNumber);
