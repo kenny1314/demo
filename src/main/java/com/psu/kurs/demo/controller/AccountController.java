@@ -66,7 +66,7 @@ public class AccountController {
 
         //выбрать заказы по id  usera и заказы не завершены
         for (FinalOrder fin : finalOrderRepository.findAll()) {
-            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId())&&!fin.isCompleted()) {
+            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId()) && !fin.isCompleted()) {
                 newListFinalOrder.add(fin);
             }
         }
@@ -86,7 +86,7 @@ public class AccountController {
 
         //выбрать заказы по id  usera и заказы не завершены
         for (FinalOrder fin : finalOrderRepository.findAll()) {
-            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId())&&fin.isCompleted()) {
+            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId()) && fin.isCompleted()) {
                 newListFinalOrder.add(fin);
             }
         }
@@ -194,7 +194,7 @@ public class AccountController {
     @PostMapping("/returnOrder") //можно зайти под админом
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
     public String returnOrder(Model model, Principal principal, HttpServletRequest request,
-                               @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+                              @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
 
         model = menuService.getMenuItems(model); //get menu items
 
@@ -215,7 +215,7 @@ public class AccountController {
     @PostMapping("/keepYourself") //можно зайти под админом
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
     public String keepYourself(Model model, Principal principal, HttpServletRequest request,
-                                         @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+                               @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
 
         model = menuService.getMenuItems(model); //get menu items
 
@@ -236,21 +236,25 @@ public class AccountController {
     @GetMapping("/accountDelGenre") //можно зайти под админом
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
     public String accountDelGenre(Model model, Principal principal, HttpServletRequest request) {
-
         model = menuService.getMenuItems(model); //get menu items
 
-//        List<FinalOrder> newListFinalOrder = new ArrayList<>();
-//
-//        //выбрать заказы по id  usera и заказы не завершены
-//        for (FinalOrder fin : finalOrderRepository.findAll()) {
-//            if ((fin.getUser().getId() == userService.findByUsername(principal.getName()).getId())&&!fin.isCompleted()) {
-//                newListFinalOrder.add(fin);
-//            }
-//        }
-//
-//        model.addAttribute("listFinalOrder", newListFinalOrder);
-
         return "/account/accountDelGenre";
+    }
+
+    @GetMapping("/accountDelGame") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String accountDelGame(Model model, Principal principal, HttpServletRequest request) {
+        model = menuService.getMenuItems(model); //get menu items
+
+        return "/account/accountDelGame";
+    }
+
+    @GetMapping("/accountDelPlatform") //можно зайти под админом
+    @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
+    public String accountDelPlatform(Model model, Principal principal, HttpServletRequest request) {
+        model = menuService.getMenuItems(model); //get menu items
+
+        return "/account/accountDelPlatform";
     }
 
 

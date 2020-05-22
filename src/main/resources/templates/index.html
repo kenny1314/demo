@@ -64,6 +64,20 @@
 
                     <div class="col-md-9" style="padding-left: 0px;">
 
+                        <div th:if="${ok!=null&&ok}">
+                            <div class="form-group col-md-12" style=" text-align: center">
+
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="
+    margin-top: 10px;">
+                                    Игра удалена
+                                    <button type=" button
+                                " class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Carousel -->
                         <div id="carouselExampleInterval" class="carousel slide"
                              data-ride="carousel">
@@ -179,7 +193,7 @@
                                                                            name="custId"
                                                                            th:value="${info.oneDayPrice}">
                                                                     <!--                                                                    <input   onchange="incr(this)" type="text"-->
-<!--                                                                    <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"-->
+                                                                    <!--                                                                    <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"-->
                                                                     <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
                                                                            onchange="incr(this)" type="text"
                                                                            th:id="${'quant['+info.id+']'}"

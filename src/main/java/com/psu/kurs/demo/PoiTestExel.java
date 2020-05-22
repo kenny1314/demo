@@ -1,10 +1,15 @@
 package com.psu.kurs.demo;
 
+import com.psu.kurs.demo.dao.FinalOrderRepository;
 import com.psu.kurs.demo.dao.ProductsRepository;
+import com.psu.kurs.demo.entity.FinalOrder;
 import com.psu.kurs.demo.entity.Products;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.io.FileNotFoundException;
@@ -18,12 +23,11 @@ public class PoiTestExel {
 
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Products");
-        int rowNum = 0;
         System.out.println("Creating excel");
         List<Products> productsList = productsRepository.findAll();
 
         int colNum1 = 0;
-        Row row = sheet.createRow(rowNum++);
+        Row row = sheet.createRow(0);
         Cell cell = null;
         row.createCell(colNum1++).setCellValue("ID");
         row.createCell(colNum1++).setCellValue("Title");
@@ -35,7 +39,7 @@ public class PoiTestExel {
         row.createCell(colNum1++).setCellValue("Genres");
         row.createCell(colNum1++).setCellValue("Language");
         row.createCell(colNum1++).setCellValue("Platform");
-        row.createCell(colNum1++).setCellValue("Publishefffr");
+        row.createCell(colNum1).setCellValue("Publishefffr");
 
         int rowNum1 = 1;
         for (Products prod : productsList) {
@@ -57,6 +61,47 @@ public class PoiTestExel {
 
         try {
             FileOutputStream outputStream = new FileOutputStream("products.xls");
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Done");
+    }
+
+    public void run1(FinalOrderRepository finalOrderRepository) throws IOException {
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Products");
+        sheet.autoSizeColumn(100000);
+
+        System.out.println("Creating excel");
+        List<FinalOrder> finalOrders = finalOrderRepository.findAll();
+
+        sheet.setColumnWidth(2, 7500);
+
+        int colNum1 = 0;
+        Row row = sheet.createRow(0);
+
+        row.createCell(colNum1++).setCellValue("ID");
+
+        row.createCell(colNum1++).setCellValue("ID User");
+        row.createCell(colNum1++).setCellValue("Date");
+        row.createCell(colNum1).setCellValue("Sum");
+
+        int rowNum1 = 1;
+        for (FinalOrder finalOrder : finalOrders) {
+            Row row1 = sheet.createRow(rowNum1++);
+            int colNum = 0;
+            row1.createCell(colNum++).setCellValue(finalOrder.getId());
+            row1.createCell(colNum++).setCellValue(finalOrder.getUser().getId());
+            row1.createCell(colNum++).setCellValue(finalOrder.getDate());
+            row1.createCell(colNum).setCellValue(finalOrder.getFinalPrice());
+        }
+
+        try {
+            FileOutputStream outputStream = new FileOutputStream("orders.xls");
             workbook.write(outputStream);
             workbook.close();
         } catch (FileNotFoundException e) {

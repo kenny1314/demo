@@ -48,6 +48,7 @@
                                 <th scope="row">ID</th>
                                 <td style="text-align: center">Дата</td>
                                 <td>Сумма</td>
+                                <td>Статус</td>
                                 <td>Вернуть</td>
                                 <td>Оставить себе</td>
                             </tr>
@@ -61,6 +62,8 @@
                                     <th scope="row" th:text="${info.id}">Default</th>
                                     <td style="text-align: center" th:text="${info.date}">Column content</td>
                                     <td th:text="${info.finalPrice}">Column content</td>
+                                    <td th:if="${info.idDelivered}" th:text="Доставлено"></td>
+                                    <td th:if="${!info.idDelivered}" th:text="'В пути'"></td>
                                     <td>
                                         <form method="POST" action="/returnOrder">
                                             <input th:value="${info.id}" type="text" class="form-control"

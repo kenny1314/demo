@@ -64,6 +64,20 @@
 
                     <div class="col-md-9" style="padding-left: 0px;">
 
+                        <div th:if="${ok!=null&&ok}">
+                            <div class="form-group col-md-12" style=" text-align: center">
+
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="
+    margin-top: 10px;">
+                                    Игра удалена
+                                    <button type=" button
+                                " class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Carousel -->
                         <div id="carouselExampleInterval" class="carousel slide"
                              data-ride="carousel">
@@ -118,18 +132,18 @@
                                                              class="col-md-12"
                                                              style="text-align: center;">
                                                             <b th:text="${info.oneDayPrice}">old</b>
-                                                            <b th:text=" 'р/день'">r/day</b>
+                                                            <b th:text=" ' р/д'">r/day</b>
                                                         </div>
 
-<!--                                                        <div th:if="${(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"-->
-<!--                                                             class="col-md-12"-->
-<!--                                                             style="text-align: center;">-->
-<!--                                                            <b th:text="${info.oneDayPrice}"-->
-<!--                                                               class="idoneday">-->
-<!--                                                            </b>-->
-<!--                                                            <s th:text="${info.oneDayPrice}">old</s>-->
-<!--                                                            <b th:text=" 'р/день'">r/day</b>-->
-<!--                                                        </div>-->
+                                                        <!--                                                        <div th:if="${(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"-->
+                                                        <!--                                                             class="col-md-12"-->
+                                                        <!--                                                             style="text-align: center;">-->
+                                                        <!--                                                            <b th:text="${info.oneDayPrice}"-->
+                                                        <!--                                                               class="idoneday">-->
+                                                        <!--                                                            </b>-->
+                                                        <!--                                                            <s th:text="${info.oneDayPrice}">old</s>-->
+                                                        <!--                                                            <b th:text=" 'р/день'">r/day</b>-->
+                                                        <!--                                                        </div>-->
 
                                                         <!-- User Admin-->
 
@@ -142,7 +156,7 @@
                                                                class="idoneday">
                                                             </b>
                                                             <s th:text="${info.oneDayPrice}">old</s>
-                                                            <b th:text=" 'р/день'">r/day</b>
+                                                            <b th:text=" ' р/д'">r/day</b>
                                                         </div>
 
                                                     </div>
@@ -150,9 +164,17 @@
                                                          class="row">
                                                         <div class="col-md-12" style="text-align: center">
                                                             <b th:id="${info.id}"
-                                                               th:text="${#numbers.formatDecimal(info.oneDayPrice*user.discount_rate*3, 1, 'POINT', 2, 'POINT')+'p'}"></b>
+                                                               th:text="${#numbers.formatDecimal(info.oneDayPrice*user.discount_rate*3, 1, 'POINT', 2, 'POINT')+' p/итог'}"></b>
                                                         </div>
                                                     </div>
+                                                    <div th:if="${!(#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER'))}"
+                                                         class="row">
+                                                        <div class="col-md-12" style="text-align: center">
+                                                            <b th:id="${info.id}"
+                                                               th:text="${#numbers.formatDecimal(info.oneDayPrice*3, 1, 'POINT', 2, 'POINT')+' p/итог'}"></b>
+                                                        </div>
+                                                    </div>
+
                                                     <hr style="margin-top: 5px;margin-bottom: 5px;">
 
                                                     <div class="container">
@@ -171,6 +193,7 @@
                                                                            name="custId"
                                                                            th:value="${info.oneDayPrice}">
                                                                     <!--                                                                    <input   onchange="incr(this)" type="text"-->
+                                                                    <!--                                                                    <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"-->
                                                                     <input th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN') or #httpServletRequest.isUserInRole('ROLE_USER')}"
                                                                            onchange="incr(this)" type="text"
                                                                            th:id="${'quant['+info.id+']'}"
@@ -194,12 +217,16 @@
 
                                                                     <script>
                                                                         function incr(e) {
-                                                                            var temp = e.value * e.alt * e.accept;
+                                                                            if (e.accept.length != 0) {
+                                                                                var temp = e.value * e.alt * e.accept;
+                                                                            } else {
+                                                                                var temp = e.value * e.alt;
+                                                                            }
 
                                                                             if ((temp + "").indexOf(".") > 0) {
-                                                                                document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + 'р';
+                                                                                document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + ' p/итог';
                                                                             } else {
-                                                                                document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + '.00р';
+                                                                                document.getElementById(e.title).innerText = parseFloat(temp).toFixed(2) + ' p/итог';
                                                                             }
                                                                         }
 

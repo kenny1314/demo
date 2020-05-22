@@ -121,8 +121,14 @@ public class AdminController {
 
     //переделать
     @GetMapping("/delgame/{id}")
-    public String delGameId(@PathVariable String id, Model model) {
+    public String delGameId(@PathVariable String id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws MalformedURLException {
 
+        URL url = new URL(request.getHeader("Referer")); //where request is the HttpServletRequest
+        String urlStr = url.getPath();
+
+        if (urlStr.startsWith("/game/")) {
+            urlStr = "/";
+        }
         //если удаляем игру, то и удаляем и requests с этой игрой
         List<Requests> requestsList = requestsRepository.findAll();
         for (Requests req : requestsList) {
@@ -131,10 +137,11 @@ public class AdminController {
                 requestsRepository.deleteById(req.getId());
             }
         }
+        redirectAttributes.addFlashAttribute("ok", true);
 
         productsRepository.deleteById(Long.valueOf(id));
 
-        return "redirect:/";
+        return "redirect:" + urlStr;
     }
 
     @Autowired
@@ -156,7 +163,13 @@ public class AdminController {
 
         if (resqMeth.equals("error")) {
             redirectAttributes.addFlashAttribute("error", true);
-            model.addAttribute("error", true);
+//            model.addAttribute("error", true);
+        }
+        if (resqMeth.equals("ok")) {
+            System.out.println("ok page delGenreid");
+
+            redirectAttributes.addFlashAttribute("ok", true);
+//            model.addAttribute("ok", true);
         }
         String retStr = "redirect:" + urlStr;
 
@@ -181,7 +194,6 @@ public class AdminController {
             for (Products prod : productsList) {
                 if (prod.getGenres().getId().equals(idGenre)) {
                     trExistsOfGame = true;
-//                    model.addAttribute("error", true);
 
                     return "error";
 //                    return "delGenreError";
@@ -190,11 +202,11 @@ public class AdminController {
             }
             if (!trExistsOfGame) {
                 genresRepository.deleteById(idGenre);
-                return "redirect:/genres";
+                return "ok";
             }
         }
 
-        return "redirect:/genres";
+        return "ok";
     }
 
 
@@ -224,6 +236,73 @@ public class AdminController {
 
         return "redirect:/listplatforms";
     }
+
+
+    @GetMapping("/delplatform1/{id}")
+    public String delPlatformId1(@PathVariable String id, Model model, RedirectAttributes redirectAttributes,
+                                 HttpServletRequest request) throws MalformedURLException {
+
+        URL url = new URL(request.getHeader("Referer")); //where request is the HttpServletRequest
+        String urlStr = url.getPath();
+        if (urlStr.startsWith("/platform")) {
+            urlStr = "/listplatforms";
+        }
+        System.out.println("lru: " + urlStr);
+
+        model = menuService.getMenuItems(model); //get menu items
+
+        String resqMeth = getDelPlatform(id);
+
+        if (resqMeth.equals("error")) {
+            System.out.println("error page delplatform1");
+
+            redirectAttributes.addFlashAttribute("error", true);
+//            model.addAttribute("error", true);
+        }
+        if (resqMeth.equals("ok")) {
+            System.out.println("ok page delplatform1");
+
+            redirectAttributes.addFlashAttribute("ok", true);
+//            model.addAttribute("ok", true);
+        }
+        String retStr = "redirect:" + urlStr;
+
+        return retStr;
+
+    }
+
+
+    //если нельзя удалить то посылаем на страницу error
+    public String getDelPlatform(String id) {
+        Long idPlatform = null;
+        try {
+            idPlatform = Long.valueOf(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        boolean trExistsOfGame = false;
+
+        if (platformsRepository.existsById(Long.valueOf(id))) {
+            List<Products> productsList = productsRepository.findAll();
+
+            for (Products prod : productsList) {
+                if (prod.getGenres().getId().equals(idPlatform)) {
+                    trExistsOfGame = true;
+
+                    return "error";
+                    //перенаправить на стриницу ошибки или передать ошибку на текущую и вывести ошибку вверху
+                }
+            }
+            if (!trExistsOfGame) {
+                platformsRepository.deleteById(idPlatform);
+                return "ok";
+            }
+        }
+
+        return "ok"; //не используется
+    }
+
 
     public Long getLastId(JpaRepository<?, ?> jp, String str) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InstantiationException {
         //получение последнего id из списка платформ

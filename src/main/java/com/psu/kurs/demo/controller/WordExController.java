@@ -2,6 +2,7 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.PoiTestExel;
 import com.psu.kurs.demo.PoiTestWord;
+import com.psu.kurs.demo.dao.FinalOrderRepository;
 import com.psu.kurs.demo.dao.ProductsRepository;
 import com.psu.kurs.demo.services.MediaTypeUtils;
 import org.slf4j.Logger;
@@ -27,6 +28,8 @@ public class WordExController {
 
     @Autowired
     ProductsRepository productsRepository;
+    @Autowired
+    FinalOrderRepository finalOrderRepository;
 
     @Autowired
     private ServletContext servletContext;
@@ -36,18 +39,19 @@ public class WordExController {
 
         PoiTestExel poiTestExel = new PoiTestExel();
         try {
-            poiTestExel.run(productsRepository);
+//            poiTestExel.run(productsRepository);
+            poiTestExel.run1(finalOrderRepository);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String fileName = "products.xls";
+        String fileName = "orders.xls";
         MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
         logger.info("  " + mediaType);
         System.out.println("fileName: " + fileName);
         System.out.println("mediaType: " + mediaType);
 
-        File file = new File("D:\\demo\\products.xls");
+        File file = new File("D:\\demo\\orders.xls");
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
         return ResponseEntity.ok()
@@ -62,18 +66,19 @@ public class WordExController {
 
         PoiTestWord poiTestWord = new PoiTestWord();
         try {
-            poiTestWord.run(productsRepository);
+//            poiTestWord.run(productsRepository);
+            poiTestWord.run1(finalOrderRepository);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String fileName = "products.docx";
+        String fileName = "orders.docx";
         MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
         logger.info("  " + mediaType);
         System.out.println("fileName: " + fileName);
         System.out.println("mediaType: " + mediaType);
 
-        File file = new File("D:\\demo\\products.docx");
+        File file = new File("D:\\demo\\orders.docx");
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
         return ResponseEntity.ok()

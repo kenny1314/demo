@@ -42,39 +42,62 @@
                         </div> <!-- /row -->
                         <hr>
 
+                        <div th:if="${error!=null&&error}">
+                            <div class="form-group col-md-12" style=" text-align: center">
+
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Нельзя удалить игру
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${ok!=null&&ok}">
+                            <div class="form-group col-md-12" style=" text-align: center">
+
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Игра удалена
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <table class="table table-hover">
                             <thead>
                             <tr class="table-active">
                                 <th scope="row">ID</th>
-                                <td style="text-align: center">Дата</td>
-                                <td>Статус</td>
-                                <td>Сумма</td>
+                                <td style="text-align: center;">Название</td>
+                                <td>Действие</td>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <th:block th:each="info : ${listFinalOrder}">
-                            <tr th:if="${info.keepYourself}" class="table-info">
-                                <th scope="row" th:text="${info.id}">Default</th>
-                                <td style="text-align: center" th:text="${info.date}">Column content</td>
-                                <td>Оставлено себе</td>
-                                <td th:text="${info.finalPrice}">Column content</td>
-                            </tr>
+                            <th:block th:each="info : ${productsList}">
+                                <tr>
+                                    <th scope="row" th:text="${info.id}">Default</th>
+                                    <td th:text="${info.title}" style="text-align: center;">Column content</td>
+                                    <td>
+                                        <form method="POST" action="/__">
+                                            <input th:value="${info.id}" type="text" class="form-control"
+                                                   placeholder="Название" name="id"
+                                                   hidden>
+                                            <a th:href="${'/delgame/'+info.id}"
+                                               class="btn btn-danger"
+                                               style="margin-left: 6px;width: 146px; margin-top: 5px;">Удалить</a>
+                                        </form>
 
-                            <tr th:if="${!info.keepYourself}" class="table-success">
-                                <th scope="row" th:text="${info.id}">Default</th>
-                                <td style="text-align: center" th:text="${info.date}">Column content</td>
-                                <td>Возвращено</td>
-                                <td th:text="${info.finalPrice}">Column content</td>
-                            </tr>
+                                    </td>
+
+                                </tr>
                             </th:block>
 
                             </tbody>
                         </table>
 
                         <hr>
-
-
 
 
                     </div> <!-- /Col-md-9 -->
