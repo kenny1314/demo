@@ -68,22 +68,28 @@
                                 </div>
 
 
-
-
                                 <hr style="margin-left: 140px;">
 
                                 <div class="row">
-                                    <div class="col-md-5"></div>
-                                    <div class="col-md-5" style="text-align: center">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-3" style="text-align: center">
                                         <h5 th:name="finalPrice" th:text="'Цена: '+${finalPrice}"
                                             style="padding-top: 5px;"></h5>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <h5 th:name="basketSum" th:text="'Будет списано:'"
+                                                style="padding-top: 5px;"></h5>
+                                        </div>
+
+                                        <div class="row">
+                                            <h5 th:text="${basketSum}"></h5>
+
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-
                                     <div class="col-md-5"></div>
 
                                     <div class="col-md-5" style="text-align: center">
@@ -91,8 +97,9 @@
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
+                                <input th:name="basketSum" th:value="${basketSum}" hidden>
 
-                        </div>
+<!--                        </div>-->
                         </form>
                     </div>
 

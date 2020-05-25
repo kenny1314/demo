@@ -13,15 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +34,8 @@ public class CreateOrderController {
 
     private static Logger logger = LoggerFactory.getLogger(CreateOrderController.class);
 
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     ProductsRepository productsRepository;
 
@@ -96,9 +97,11 @@ public class CreateOrderController {
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
     public String basket(Model model, Principal principal, HttpServletRequest request) {
 
+        System.out.println(request);
         model = menuService.getMenuItems(model); //get menu items
 
         Basket basket;
+        Double basketSum = 0.0;
 
         User user = userService.findByUsername(principal.getName());
         if (basketRepository.existsById(user.getId())) {
@@ -117,8 +120,13 @@ public class CreateOrderController {
                     productsListBasket.add(req.getProducts());
                 }
 
+                for (Products prod : productsListBasket) {
+                    basketSum += prod.getFullPrice();
+                }
+
                 model.addAttribute("requestsList", basket.getRequestsList());
                 model.addAttribute("productsListBasket", productsListBasket);
+                model.addAttribute("basketSum", basketSum);
 
             }
         } else {
@@ -133,16 +141,30 @@ public class CreateOrderController {
     }
 
 
+    //TODO dd
     //registration order на какую страницу перенаправить
     @PostMapping("/actionDefinition")
     public String actionDefinition(@RequestParam(name = "typeOfDelivery", required = false) String typeOfDelivery,
-                                   @RequestParam(name = "finalPrice", required = false) String finalPrice, Model model
+                                   @RequestParam(name = "basketSum", required = false) String basketSum,
+                                   Model model, Principal principal, RedirectAttributes redirectAttributes
     ) {
 
+        User user = userService.findByUsername(principal.getName());
+
+        if (user != null && basketSum != null) {
+            Double basketSumDoub = Double.valueOf(basketSum);
+            if (user.getBalance() < basketSumDoub) {
+                redirectAttributes.addFlashAttribute("error", true);
+                return "redirect:/basket";
+            }
+        }
+
         if (typeOfDelivery.equals("Курьер")) {
-            return "forward:/createOrder";
+            redirectAttributes.addFlashAttribute("basketSum", basketSum);
+            return "redirect:/createOrder";
         }
         if (typeOfDelivery.equals("Самовывоз")) {
+            redirectAttributes.addFlashAttribute("basketSum", basketSum);
             return "redirect:/storeSelection";
         }
 
@@ -151,8 +173,11 @@ public class CreateOrderController {
 
     //оформление курьёр
     // registration order
-    @PostMapping("/createOrder")
-    public String createOrder(Model model, Principal principal) {
+    @GetMapping("/createOrder")
+    public String createOrder(Model model, Principal principal, RedirectAttributes redirectAttributes,
+                              HttpServletRequest request,
+                              HttpServletResponse response
+    ) {
         model = menuService.getMenuItems(model);
 
         User user = userService.findByUsername(principal.getName());
@@ -161,12 +186,23 @@ public class CreateOrderController {
 
         model.addAttribute("address", address);
 
+        Double basketSum = 0.0;
+
         if (user != null) {
             Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
+
+            for (Requests requests : basket.getRequestsList()) {
+                basketSum += requests.getProducts().getFullPrice();
+            }
             model.addAttribute("finalPrice", basket.getFinalPrice());
+            model.addAttribute("basketSum", basketSum);
+            System.out.println("basket sum create order0: "+basketSum);
+
             logger.info("finalPrice: " + basket.getFinalPrice());
         } else {
             model.addAttribute("finalPrice", "notPrice");
+            model.addAttribute("basketSum", "nullmm");
+            System.out.println("basket sum create order0: "+basketSum);
         }
 
         return "createOrder";
@@ -176,7 +212,11 @@ public class CreateOrderController {
     //выбор магазина
     //registration order
     @GetMapping("/storeSelection")
-    public String storeSelection(Model model, Principal principal) {
+    public String storeSelection(Model model, Principal principal, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        if (request.getAttribute("basketSum") != null) {
+            redirectAttributes.addFlashAttribute("basketSum", request.getAttribute("basketSum"));
+        }
 
         model = menuService.getMenuItems(model); //get menu items
 
@@ -196,7 +236,9 @@ public class CreateOrderController {
 //нужна транзакция
     @Transactional
     @PostMapping("/orderIsProcessed")
-    public String orderIsProcessed(@RequestParam(name = "fb", required = false) String radioValue, Model model, Principal principal, HttpServletRequest request) {
+    public String orderIsProcessed(@RequestParam(name = "fb", required = false) String radioValue,
+                                   @RequestParam(name = "basketSum", required = false) String basketSum,
+                                   Model model, Principal principal, HttpServletRequest request) {
 
         System.out.println(")))))))))PrincipaL: " + principal.getName());
 
@@ -291,6 +333,17 @@ public class CreateOrderController {
         finalOrder.setDelivery(delivery);
         finalOrderRepository.save(finalOrder);
 
+        //вычесть сумму заказа у пользователя
+        System.out.println("SUUUUUUMM ZAK: " + basketSum);
+
+        User user = userService.findByUsername(principal.getName());
+        if (user != null && basketSum != null) {
+            Double basketSumDoub = Double.valueOf(basketSum);
+            user.setBalance(user.getBalance() - basketSumDoub);
+            userRepository.save(user);
+            System.out.println("Деньги списаны самовывоз");
+        }
+
         return "orderComplete";
     }
 
@@ -327,9 +380,11 @@ public class CreateOrderController {
     public String completeCheckout(@RequestParam(name = "city", required = false) String city,
                                    @RequestParam(name = "street", required = false) String street,
                                    @RequestParam(name = "flat_number", required = false) String flat_number,
+                                   @RequestParam(name = "basketSum", required = false) String basketSum,
                                    Principal principal, Model model) {
 
         model = menuService.getMenuItems(model); //get menu items
+        model.addAttribute("basketSum", basketSum);
 
         Basket basket = basketRepository.getOne(userService.findByUsername(principal.getName()).getId());
 
@@ -390,6 +445,17 @@ public class CreateOrderController {
         finalOrder.setDelivery(delivery);
 
         finalOrderRepository.save(finalOrder);
+
+        //user отнять сумму
+        System.out.println("basket sum: completecheckout: " + basketSum);
+
+        User user = userService.findByUsername(principal.getName());
+        if (user != null && basketSum != null) {
+            Double basketSumDoub = Double.valueOf(basketSum);
+            user.setBalance(user.getBalance() - basketSumDoub);
+            userRepository.save(user);
+            System.out.println("Деньги списаны");
+        }
 
         return "orderComplete";
     }

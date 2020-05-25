@@ -52,7 +52,7 @@ public class MenuService {
             for(Requests req:requestsList){
 
                 if(req.getBasket()!=null&&req.getBasket().getId()==user.getId()){
-                    System.out.println("в корзине что-то есть");
+//                    System.out.println("в корзине что-то есть");
                     basketCount++;
                 }
             }

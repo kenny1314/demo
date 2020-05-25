@@ -259,6 +259,7 @@ public class AccountController {
         return "/account/accountDelPlatform";
     }
 
+    //not use
     @GetMapping("/accountBalance") //можно зайти под админом
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER", "ROLE_COURIER"})
     public String accountBalance(Model model, Principal principal, HttpServletRequest request) {
