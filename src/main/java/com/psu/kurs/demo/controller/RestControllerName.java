@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 public class RestControllerName {
-
+//igor
     private static Logger logger = LoggerFactory.getLogger(RestControllerName.class);
 
     @Autowired
