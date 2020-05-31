@@ -2,10 +2,10 @@ package com.psu.kurs.demo.controller;
 
 import com.psu.kurs.demo.dao.AddressRepository;
 import com.psu.kurs.demo.dao.FinalOrderRepository;
+import com.psu.kurs.demo.dao.ProductsRepository;
 import com.psu.kurs.demo.dao.UserRepository;
-import com.psu.kurs.demo.entity.Address;
-import com.psu.kurs.demo.entity.FinalOrder;
-import com.psu.kurs.demo.entity.User;
+import com.psu.kurs.demo.entity.*;
+import com.psu.kurs.demo.services.FinalOrderComparator;
 import com.psu.kurs.demo.services.MenuService;
 import com.psu.kurs.demo.services.OtherService;
 import com.psu.kurs.demo.services.UserService;
@@ -24,6 +24,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -46,6 +47,9 @@ public class AccountController {
     @Autowired
     OtherService otherService;
 
+    @Autowired
+    ProductsRepository productsRepository;
+
     //TODO исправить название
     @GetMapping("/accountAdmin")
     @RolesAllowed(value = {"ROLE_ADMIN", "ROLE_USER"})
@@ -53,7 +57,11 @@ public class AccountController {
 
         model = menuService.getMenuItems(model); //get menu items
 
-        model.addAttribute("listFinalOrder", finalOrderRepository.findAll());
+        List<FinalOrder> newListFinalOrder=finalOrderRepository.findAll();
+
+        Collections.sort(newListFinalOrder, new FinalOrderComparator());
+
+        model.addAttribute("listFinalOrder", newListFinalOrder);
 
         return "/account/accountAdmin";
     }
@@ -72,6 +80,8 @@ public class AccountController {
                 newListFinalOrder.add(fin);
             }
         }
+
+        Collections.sort(newListFinalOrder, new FinalOrderComparator());
 
         model.addAttribute("listFinalOrder", newListFinalOrder);
 
@@ -92,6 +102,8 @@ public class AccountController {
                 newListFinalOrder.add(fin);
             }
         }
+
+        Collections.sort(newListFinalOrder, new FinalOrderComparator());
 
         model.addAttribute("listFinalOrder", newListFinalOrder);
 
@@ -145,6 +157,8 @@ public class AccountController {
             }
         }
 
+        Collections.sort(finalOrderListNew, new FinalOrderComparator());
+
         model.addAttribute("listFinalOrder", finalOrderListNew);
 
         return "/account/confirmOrders";
@@ -188,6 +202,8 @@ public class AccountController {
 
         List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
 
+        Collections.sort(finalOrderList, new FinalOrderComparator());
+
         model.addAttribute("listFinalOrder", finalOrderList);
 
         return "/account/ordersWithStatus";
@@ -198,13 +214,36 @@ public class AccountController {
     public String returnOrder(Model model, Principal principal, HttpServletRequest request,
                               @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
 
+        User user = userService.findByUsername(principal.getName());
         model = menuService.getMenuItems(model); //get menu items
 
         System.out.println("idd: " + id);
 
+        Double pricePerDay = null;
+
         FinalOrder finalOrder0 = finalOrderRepository.getOne(Long.valueOf(id));
         finalOrder0.setCompleted(true);
+        Double finalPrice = finalOrder0.getFinalPrice();
+        Double totalPrice = finalOrder0.getTotalPrice();
+
         finalOrderRepository.saveAndFlush(finalOrder0);
+
+        System.out.println("balance before: " + user.getBalance());
+        System.out.println("final prc: " + finalPrice);
+        System.out.println("total prc: " + totalPrice);
+        user.setBalance(user.getBalance() + totalPrice - finalPrice);
+        System.out.println("balance after: " + user.getBalance());
+
+        userRepository.save(user);
+
+        List<Products> productsList0=new ArrayList<>();
+       for(Requests requests: finalOrder0.getRequestsList()){
+           productsList0.add(requests.getProducts());
+       }
+
+
+        List<Products> productsList = new ReduceGameService().increaseNumbOfGame(productsList0, productsRepository);
+        productsRepository.saveAll(productsList);
 
         List<FinalOrder> finalOrderList = finalOrderRepository.findAll();
 
@@ -289,7 +328,7 @@ public class AccountController {
         System.out.println("balance after abs: " + balance);
 
         User user = userService.findByUsername(principal.getName());
-        user.setBalance(user.getBalance()+balance);
+        user.setBalance(user.getBalance() + balance);
         user.getPassword();
         userRepository.save(user);
 

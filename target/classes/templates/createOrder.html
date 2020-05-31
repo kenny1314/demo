@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Index</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="site">
+        <div class="maincl">
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+                    </div>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                <h3>Оформление заказа</h3>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div> <!-- /row -->
+                        <hr>
+
+                        <div class="row">
+
+                            <form style="margin-left: 210px" action="/completeСheckout" method="POST">
+                                <div class="form-group row" style="margin-bottom: 16px; width: 450px">
+                                    <label id="labform1" class="col-sm-4 col-form-label">Город</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <input type="text" class="form-control" placeholder="Город" name="city"
+                                               th:value="${address.city}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="margin-bottom: 16px;">
+                                    <label id="labform1" class="col-sm-4 col-form-label">Улица</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <input type="text" class="form-control" placeholder="Улица" name="street"
+                                               th:value="${address.street}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="margin-bottom: 16px;">
+                                    <label id="labform1" class="col-sm-4 col-form-label">Номер дома</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <input type="text" class="form-control" placeholder="Номер дома"
+                                               name="flat_number" th:value="${address.flatNumber}">
+                                    </div>
+                                </div>
+
+
+                                <hr style="margin-left: 140px;">
+
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-3" style="text-align: center">
+                                        <h5 th:name="finalPrice" th:text="'Цена: '+${finalPrice}"
+                                            style="padding-top: 5px;"></h5>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <h5 th:name="basketSum" th:text="'Будет списано:'"
+                                                style="padding-top: 5px;"></h5>
+                                        </div>
+
+                                        <div class="row">
+                                            <h5 th:text="${basketSum}"></h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+
+                                    <div class="col-md-5" style="text-align: center">
+                                        <button class="btn btn-success" style="height: 35px;">Оформить заказ</button>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                                <input th:name="basketSum" th:value="${basketSum}" hidden>
+
+<!--                        </div>-->
+                        </form>
+                    </div>
+
+                </div> <!-- /Col-md-9 -->
+            </div> <!-- /Row -->
+        </div>
+    </div> <!-- /MainCl -->
+
+    <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+</div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+
+<script>
+
+    //plugin bootstrap minus and plus
+    //http://jsfiddle.net/laelitenetwork/puJ6G/
+    $('.btn-number').click(function (e) {
+        e.preventDefault();
+
+        fieldName = $(this).attr('id');
+        type = $(this).attr('data-type');
+        var input = $("input[id='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
+
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('min')) {
+                    $(this).attr('disabled', true);
+                }
+
+            } else if (type == 'plus') {
+
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('max')) {
+                    $(this).attr('disabled', true);
+                }
+
+            }
+        } else {
+            input.val(0);
+        }
+    });
+    $('.input-number').focusin(function () {
+        $(this).data('oldValue', $(this).val());
+    });
+    $('.input-number').change(function () {
+
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
+        valueCurrent = parseInt($(this).val());
+
+        // var name = $(this).attr('name');
+        // alert('name '+name);
+        fieldName = $(this).attr('id');
+        // alert('field_name '+fieldName);
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][id='" + fieldName + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the minimum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][id='" + fieldName + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the maximum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+
+
+    });
+    $(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+
+</html>

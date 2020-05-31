@@ -1,0 +1,109 @@
+<!-- red -->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Info user</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <h1>Balance</h1>
+    <div class="site">
+        <div class="maincl">
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menuCUser"></div>
+                    </div>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                <h3>Личный кабинет</h3>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div> <!-- /row -->
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-2 register-left"></div>
+
+                            <div class="col-md-4 ">
+                                <div class="row">
+                                    <h3 th:text="'Ваш баланс: '+${usr.balance}">Ваша баланс:</h3>
+
+                                </div>
+                                <form action="#" th:action="@{/updateUserAddress}" method="post">
+
+                                    <div class="form-group col-md-12" style=" text-align: center">
+                                        <h5>Ваш адрес</h5>
+                                    </div>
+                                    <div class="form-row ">
+                                        <div class="form-group col-md-12">
+                                            <input name="city" type="text" class="form-control" th:field="*{city}"
+                                                   th:value="${address.city}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row ">
+                                        <div class="form-group col-md-12">
+                                            <input name="street" type="text" class="form-control" th:field="*{street}"
+                                                   th:value="${address.street}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row ">
+                                        <div class="form-group col-md-12">
+                                            <input name="flat_number" type="text" class="form-control"
+                                                   th:field="*{flatNumber}"
+                                                   th:value="${address.flatNumber}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row ">
+                                        <div class="form-group col-md-12">
+                                            <input type="submit" value="Submit" class="btn btn-outline-success"
+                                            />
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div> <!-- !col-md-4 form -->
+                            <!--                            <a href="/updateUserAddress"></a>-->
+
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <h5>Ник</h5>
+                                <h6 th:text="${usr.username}">Ник</h6>
+                                <h5>Сумма заказов</h5>
+                                <!--                                <h6 th:if="${usr.order_amount!=null}" th:text="${usr.order_amount}"></h6>-->
+                                <h6 th:text="${usr.order_amount==null?0:usr.order_amount}"></h6>
+                            </div>
+                        </div>
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+
+</body>
+</html>

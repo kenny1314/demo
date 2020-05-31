@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+
+
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+
+    <title>Title</title>
+</head>
+<body>
+<h1>hhh</h1>
+
+<option th:each="info : ${listGame}">
+    <p th:text="${ info.title }"></p> <!-- THIS loops 4 times, instead of 5 -->
+</option>
+
+
+<!--<option th:each="i : ${#numbers.sequence( 1, 10)}">-->
+<!--    <p th:text="${ i }"></p> &lt;!&ndash; THIS loops 4 times, instead of 5 &ndash;&gt;-->
+<!--</option>-->
+
+
+
+
+<!--<div th:each="i : ${#numbers.sequence( 1, 10)}">-->
+<!--<div class="card" style="width: 18rem;">-->
+<!--    <div class="card-body">-->
+<!--        <h5 class="card-title">Card title</h5>-->
+<!--        <p class="card-text">Some quick</p>-->
+<!--        <a href="#" class="btn btn-primary">Go somewhere</a>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--</div>-->
+
+
+
+<!--<ul class="list-group" th:each="i : ${#numbers.sequence( 1, 10)}">-->
+<!--    <li class="list-group-item"  th:text="${ i }">Cras justo odio</li>-->
+<!--</ul>-->
+
+</body>
+</html>

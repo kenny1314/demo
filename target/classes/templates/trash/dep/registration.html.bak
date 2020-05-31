@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Get platforms</title>
+</head>
+<body>
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <h3>Добро пожаловать</h3>
+            <h3>Добро пожаловать</h3>
+            <h3>Добро пожаловать</h3>
+            <p>Вы уже зарегестрированы?</p>
+            <form action="/login">
+                <input class="btn btn-outline-info" type="submit" name="" value="Войти"/><br/>
+            </form>
+        </div>
+
+        <div class="col-md-9 ">
+            <h3 class="register-heading" th:text="${error}">Регистрация пользователя</h3>
+            <div class="register-form">
+                <form action="/registration" method="post">
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" placeholder="Логин *" value=""
+                                   minlength="3" maxlength="20" name="username"/>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" placeholder="Пароль *" minlength="4"
+                                   maxlength="20" value="" id="password" required name="password"/>
+                        </div>
+<!--                        <div class="form-group col-md-6">-->
+<!--                            <input type="password" class="form-control" placeholder="Подтвердить Пароль *"-->
+<!--                                   minlength="4" maxlength="20" value="" id="confirm_password" required/>-->
+<!--                        </div>-->
+                        <input type="submit" class="btn btn-outline-success" value="Подтвердить"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+
+</script>
+</body>
+</html>

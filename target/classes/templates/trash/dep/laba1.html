@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Index</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <!--    <h1>basket</h1>-->
+    <div class="site">
+        <div class="maincl">
+
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+                    </div>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+
+                        <div class="container">
+                            <div class="jumbotron">
+                                <div th:switch="${state}">
+                                    <div th:case="1">
+                                        <form th:action="@{/laba}" method="post">
+                                            <div class="form-group col-md-6">
+                                                <label for="sq">База данных</label>
+                                                <select id="sq" name="datname" class="form-control">
+                                                    <option th:each=" db: ${datnames}" th:value="${db}" th:text="${db}">db</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" th:value="Выбрать" type="submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div th:case="2">
+                                        <form th:action="@{/laba}" method="post">
+                                            <div class="form-group col-md-6">
+                                                <label for="sel">Таблица</label>
+                                                <select id="sel" name="table" class="form-control">
+                                                    <option th:each=" tbl: ${tbls}" th:value="${tbl}" th:text="${tbl}">tablename</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" th:value="Выбрать" type="submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                                <hr>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            column_name
+                                        </th>
+                                        <th scope="row">
+                                            data_type
+                                        </th>
+                                        <th scope="row">
+                                            is_nullable
+                                        </th>
+
+                                    </tr>
+                                    <tr th:each="col: ${cols}">
+                                        <td th:text="${col.column_name}"> column_name</td>
+                                        <td th:text="${col.data_type}"> data_type</td>
+                                        <td th:text="${col.is_nullable}"> is_nullable</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+
+<script>
+
+    //plugin bootstrap minus and plus
+    //http://jsfiddle.net/laelitenetwork/puJ6G/
+    $('.btn-number').click(function (e) {
+        e.preventDefault();
+
+        fieldName = $(this).attr('id');
+        type = $(this).attr('data-type');
+        var input = $("input[id='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
+
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('min')) {
+                    $(this).attr('disabled', true);
+                }
+
+            } else if (type == 'plus') {
+
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('max')) {
+                    $(this).attr('disabled', true);
+                }
+
+            }
+        } else {
+            input.val(0);
+        }
+    });
+    $('.input-number').focusin(function () {
+        $(this).data('oldValue', $(this).val());
+    });
+    $('.input-number').change(function () {
+
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
+        valueCurrent = parseInt($(this).val());
+
+        // var name = $(this).attr('name');
+        // alert('name '+name);
+        fieldName = $(this).attr('id');
+        // alert('field_name '+fieldName);
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][id='" + fieldName + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the minimum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][id='" + fieldName + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the maximum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+
+
+    });
+    $(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+
+</html>

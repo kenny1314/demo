@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=1024, initial-scale=1">
+</head>
+<body>
+
+
+<div class="container-fluet" style="
+    margin-left: 20px;
+    margin-right: 20px;" th:fragment="header">
+    <div class=" row ">
+
+        <div class="col-xs-4"><a href="/"> <img id="logo" src="../img/logo2.png"></a></div>
+        <div class="col-xs-5">
+            <form class="form-inline my-2 my-lg-0 searchcl " action="/productq" method="get">
+
+                <input list="results" class="form-control mr-sm-2 inputclsearch" id="srch1" type="search"
+                       name="productName" oninput="search(this)"
+                       placeholder="Поиск" aria-label="Search">
+                <datalist id="results"></datalist>
+                <button href="#!" class="btn btn-secondary my-2 my-sm-0 " type="submit">Search</button>
+            </form>
+        </div>
+        <script>
+            async function search(input) {
+
+                fetch("http://localhost:8080/searchq2/?value=" + input.value, {
+                    credentials: 'same-origin',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => response.json())
+                    .then(products => {
+                        //title
+                        // alert("find");
+                        // alert(products.length);
+                        document.getElementById("results").innerHTML = '';
+                        for (var i of products) {
+                            // alert("name: "+i.title);
+                            // alert("name: "+i.platforms.imagesT.name);
+                            var optionElement = document.createElement("option");
+                            optionElement.value = i.title;
+                            // alert("m:"+i);
+                            document.getElementById("results").appendChild(optionElement);
+                        }
+                    }).catch(err => {
+                    // alert("err");
+                    // Do something for an error here
+                    console.log("Error Reading data " + err);
+                });
+
+            }
+        </script>
+
+
+        <!--        <form class="form-inline ml-auto" action="/productq" method="get">-->
+        <!--            <div class="md-form my-0">-->
+        <!--                <input list="results" class="form-control" type="search" name="productName" oninput="search(this)"-->
+        <!--                       placeholder="Поиск" aria-label="Search">-->
+        <!--                <datalist id="results"></datalist>-->
+        <!--            </div>-->
+        <!--            <button href="#!" class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit">Поиск</button>-->
+        <!--        </form>-->
+        <!--        <div class="col-md-2" id="contid">-->
+        <!--            тел. 375298265750<br> тел. 375296666666-->
+        <!--        </div>-->
+        <!--        <div class="col-md-2" id="contid2">-->
+        <!--            <div class="row">-->
+        <!--                <a class="nav-link " href="/login" sec:authorize="isAnonymous()" style="padding-bottom: 3px;padding-top: 11px;">Вход</a>-->
+        <!--            </div>-->
+        <!--            <div class="row">-->
+        <!--                <a class="nav-link " href="/registration" sec:authorize="isAnonymous()" style="padding-top: 3px;">Регистрация</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="col-md-1">-->
+        <!--        </div>-->
+
+        <div class="col-xs-3">
+            <div class="row">
+                <div class="col-xs-6" sec:authorize="isAnonymous()">
+                    <!--                    <div class="row">-->
+                    <!--                        тел. 375298265750<br> тел. 375296666666-->
+                    <!--                    </div>-->
+                    <!--                    <div class="row">-->
+                    <!--                        <a class="nav-link " href="/login"-->
+                    <!--                           style="padding-bottom: 3px;padding-top: 11px;">Вход</a>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="row">-->
+                    <!--                        <a class="nav-link " href="/registration"-->
+                    <!--                           style="padding-top: 3px;">Регистрация</a>-->
+                    <!--                    </div>-->
+                </div>
+                <div class="col-xs-6" sec:authorize="isAnonymous()" style="padding-left: 37px">
+                    <div class="row" style="text-align: center; padding-left: 22px;">
+                        <a class="nav-link " href="/login"
+                           style="padding-bottom: 3px;padding-top: 11px;">Вход</a>
+                    </div>
+                    <div class="row">
+                        <a class="nav-link " href="/registration"
+                           style="padding-top: 3px;">Регистрация</a>
+                    </div>
+                </div>
+
+                <div class="col-xs-8" sec:authorize="isAuthenticated()" style="padding-left: 100px;padding-top: 16px;">
+                    <div class="row">
+                        <!--                        <a href="/"> [[${#httpServletRequest.remoteUser}]]</a>-->
+                        <h6 href="/" style="margin-bottom: 4px;"> [[${#httpServletRequest.remoteUser}]]</h6>
+                    </div>
+                    <div class="row" style="padding-top: 3px;">
+                        <a href="/accountUser">Личный кабинет</a>
+                    </div>
+                </div>
+
+                <div class="col-xs-4" sec:authorize="isAuthenticated()">
+                    <div class="row">
+                        <a class="nav-link " href="/logout"
+                           style="padding-top: 27px;padding-left: 27px;">Выход</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

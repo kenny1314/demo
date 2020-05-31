@@ -196,13 +196,13 @@ public class CreateOrderController {
             }
             model.addAttribute("finalPrice", basket.getFinalPrice());
             model.addAttribute("basketSum", basketSum);
-            System.out.println("basket sum create order0: "+basketSum);
+            System.out.println("basket sum create order0: " + basketSum);
 
             logger.info("finalPrice: " + basket.getFinalPrice());
         } else {
             model.addAttribute("finalPrice", "notPrice");
             model.addAttribute("basketSum", "nullmm");
-            System.out.println("basket sum create order0: "+basketSum);
+            System.out.println("basket sum create order0: " + basketSum);
         }
 
         return "createOrder";
@@ -230,6 +230,7 @@ public class CreateOrderController {
         return "orderComplete";
     }
 
+    //самовывоз
     //выбрать магазин и добавить нужный адрес в заказ
     //registration order
     //вывод значения с радиокнопки
@@ -282,11 +283,20 @@ public class CreateOrderController {
         finalOrder.setId(inxIns);
         finalOrder.setDate(new Date().toString());
         finalOrder.setFinalPrice(basket.getFinalPrice());
+
         finalOrder.setUser(userService.findByUsername(principal.getName()));
 
         //установить флаг доставки, потому что самовывоз
         finalOrder.setIdDelivered(true);
         //установить флаг доставки, потому что самовывоз
+
+        Double totalPrice = 0.0;
+
+        for (Requests requests : basket.getRequestsList()) {
+            totalPrice += requests.getProducts().getFullPrice();
+        }
+        finalOrder.setTotalPrice(totalPrice);
+        System.out.println("TOTAL PRICE САМОВЫВОЗ: " + totalPrice);
 
         finalOrderRepository.save(finalOrder);
         finalOrderRepository.flush();
@@ -297,6 +307,11 @@ public class CreateOrderController {
             rq.setBasket(null);
         }
         requestsRepository.saveAll(requestsList);
+
+        //уменьшитль количество игр в наличии
+        List<Products> productsList = new ReduceGameService().changeNumbOfGame(basket, productsRepository,false);
+        productsRepository.saveAll(productsList);
+
 
         basket.setRequestsList(null); //бесполезно
         basketRepository.deleteById(basket.getId());
@@ -374,6 +389,7 @@ public class CreateOrderController {
     }
 
 
+    //курьер
     //оформление заказа если курьер
     //@Transactional
     @PostMapping("/completeСheckout")
@@ -396,13 +412,24 @@ public class CreateOrderController {
             inxIns = finalOrderList.get(finalOrderList.size() - 1).getId() + 1;
         }
 
-
         FinalOrder finalOrder = new FinalOrder();
         finalOrder.setId(inxIns);
         finalOrder.setDate(new Date().toString());
         finalOrder.setFinalPrice(basket.getFinalPrice());
         finalOrder.setUser(userService.findByUsername(principal.getName()));
+
+        Double totalPrice = 0.0;
+
+        for (Requests requests : basket.getRequestsList()) {
+            totalPrice += requests.getProducts().getFullPrice();
+        }
+        finalOrder.setTotalPrice(totalPrice);
+        System.out.println("TOTAL PRICE КУРЬЕР: " + totalPrice);
+
         finalOrderRepository.save(finalOrder);
+
+        List<Products> productsList = new ReduceGameService().changeNumbOfGame(basket, productsRepository,false);
+        productsRepository.saveAll(productsList);
 
         for (Requests rq : requestsList) {
             rq.setFinalOrder(finalOrder);

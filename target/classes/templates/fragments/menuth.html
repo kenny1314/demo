@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="list-group" id="listcat" th:fragment="menu2">
+    <a href="#" class="list-group-item list-group-item-action" id="firstellistpr">Dendy</a>
+    <a href="#" class="list-group-item list-group-item-action">Sega Master System</a>
+    <a href="#" class="list-group-item list-group-item-action">SNES</a>
+    <a href="#" class="list-group-item list-group-item-action">Igorok Boy</a>
+    <a href="#" class="list-group-item list-group-item-action">Atari Lynx</a>
+    <!-- <a href="#" class="list-group-item list-group-item-action">Sega Game Gear</a>
+    <a href="#" class="list-group-item list-group-item-action">Atari Jaguar</a>
+    <a href="#" class="list-group-item list-group-item-action">Game Boy</a>
+    <a href="#" class="list-group-item list-group-item-action">Atari Lynx</a>
+    <a href="#" class="list-group-item list-group-item-action">Sega Game Gear</a>
+    <a href="#" class="list-group-item list-group-item-action">Atari Jaguar</a>
+    <a href="#" class="list-group-item list-group-item-action">Game Boy</a> -->
+    <a href="#" class="list-group-item list-group-item-action">Atari Lynx</a>
+    <a href="#" class="list-group-item list-group-item-action">Sega Game Gear</a>
+    <a href="#" class="list-group-item list-group-item-action">Atari Jaguar</a>
+    <a href="#" class="list-group-item list-group-item-action" id="lastellistpr">Sega Saturn</a>
+</div>
+
+
+<nav class="navbar navbar-light white mb-4" id="navwh" th:fragment="menu">
+    <a class="navbar-brand" style="padding-left: 18px;" href="#">Console</a>
+    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"
+            aria-label="Toggle navigation" style="
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    width: 40px;
+    height: 35px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 2px;
+    padding-right: 0px;
+    margin-bottom: 2px;
+">
+        <img src="../img/hum1.png" style="width: 30px;
+    height: 30px;"></button>
+    <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
+        <ul class="navbar-nav mr-auto" th:each="platfom: ${platforms}">
+            <li><a th:href="@{'/platform/' + ${platfom.id}}" class="list-group-item list-group-item-action"
+                   th:text="${platfom.name}">Sega Master
+                System</a></li>
+        </ul>
+    </div>
+</nav>
+
+<nav class="navbar navbar-light white mb-4" id="navwh" th:fragment="menuCUser">
+    <a class="navbar-brand" style="padding-left: 18px;" href="#">Действия</a>
+    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"
+            aria-label="Toggle navigation" style="
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    width: 40px;
+    height: 35px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 2px;
+    padding-right: 0px;
+    margin-bottom: 2px;
+">
+        <img src="../img/hum1.png" style="width: 30px;
+    height: 30px;"></button>
+    <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
+        <ul class="navbar-nav mr-auto">
+
+            <th:block th:if="${#httpServletRequest.isUserInRole('ROLE_COURIER')}">
+                <li><a href="/confirmOrders" class="list-group-item list-group-item-action">Подтвердить заказы</a></li>
+                <li><a href="/ordersWithStatus" class="list-group-item list-group-item-action">Статусы заказов</a></li>
+            </th:block>
+            <th:block th:if="${!#httpServletRequest.isUserInRole('ROLE_COURIER')}">
+                <li><a href="/infoUser" class="list-group-item list-group-item-action">Информация</a></li>
+                <li><a href="/accountUser" class="list-group-item list-group-item-action">Заказы</a></li>
+                <li><a href="/accountUserCompleted" class="list-group-item list-group-item-action">Завершённые
+                    заказы</a></li>
+<!--                <li><a href="/accountBalance" class="list-group-item list-group-item-action">Баланс</a></li>-->
+            </th:block>
+
+            <th:block th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+                <li>
+                    <a class="list-group-item list-group-item-action" href="/accountAdmin">Все заказы</a>
+                    <a class="list-group-item list-group-item-action" href="/accountDelGenre">Удалить жанры</a>
+                    <a class="list-group-item list-group-item-action" href="/accountDelGame">Удалить игры</a>
+                    <a class="list-group-item list-group-item-action" href="/accountDelPlatform">Удалить платформу</a>
+                </li>
+            </th:block>
+            <!--            <li><a class="list-group-item list-group-item-action">Настройки</a></li>-->
+        </ul>
+    </div>
+</nav>
+
+
+<!--Navbar-->
+<nav class="navbar navbar-light light-blue lighten-4" th:fragment="menu3">
+
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="#">Navbar</a>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+        </ul>
+        <!-- Links -->
+
+    </div>
+    <!-- Collapsible content -->
+
+</nav>
+<!--/.Navbar-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+
+

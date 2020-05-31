@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" th:fragment="navbar">
+    <!--    <a href="/platform"><img src="../../../../resources/static/img/3ch.png" id="imgl"></a>-->
+    <!--    <a class="navbar-brand " href="# " id="gameofconsole">РЕТРО ИГОРЫ</a>-->
+    <a class="navbar-brand " href="/" style="margin-left: 65px;margin-right: 145px;">Главная</a>
+    <!--    <a class="navbar-brand " href="/" style="margin-left: 65px;margin-right: 145px;">'[[${#httpServletRequest.remoteUser}]]'</a>-->
+
+    <!--    <button class="navbar-toggler " type="button " data-toggle="collapse " data-target="#navbarColor01 "-->
+    <!--            aria-controls="navbarColor01 " aria-expanded="false " aria-label="Toggle navigation ">-->
+    <!--        <span class="navbar-toggler-icon "></span>-->
+    <!--    </button>-->
+
+
+    <div class="collapse navbar-collapse " id="navbarColor01 ">
+        <ul class="navbar-nav">
+            <!--            <li class="nav-item ">-->
+            <!--                <a class="nav-link " href="/genres">Жанры</a>-->
+            <!--            </li>-->
+
+            <li class="menu-item nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Жанры
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/genres">Все жанры</a>
+                    <hr style="margin-top: 5px;margin-bottom: 5px;">
+                    <div th:each="i : ${genresList}">
+                        <a class="dropdown-item" th:href="${'/getGameByGenre/'+i.id}" th:utext="${i.name}">P</a>
+                    </div>
+
+                </div>
+            </li>
+
+            <li class="nav-item ">
+                <a class="nav-link " href="/listplatforms ">Приставки</a>
+            </li>
+            <li class="nav-item ">
+                <!--                <a class="nav-link " href="/delivery">Оплата и доставка</a>-->
+                <a class="nav-link " href="/delivery">Опл. и дост.</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link " href="/about">О нас</a>
+            </li>
+
+            <li class="nav-item ">
+                <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+                    <a class="nav-link " href="/addplatform">Add platf.</a>
+                </div>
+                <!--                <a class="nav-link " href="/addplatform">Добавить платформу</a>-->
+            </li>
+
+            <!--            <li>-->
+            <!--                <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">-->
+            <!--                    <a class="nav-link " href="/addplatform" >Add platf</a>-->
+            <!--                </div>-->
+            <!--            </li>-->
+
+            <li class="nav-item ">
+                <!--                <a class="nav-link " href="/addgame">Добавить игру</a>-->
+                <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+                    <a class="nav-link " href="/addgame">Add game</a>
+                </div>
+            </li>
+
+            <li class="nav-item ">
+                <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+                    <a class="nav-link " href="/addGenres">Add genre</a>
+                </div>
+                <!--                <a class="nav-link " href="/addGenres">Добавить жанр</a>-->
+            </li>
+
+            <!--            <li>-->
+            <!--                <div sec:authorize="isAuthenticated()">-->
+            <!--                    Text visible only to authenticated users.-->
+            <!--                </div>-->
+            <!--            </li>-->
+
+            <!--            <li class="nav-item " sec:authorize="isAnonymous()">-->
+            <!--                <a class="nav-link " href="/login">Вход</a>-->
+            <!--            </li>-->
+            <!--            <li class="nav-item " sec:authorize="isAuthenticated()">-->
+            <!--                <a class="nav-link " href="/logout">Выход</a>-->
+            <!--            </li>-->
+            <!--            <li class="nav-item " sec:authorize="isAnonymous()">-->
+            <!--                <a class="nav-link " href="/registration">Регистрация</a>-->
+            <!--            </li>-->
+            <li class="nav-item " style="padding-left: 515px;" sec:authorize="isAnonymous()">
+                <a class="nav-link " href="/basket">Корзина</a>
+            </li>
+
+            <li class="nav-item " th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" style="padding-left: 255px;">
+                <a class="nav-link " href="/basket">Корзина (<b th:text="${basketCount!=null}? ${basketCount} : -0">2222</b>) </a>
+            </li>
+
+            <li class="nav-item " th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}" style="padding-left: 495px;">
+                <a class="nav-link " href="/basket">Корзина (<b th:text="${basketCount!=null}? ${basketCount} : -0">2222</b>) </a>
+            </li>
+
+            <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+
+                <!--            <li>-->
+                <!--                <a class="nav-link ">[[${#httpServletRequest.remoteUser}]]'</a>-->
+                <!--            </li>-->
+                <li>
+
+                </li>
+
+                <!--            <li class="nav-item ">-->
+                <!--                <ul>-->
+                <!--                    <li><a class="nav-link " href="/addplatform">Добавить</a></li>-->
+                <!--                    <li>2</li>-->
+                <!--                </ul>-->
+                <!--            </li>-->
+
+
+        </ul>
+    </div>
+
+
+    <!--        <ul>-->
+    <!--            <li><a href="/addplatform">Добавить</a></li>-->
+    <!--            <li><a href="/addplatform">Добавить</a></li>-->
+    <!--        </ul>-->
+
+</nav>
+
+
+</body>
+</html>

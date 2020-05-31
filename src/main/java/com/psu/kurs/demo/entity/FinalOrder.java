@@ -20,6 +20,10 @@ public class FinalOrder {
     private User user;
 
     private double finalPrice;
+
+    @Column(name = "total_price", columnDefinition = "double precision null default 0.0")
+    private double totalPrice;
+
     private String date;
 
     @Column(name = "is_delivered", columnDefinition = "boolean default false")
@@ -68,6 +72,14 @@ public class FinalOrder {
 
     public void setFinalPrice(double finalPrice) {
         this.finalPrice = finalPrice;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public String getDate() {
