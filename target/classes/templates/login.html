@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Вход</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="site">
+        <div class="maincl">
+
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+
+
+                    </div>
+
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+                        <!-- Carousel -->
+
+                        <div class="container register">
+
+
+
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-3" style="  padding-top: 15px; padding-left: 37px;">
+                                    <h3>Вход</h3>
+                                </div>
+                                <div class="col-md-5"></div>
+                            </div>
+                            <hr>
+
+
+
+                            <div class="row" style="margin-top: 30px;">
+                                <div class="col-md-3 register-left"></div>
+
+                                <div class="col-md-4 ">
+
+                                    <form th:action="@{/login}" method="post">
+                                        <fieldset>
+<!--                                            <h1>Пожалуйста авторизируйтесь</h1>-->
+
+                                            <div class="form-group col-md-12" style="text-align: center">
+                                                <h5>Введите данные</h5>
+                                                <div th:if="${param.error}">
+                                                    <div class="alert alert-danger">
+                                                        Направильный логин или/и пароль
+                                                    </div>
+                                                </div>
+                                                <div th:if="${param.logout}">
+                                                    <div class="alert alert-info">
+                                                        You have been logged out.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="text" name="username" id="username" class="form-control input-lg"
+                                                       placeholder="Логин" required="true" autofocus="true"/>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="password" name="password" id="password" class="form-control input-lg"
+                                                       placeholder="Пароль" required="true"/>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <button type="submit" class="btn btn-primary ">Войти</button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div> <!-- !col-md-4 form -->
+
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3" style="text-align: center; padding-top: 10px;">
+                                    <h5>Нет аккаунта?</h5>
+                                    <form action="/registration">
+                                        <input class="btn btn-outline-info" type="submit" name="" value="Регистрация"/><br/>
+                                    </form>
+                                </div>
+                                <div class="col-md-1"></div>
+
+                            </div>
+
+                        </div>
+
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
+</div>
+
+<script>
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Пароли не совпадают");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+
+</script>
+
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+</body>
+
+</html>

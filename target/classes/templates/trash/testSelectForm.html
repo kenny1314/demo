@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Test select form</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <h1>Test select form</h1>
+    <div class="maincl">
+
+        <!-- Header -->
+        <div th:replace="fragments/headerth :: header"></div>
+
+        <!-- Navbar -->
+        <div th:replace="fragments/navbarth :: navbar"></div>
+
+        <div class="container-fluet" style="width: 1211px;">
+            <div class="row">
+                <!-- Menu -->
+                <div class="col-md-3" style="padding-right: 0px;">
+                    <div th:replace="fragments/menuth :: menu"></div>
+                </div>
+
+                <div class="col-md-9" style="padding-left: 0px;">
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                            <h3>Жанры</h3>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div> <!-- /row -->
+                    <hr>
+
+
+                    <form action="/result" method="post" th:object="${selectedOption}">
+                        <select class="form-control form-control-sm" id="optionsList" name="optionsLIstId">
+                            <option th:each="option: ${liststr}"
+                                    th:value="${option}"
+                                    th:text="${option}"
+                            ></option>
+                        </select>
+                        <button type="submit">submit</button>
+                    </form>
+
+                    <form action="/result" method="post" th:object="${selectedOption}">
+                        <select class="form-control form-control-sm" id="optionsList" name="optionsLIstId">
+                            <option th:each="option: ${listlang}"
+                                    th:value="${option.name}"
+                                    th:text="${option.name}"
+                            ></option>
+                        </select>
+                        <button type="submit">submit</button>
+                    </form>
+
+
+                </div> <!-- /Col-md-9 -->
+            </div> <!-- /Row -->
+        </div>
+    </div> <!-- /MainCl -->
+
+    <div th:replace="fragments/footerth :: footer"></div>
+
+</div>
+
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+</body>
+
+</html>

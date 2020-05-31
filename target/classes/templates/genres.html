@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Жанры</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="site">
+        <div class="maincl">
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+                    </div>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                                <h3>Жанры</h3>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div> <!-- /row -->
+                        <hr>
+
+                        <div th:if="${error!=null&&error}">
+                            <div class="form-group col-md-12" style=" text-align: center">
+
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Нельзя удалить жанр потому что он используется
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${ok!=null&&ok}">
+                            <div class="form-group col-md-12" style=" text-align: center">
+
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Удалён жанр
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Container with card -->
+                        <div class="container" style="padding-left: 0px;">
+                            <th:block
+                                    th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(genresList, 4)}">
+                                <div class="row " th:each="partition: ${partitions}">
+                                    <div class="col-md-3" th:each="info : ${partition}">
+
+                                        <div th:if="${!#httpServletRequest.isUserInRole('ROLE_ADMIN')}" class="card"
+                                             style="width: 14rem;margin-bottom: 20px;height: 245px;" id="card1id">
+                                            <a th:href="${'/getGameByGenre/'+info.id}">
+                                                <img th:src="@{'/getimgg/'+${info.id}}" class="card-img-top"
+                                                     style="height: 124px;">
+                                            </a>
+                                            <div class="card-body">
+
+                                                <h5 class="card-title "
+                                                    style="text-align: center;margin-bottom: 0px;"
+                                                    th:text="${info.name}">
+                                                    NoAction</h5>
+                                                <hr style="margin-top: 10px;margin-bottom: 0px;margin-bottom: 10px;">
+                                                <div class="container">
+                                                    <div class="row">
+
+                                                        <div class="col-md-7">
+                                                            <a th:href="${'/getGameByGenre/'+info.id}"
+                                                               class="btn btn-primary"
+                                                               style="margin-left: 6px;width: 146px;">Показать</a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- admin -->
+                                        <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" class="card"
+                                             style="width: 14rem;margin-bottom: 20px;height: 275px;" id="card1id">
+                                            <a th:href="${'/getGameByGenre/'+info.id}">
+                                                <img th:src="@{'/getimgg/'+${info.id}}" class="card-img-top"
+                                                     style="height: 124px;">
+                                            </a>
+                                            <div class="card-body">
+
+                                                <h5 class="card-title "
+                                                    style="text-align: center;margin-bottom: 0px;"
+                                                    th:text="${info.name}">
+                                                    NoAction</h5>
+                                                <hr style="margin-top: 10px;margin-bottom: 0px;margin-bottom: 10px;">
+                                                <div class="container">
+                                                    <div class="row">
+
+                                                        <div class="col-md-7">
+                                                            <a th:href="${'/getGameByGenre/'+info.id}"
+                                                               class="btn btn-primary"
+                                                               style="margin-left: 6px;width: 146px;">Показать</a>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <a th:href="${'/delGenreId/'+info.id}"
+                                                               class="btn btn-danger"
+                                                               style="margin-left: 6px;width: 146px; margin-top: 5px;">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div> <!-- /Container with card -->
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+
+
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+</body>
+
+</html>

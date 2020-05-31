@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>О нас</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="site">
+    <div class="maincl">
+
+
+
+        <!-- Header -->
+        <div th:replace="fragments/headerth :: header"></div>
+
+        <!-- Navbar -->
+        <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+        <div class="container-fluet" style="width: 1211px;">
+            <div class="row">
+                <!-- Menu -->
+                <div class="col-md-3" style="padding-right: 0px;">
+                    <div th:replace="fragments/menuth :: menu"></div>
+
+
+                </div>
+
+                <div class="col-md-9" style="padding-left: 0px;">
+
+
+                    <div class="row" style="margin-top: 15px;margin-left: 0px;">
+                        <div class="col-md-7" style=" text-align: left; ">
+                            <h4>О нас</h4>
+
+                            <p>
+                                Добро пожаловать в прокат ретро игр "Ретро Игоры", на Марсе с 2029 г.
+                            </p>
+
+                            <b>Предыстория:</b>
+                            <p>
+                                Этот сайт появился исключительно из-за моих тёплых воспомнинаний о "пиксельных" играх,
+                                они "трогают" меня до глубины души.
+                            </p>
+
+                            <b>Почему аренда?</b>
+                            <p>
+                                Вы спросите, зачем же арендовать, если можно скачать или купить?
+                                Ответ очевиден и прост, чтобы вспомнить былые времена, когда нельзя было просто купить нужную тебе игру.
+                                Погрузитесь в мир ностальгии и вспомните о чём вы мечтали в то время.
+                            </p>
+
+                            <b>Адрес проката:</b>
+                            <p>
+                                Галактическая Нить Персея-Пегаса, комплекс сверхскоплений Рыб-Кита, Ланиакея,
+                                сверхскопление Девы, Местная группа галактик, галактика Млечный Путь, рукав Ориона,
+                                Солнечная система, планета Марс.
+                            </p>
+
+                            <b>Телефон: </b>
+                            <p>+375 (29) 666-66-66</p>
+                        </div>
+                        <div class="col-md-5" style="text-align:center;">
+                            <h6>А это я (◕‿◕) </h6>
+                            <img src="/img/ya.jpg" style="height: 370px;">
+
+
+                        </div> <!-- /col3 характеристики -->
+                    </div>
+
+
+                    <div class="row" style="margin-top: 20px;margin-bottom: 15px;">
+                        <div class="col-md-6" style="text-align: center">
+                            <h6>Тут я кодил</h6>
+                            <a href="https://yandex.ru/maps/?um=constructor%3A9450e20a8175334e37c9b9cb1a2785f2ccf00216a99fbd96e7450a3fe033bbfb&amp;source=constructorStatic"
+                               target="_blank"><img
+                                    src="https://api-maps.yandex.ru/services/constructor/1.0/static/?um=constructor%3A9450e20a8175334e37c9b9cb1a2785f2ccf00216a99fbd96e7450a3fe033bbfb&amp;width=440&amp;height=360&amp;lang=ru_RU"
+                                    alt="" style="border: 0;"/></a>
+                            <!--    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A9450e20a8175334e37c9b9cb1a2785f2ccf00216a99fbd96e7450a3fe033bbfb&amp;source=constructor"-->
+                            <!--    width="440" height="360" frameborder="0"></iframe>-->
+
+                        </div>
+
+                        <div class="col-md-6" style="text-align: center">
+                            <h6>Тут я ел</h6>
+                            <a href="https://yandex.ru/maps/?um=constructor%3Aa22e475de8831192417e7847b52a2d0b24083a19defb423985d36b3b6b006511&amp;source=constructorStatic"
+                               target="_blank"><img
+                                    src="https://api-maps.yandex.ru/services/constructor/1.0/static/?um=constructor%3Aa22e475de8831192417e7847b52a2d0b24083a19defb423985d36b3b6b006511&amp;width=440&amp;height=360&amp;lang=ru_RU"
+                                    alt="" style="border: 0;"/></a>
+                            <!-- <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa22e475de8831192417e7847b52a2d0b24083a19defb423985d36b3b6b006511&amp;source=constructor"-->
+                            <!-- width="440" height="360" frameborder="0"></iframe>-->
+                        </div>
+                    </div>
+
+
+                </div> <!-- /Col-md-9 -->
+            </div> <!-- /Row -->
+        </div>
+    </div> <!-- /MainCl -->
+
+<!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+</body>
+
+</html>

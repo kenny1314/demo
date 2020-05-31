@@ -1,0 +1,3 @@
+INSERT INTO cursovaya.requests (id, date, number_of_days, price, basket_id, products_id) VALUES (3, '2019.11.18  23:19:44', 3, 1, 1, 5);
+INSERT INTO cursovaya.requests (id, date, number_of_days, price, basket_id, products_id) VALUES (5, '2019.11.18  23:19:57', 4, 12, 2, 4);
+INSERT INTO cursovaya.requests (id, date, number_of_days, price, basket_id, products_id) VALUES (7, '2019.11.18  23:20:00', 4, 1, 2, 5);

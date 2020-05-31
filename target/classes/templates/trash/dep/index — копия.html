@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Index</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <h1>hello</h1>
+    <div class="site">
+        <div class="maincl">
+
+
+            <!-- Header -->
+            <div th:replace="fragments/headerth :: header"></div>
+
+            <!-- Navbar -->
+            <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+            <div class="container-fluet" style="width: 1211px;">
+                <div class="row">
+                    <!-- Menu -->
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div th:replace="fragments/menuth :: menu"></div>
+
+
+                    </div>
+
+                    <div class="col-md-9" style="padding-left: 0px;">
+                        <!-- Carousel -->
+                        <div id="carouselExampleInterval" class="carousel slide"
+                             data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" data-interval="10000">
+                                    <img src="../../../static/img/1k.png" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item" data-interval="2000">
+                                    <img src="../../../static/img/2k.jpg" class="d-block w-100" alt="...">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleInterval"
+                               role="button" data-slide="prev"> <span
+                                    class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+                                    class="sr-only">Previous</span>
+                            </a> <a class="carousel-control-next" href="#carouselExampleInterval"
+                                    role="button" data-slide="next"> <span
+                                class="carousel-control-next-icon" aria-hidden="true"></span> <span
+                                class="sr-only">Next</span>
+                        </a>
+                        </div> <!-- /Carousel -->
+
+                        <br>
+                        <!-- Container with card -->
+                        <div class="container" style="padding-left: 0px;">
+                            <th:block
+                                    th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(productsList, 3)}">
+                                <div class="row " th:each="partition: ${partitions}">
+                                    <div class="col-md-4" th:each="info : ${partition}">
+                                        <div class="card" style="width: 18rem; margin-bottom: 20px;" id="card1id">
+                                            <a th:href="@{'/game/' +${info.id}}" class="btn btn-primary"
+                                               style="padding: 0px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px;border-bottom-width: 0px;">
+                                                <img th:src="@{'/getimgp/' + ${info.id}}"
+                                                     style="height: 160px; width: 286px">
+                                            </a>
+                                            <!--                                        <img src="img/card1.jpg " class="card-img-top">-->
+                                            <div class="card-body">
+                                                <form method="post" th:action="@{'/testDB/'+${info.id}}">
+                                                    <!--                                            <h5 class="card-title " th:text="${info.id}">Battletoads</h5>-->
+                                                    <h5 class="card-title " th:text="${info.title}">Battletoads</h5>
+                                                    <p class="card-text " th:text="${info.description}"
+                                                       style="width: 247px;height: 123px; margin-bottom: 10px;">
+                                                        Игры серии выполнены в
+                                                        жанре «избей их всех». Сюжеты игр развиваются вокруг
+                                                        противостояния
+                                                        боевых жаб и Тёмной Королевы, главного отрицательного героя игр
+                                                        серии.</p>
+                                                    <hr style="margin-top: 5px;margin-bottom: 5px;">
+                                                    <div class="row">
+                                                        <!--                                                    <div class="col-md-2"></div>-->
+                                                        <!--                                                    <div class="col-md-4" style="padding-left: 0px; text-align: center;"><b th:text="${info.oneDayPrice}">100р</b></div>-->
+
+                                                        <div class="col-md-6"
+                                                             style="text-align: center;padding-left: 42px;"><b
+                                                                th:text="${info.oneDayPrice+' р/д'}">100р</b></div>
+                                                        <div class="col-md-6"></div>
+                                                    </div>
+                                                    <hr style="margin-top: 5px;margin-bottom: 5px;">
+
+                                                    <div class="container">
+                                                        <div class="row" style="padding-left: 10px;">
+                                                            <div class="col-md-6"
+                                                                 style="padding-left: 5px;padding-right: 5px;">
+                                                                <div class="input-group"><span class="input-group-btn">
+                                    <button type="button btn-number" class="btn btn-success btn-number"
+                                            disabled="disabled" data-type="minus" th:id="${'quant['+info.id+']'}">
+                                    -</button>
+                                                            </span> <input type="text" th:id="${'quant['+info.id+']'}"
+                                                                           th:name="inputplus"
+                                                                           class="form-control input-number" value="1"
+                                                                           min="1"
+                                                                           max="10" style="text-align: center;">
+                                                                    <span class="input-group-btn">
+                                    <button type="button btn-number" class="btn btn-success btn-number" data-type="plus"
+                                             th:id="${'quant['+info.id+']'}">+</button></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6"
+                                                                 style="padding-left: 8px;padding-right: 0px;">
+                                                                <button th:href="@{'/testDB/'+${info.id}}"
+                                                                        class="btn btn-primary" type="submit"
+                                                                >В корзину
+                                                                </button>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form> <!-- form -->
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div> <!-- /Container with card -->
+
+
+                    </div> <!-- /Col-md-9 -->
+                </div> <!-- /Row -->
+            </div>
+        </div> <!-- /MainCl -->
+
+        <!--    <div th:replace="fragments/footerth :: footer"></div>-->
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+
+<script>
+
+    //plugin bootstrap minus and plus
+    //http://jsfiddle.net/laelitenetwork/puJ6G/
+    $('.btn-number').click(function (e) {
+        e.preventDefault();
+
+        fieldName = $(this).attr('id');
+        type = $(this).attr('data-type');
+        var input = $("input[id='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
+
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('min')) {
+                    $(this).attr('disabled', true);
+                }
+
+            } else if (type == 'plus') {
+
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('max')) {
+                    $(this).attr('disabled', true);
+                }
+
+            }
+        } else {
+            input.val(0);
+        }
+    });
+    $('.input-number').focusin(function () {
+        $(this).data('oldValue', $(this).val());
+    });
+    $('.input-number').change(function () {
+
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
+        valueCurrent = parseInt($(this).val());
+
+        name = $(this).attr('name');
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][id='" + name + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the minimum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][id='" + name + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the maximum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+
+
+    });
+    $(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+
+</html>

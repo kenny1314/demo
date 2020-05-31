@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{'/css/mycss.css'}" rel="stylesheet"/>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <title>Оплата и доставка</title>
+</head>
+
+<body>
+<div class="bodycl">
+    <div class="site">
+    <div class="maincl">
+
+        <!-- Header -->
+        <div th:replace="fragments/headerth :: header"></div>
+
+        <!-- Navbar -->
+        <div th:replace="fragments/navbarth :: navbar"></div>
+
+
+        <div class="container-fluet" style="width: 1211px;">
+            <div class="row">
+                <!-- Menu -->
+                <div class="col-md-3" style="padding-right: 0px;">
+                    <div th:replace="fragments/menuth :: menu"></div>
+                </div>
+
+                <div class="col-md-9" style="padding-left: 0px;">
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="padding-top: 15px; text-align: center">
+                            <h3>Оплата и доставка</h3>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div> <!-- /row -->
+                    <hr>
+
+
+                    <div class="col-md-9">
+
+                        <div class="row" style="margin-top: 15px;margin-left: 0px;">
+                            <h5>Доставка курьером</h5>
+                            <p>Курьер доставляет заказ втечении 3 часов после оплаты заказа. Доставка осуществляется
+                                только в городах, в которых есть пункты самовызова.</p>
+                        </div>
+
+                        <p><b>Время работы курьера:</b></p>
+                        <table class="table" style="width: 450px;">
+                            <thead>
+                            <tr>
+                                <th>ПН-ЧТ</th>
+                                <th>ПТ-СБ</th>
+                                <th>ВС</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>18:00 - 22:00</td>
+                                <td>9:00 - 00:00</td>
+                                <td>12:00 - 22:00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <p id="price" style="margin-bottom: 5px;"><b>Стоимость:</b></p>
+                        <ul style="margin-left: 10px;">
+                            <li>Доставка до 25$ - 4$</li>
+                            <li>Доставка от 25$ - бесплатно</li>
+                        </ul>
+
+                        <!-- Pickup point -->
+                        <div class="row" style="margin-top: 15px;margin-left: 0px;">
+                            <h5>Пункты самовывоза</h5>
+                            <p>Вы можете оформить заказ через сайт и сразу же прийти и забрать его в пункте самовывоза.
+                                Так же вы можете просто прийти в любой пункт самовывоза и посмотреть весь ассортимент в
+                                живую,
+                                так как каждый магазин стилизован под ретро тематику и он вам понравится &nbsp;
+                                (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</p>
+
+
+                        </div>
+                        <p><b>Время работы пунктов самовывоза:</b></p>
+                        <table class="table" style="width: 450px;">
+                            <thead>
+                            <tr>
+                                <th>ПН-ЧТ</th>
+                                <th>ПТ-СБ</th>
+                                <th>ВС</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>15:00 - 22:00</td>
+                                <td>12:00 - 00:00</td>
+                                <td>12:00 - 22:00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <h5>Адреса пунктов выдачи заказов RETRO IGORI</h5>
+                        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Acb7dae512a092fa17dd3c68935326135398fbef0102c92ea3ef9724dbc2dd0ac&amp;source=constructor"
+                                width="880" height="420" frameborder="0"></iframe>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Новополоцк, Молодёжная улица, 69</li>
+                            <li class="list-group-item">Полоцк, Стрелецкая ул., 4</li>
+                        </ul>
+
+                        <p style="margin-top: 10px;"><b>Способы оплаты:</b></p>
+                        <img src="/img/pay.png" style="height: 70px; margin-bottom: 15px;margin-left: 20px;">
+
+                    </div> <!-- /col-md-9 -->
+
+
+                    <div class="col-md-3"></div>
+
+
+                </div> <!-- /Col-md-9 -->
+            </div> <!-- /Row -->
+        </div> <!-- /container -->
+    </div> <!-- /MainCl -->
+
+    </div>
+</div>
+<div th:replace="fragments/footerth :: footer"></div>
+<!-- Script bootstrap -->
+<div th:include="fragments/scriptth :: script"></div>
+</body>
+
+</html>
