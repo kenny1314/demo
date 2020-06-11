@@ -47,6 +47,7 @@
                             <tr class="table-active">
                                 <th scope="row">ID</th>
                                 <td style="text-align: center">Дата</td>
+<!--                                <td style="text-align: center">Дата возврата</td>-->
                                 <td>Сумма</td>
                                 <td>Статус</td>
                                 <td>Вернуть</td>
@@ -60,7 +61,11 @@
                                 <tr>
 
                                     <th scope="row" th:text="${info.id}">Default</th>
-                                    <td style="text-align: center" th:text="${info.date}">Column content</td>
+<!--                                    <td style="text-align: center" th:text="${info.date}">Column content</td>-->
+                                    <td style="text-align: center" th:text="${#dates.format(info.date, 'dd-MM-yyyy HH:mm')}">
+                                        Column content</td>
+<!--                                    <td style="text-align: center">00-00-00 00:00</td>-->
+
                                     <td th:text="${info.finalPrice}">Column content</td>
                                     <td th:if="${info.idDelivered}" th:text="Доставлено"></td>
                                     <td th:if="${!info.idDelivered}" th:text="'В пути'"></td>
@@ -87,8 +92,23 @@
                                             </button>
                                         </form>
                                     </td>
+
                                 </tr>
+
+<!--                                <tr th:each="n: ${#numbers.sequence(1, 4)}">-->
+<!--                                <th>-->
+<!--                                    <td></td>-->
+<!--                                    <td>1</td>-->
+<!--                                    <td>1</td>-->
+<!--                                    <td>1</td>-->
+<!--                                    <td>1</td>-->
+<!--                                    <td>1</td>-->
+<!--                                </th>-->
+<!--                                </tr>-->
+
+
                             </th:block>
+
 
                             </tbody>
                         </table>

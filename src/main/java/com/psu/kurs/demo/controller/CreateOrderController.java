@@ -22,6 +22,7 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -281,7 +282,7 @@ public class CreateOrderController {
 
         FinalOrder finalOrder = new FinalOrder();
         finalOrder.setId(inxIns);
-        finalOrder.setDate(new Date().toString());
+        finalOrder.setDate(new Date());
         finalOrder.setFinalPrice(basket.getFinalPrice());
 
         finalOrder.setUser(userService.findByUsername(principal.getName()));
@@ -397,7 +398,7 @@ public class CreateOrderController {
                                    @RequestParam(name = "street", required = false) String street,
                                    @RequestParam(name = "flat_number", required = false) String flat_number,
                                    @RequestParam(name = "basketSum", required = false) String basketSum,
-                                   Principal principal, Model model) {
+                                   Principal principal, Model model) throws ParseException {
 
         model = menuService.getMenuItems(model); //get menu items
         model.addAttribute("basketSum", basketSum);
@@ -414,7 +415,21 @@ public class CreateOrderController {
 
         FinalOrder finalOrder = new FinalOrder();
         finalOrder.setId(inxIns);
-        finalOrder.setDate(new Date().toString());
+
+        Date date=new Date();
+        System.out.println("get time completeСheckout: "+date.toString());
+        System.out.println("get time completeСheckout: "+date.getTime());
+        System.out.println("get time completeСheckout: "+date.getYear());
+        System.out.println("get time completeСheckout: "+date.getMonth());
+        System.out.println("get time completeСheckout: "+date.getHours());
+
+        String formattedData=new SimpleDateFormat("yyyy:MM:dd hh:mm:ss").format(date);
+        System.out.println("formattedData: "+formattedData);
+
+        Date date2=new Date(new SimpleDateFormat("yyyy:MM:dd hh:mm:ss").parse(formattedData).getTime());
+        System.out.println("date2: "+date2);
+
+        finalOrder.setDate(date2);
         finalOrder.setFinalPrice(basket.getFinalPrice());
         finalOrder.setUser(userService.findByUsername(principal.getName()));
 

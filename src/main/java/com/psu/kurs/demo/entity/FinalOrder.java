@@ -1,6 +1,7 @@
 package com.psu.kurs.demo.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class FinalOrder {
     @Column(name = "total_price", columnDefinition = "double precision null default 0.0")
     private double totalPrice;
 
-    private String date;
+    private Date date;
 
     @Column(name = "is_delivered", columnDefinition = "boolean default false")
     private boolean idDelivered;
@@ -82,11 +83,11 @@ public class FinalOrder {
         this.totalPrice = totalPrice;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

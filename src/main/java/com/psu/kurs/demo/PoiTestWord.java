@@ -128,7 +128,7 @@ public class PoiTestWord {
 
             table.getRow(counter).getCell(0).setText(finalOrder.getId().toString());
             table.getRow(counter).getCell(1).setText(String.valueOf(finalOrder.getUser().getId()));
-            table.getRow(counter).getCell(2).setText(finalOrder.getDate());
+            table.getRow(counter).getCell(2).setText(finalOrder.getDate().toString());
             table.getRow(counter).getCell(3).setText(String.valueOf(finalOrder.getFinalPrice()));
 
             counter++;
